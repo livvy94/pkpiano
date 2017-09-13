@@ -1,0 +1,398 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C0B76453-C520-4613-A803-4F1857A0F675}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PK_Piano</RootNamespace>
+    <AssemblyName>PK Piano</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\Vince\Desktop\delet this\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>none</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>6FC77D3DBEDC95B0D2E84C0F2A870F4F20B6C0A3</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>PK Piano_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <StartupObject>PK_Piano.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="PK Piano_TemporaryKey.pfx" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1C.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1Csharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1D.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1Dsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1E.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1F.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1Fsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1G.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1Gsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1zA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1zAsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1zB.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2C.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2Csharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2D.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2Dsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2E.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2F.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2Fsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2G.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2Gsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2zA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2zAsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2zB.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3C.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3Csharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3D.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3Dsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3E.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3F.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3Fsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3G.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3Gsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3zA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3zAsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3zB.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4C.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4Csharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4D.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4Dsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4E.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4F.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4Fsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4G.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4Gsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4zA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4zAsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\4zB.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5C.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5Csharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5D.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5Dsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5E.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5F.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5Fsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5G.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5Gsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5zA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5zAsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5zB.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6C.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6Csharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6D.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6Dsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6E.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6F.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6Fsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6G.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6Gsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6zA.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6zAsharp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6zB.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio Equipped!.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio LeftRight.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio No.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio Text Blip.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio The A Button.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio UpDown Tick.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExtraAudio Window.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

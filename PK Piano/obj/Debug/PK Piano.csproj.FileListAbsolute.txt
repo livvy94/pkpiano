@@ -1,0 +1,13 @@
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\bin\Debug\PK Piano.exe.config
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\bin\Debug\PK Piano.exe
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK_Piano.Form1.resources
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK_Piano.Properties.Resources.resources
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK Piano.csproj.GenerateResource.Cache
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK Piano.exe
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\bin\Debug\PK Piano.exe.manifest
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\bin\Debug\PK Piano.application
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK Piano.exe.manifest
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK Piano.application
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\obj\Debug\PK Piano.TrustInfo.xml
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\bin\Debug\PK Piano.exe.CodeAnalysisLog.xml
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\PK Piano\PK Piano\bin\Debug\PK Piano.exe.lastcodeanalysissucceeded
