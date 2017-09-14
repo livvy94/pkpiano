@@ -16,5 +16,7 @@
 
 ### Installation
 As a C# application, PK Piano requires the .NET Framework to run. I reccomend using [Ninite](https://ninite.com/) to install the latest version.
+
 To download the latest release, see ["Releases"](https://github.com/vince94/pkpiano/releases)
-If you don't have a copy of EBMusEd, you can download it [here](https://ssl-forum-files.fobby.net/forum_attachments/0040/5149/ebmused22.zip). The source code is being hosted [here](https://github.com/PKHackers/ebmused).
+
+If you don't have a copy of EBMusEd, you can download it [here](https://ssl-forum-files.fobby.net/forum_attachments/0040/5149/ebmused22.zip). Its source code is being hosted [here](https://github.com/PKHackers/ebmused).
