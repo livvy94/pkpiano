@@ -729,15 +729,6 @@ namespace PK_Piano.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream ExtraAudio_No {
-            get {
-                return ResourceManager.GetStream("ExtraAudio_No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
         internal static System.IO.UnmanagedMemoryStream ExtraAudio_Text_Blip {
             get {
                 return ResourceManager.GetStream("ExtraAudio_Text_Blip", resourceCulture);
@@ -759,15 +750,6 @@ namespace PK_Piano.Properties {
         internal static System.IO.UnmanagedMemoryStream ExtraAudio_UpDown_Tick {
             get {
                 return ResourceManager.GetStream("ExtraAudio_UpDown_Tick", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream ExtraAudio_Window {
-            get {
-                return ResourceManager.GetStream("ExtraAudio_Window", resourceCulture);
             }
         }
     }

@@ -41,6 +41,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.PanningBar = new System.Windows.Forms.TrackBar();
             this.tabCommands = new System.Windows.Forms.TabPage();
+            this.btnSetFirstDrum = new System.Windows.Forms.Button();
             this.btnPortamento = new System.Windows.Forms.Button();
             this.btnChannelTranspose = new System.Windows.Forms.Button();
             this.btnVibratoOff = new System.Windows.Forms.Button();
@@ -109,7 +110,6 @@
             this.btnOctaveDown = new System.Windows.Forms.Button();
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
-            this.btnSetFirstDrum = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabChannelVolPan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
@@ -268,6 +268,16 @@
             this.tabCommands.Text = "Common Commands";
             this.tabCommands.UseVisualStyleBackColor = true;
             // 
+            // btnSetFirstDrum
+            // 
+            this.btnSetFirstDrum.Location = new System.Drawing.Point(138, 187);
+            this.btnSetFirstDrum.Name = "btnSetFirstDrum";
+            this.btnSetFirstDrum.Size = new System.Drawing.Size(142, 23);
+            this.btnSetFirstDrum.TabIndex = 35;
+            this.btnSetFirstDrum.Text = "Set first drum";
+            this.btnSetFirstDrum.UseVisualStyleBackColor = true;
+            this.btnSetFirstDrum.Click += new System.EventHandler(this.btnSetFirstDrum_Click);
+            // 
             // btnPortamento
             // 
             this.btnPortamento.Location = new System.Drawing.Point(39, 216);
@@ -382,10 +392,10 @@
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(13, 16);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(285, 39);
+            this.label16.Size = new System.Drawing.Size(289, 39);
             this.label16.TabIndex = 0;
-            this.label16.Text = "These are a bunch of pre-made shortcuts.\r\nPlay around with the numbers until you " +
-    "think it sounds cool!\r\nHover over the buttons for syntax.";
+            this.label16.Text = "These are a bunch of shortcuts I made.\r\nPlay around with the numbers until you th" +
+    "ink it sounds good.\r\nHover over the buttons for syntax.";
             // 
             // tabEcho
             // 
@@ -993,16 +1003,6 @@
             this.DispLabel.Size = new System.Drawing.Size(35, 15);
             this.DispLabel.TabIndex = 37;
             this.DispLabel.Text = "[XX]";
-            // 
-            // btnSetFirstDrum
-            // 
-            this.btnSetFirstDrum.Location = new System.Drawing.Point(138, 187);
-            this.btnSetFirstDrum.Name = "btnSetFirstDrum";
-            this.btnSetFirstDrum.Size = new System.Drawing.Size(142, 23);
-            this.btnSetFirstDrum.TabIndex = 35;
-            this.btnSetFirstDrum.Text = "Set first drum";
-            this.btnSetFirstDrum.UseVisualStyleBackColor = true;
-            this.btnSetFirstDrum.Click += new System.EventHandler(this.btnSetFirstDrum_Click);
             // 
             // Form1
             // 

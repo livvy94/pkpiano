@@ -85,7 +85,6 @@ namespace PK_Piano
             {
 
                 cboNoteLength.Text = noteLength.ToString("X2");
-                new SoundPlayer(Properties.Resources.ExtraAudio_No).Play();
             }
             
             //update other parts of the program that use length
@@ -133,7 +132,7 @@ namespace PK_Piano
             toolTip1.SetToolTip(this.btnCopySlidingEcho, "[F8 length lvol rvol]");
             toolTip1.SetToolTip(this.btnPortamento, "C8 [F9 start length (insert note here)] ");
             toolTip1.SetToolTip(this.btnSetFirstDrum, "Sets the first sample used by the CA-DF note system.\r\nThis is useful for making quick drum loops.");
-            //toolTip1.SetToolTip(this.ANYTHING, "");
+            toolTip1.SetToolTip(this.trackBarEchoVol, "The second half of volume levels invert the waveform!\r\nYou can set the left and right numbers seperately, too.");
             //toolTip1.SetToolTip(this.ANYTHING, "");
             //toolTip1.SetToolTip(this.ANYTHING, "");
             //toolTip1.SetToolTip(this.ANYTHING, "");

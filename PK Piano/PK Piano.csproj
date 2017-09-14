@@ -126,243 +126,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\1C.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1Csharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1D.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1Dsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1E.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1F.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1Fsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1G.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1Gsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1zA.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1zAsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\1zB.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2C.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2Csharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2D.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2Dsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2E.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2F.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2Fsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2G.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2Gsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2zA.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2zAsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2zB.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3C.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3Csharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3D.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3Dsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3E.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3F.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3Fsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3G.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3Gsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3zA.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3zAsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\3zB.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4C.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4Csharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4D.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4Dsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4E.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4F.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4Fsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4G.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4Gsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4zA.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4zAsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\4zB.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5C.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5Csharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5D.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5Dsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5E.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5F.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5Fsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5G.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5Gsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5zA.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5zAsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\5zB.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6C.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6Csharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6D.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6Dsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6E.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6F.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6Fsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6G.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6Gsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6zA.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6zAsharp.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\6zB.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio Equipped!.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio LeftRight.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio No.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio Text Blip.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio The A Button.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio UpDown Tick.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ExtraAudio Window.wav" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
@@ -386,6 +149,85 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <None Include="Resources\ExtraAudio Window.wav" />
+    <None Include="Resources\ExtraAudio UpDown Tick.wav" />
+    <None Include="Resources\ExtraAudio The A Button.wav" />
+    <None Include="Resources\ExtraAudio Text Blip.wav" />
+    <None Include="Resources\ExtraAudio No.wav" />
+    <None Include="Resources\ExtraAudio LeftRight.wav" />
+    <None Include="Resources\ExtraAudio Equipped!.wav" />
+    <None Include="Resources\6zB.wav" />
+    <None Include="Resources\6zAsharp.wav" />
+    <None Include="Resources\6zA.wav" />
+    <None Include="Resources\6Gsharp.wav" />
+    <None Include="Resources\6G.wav" />
+    <None Include="Resources\6Fsharp.wav" />
+    <None Include="Resources\6F.wav" />
+    <None Include="Resources\6E.wav" />
+    <None Include="Resources\6Dsharp.wav" />
+    <None Include="Resources\6D.wav" />
+    <None Include="Resources\6Csharp.wav" />
+    <None Include="Resources\6C.wav" />
+    <None Include="Resources\5zB.wav" />
+    <None Include="Resources\5zAsharp.wav" />
+    <None Include="Resources\5zA.wav" />
+    <None Include="Resources\5Gsharp.wav" />
+    <None Include="Resources\5G.wav" />
+    <None Include="Resources\5Fsharp.wav" />
+    <None Include="Resources\5F.wav" />
+    <None Include="Resources\5E.wav" />
+    <None Include="Resources\5Dsharp.wav" />
+    <None Include="Resources\5D.wav" />
+    <None Include="Resources\5Csharp.wav" />
+    <None Include="Resources\5C.wav" />
+    <None Include="Resources\4zB.wav" />
+    <None Include="Resources\4zAsharp.wav" />
+    <None Include="Resources\4zA.wav" />
+    <None Include="Resources\4Gsharp.wav" />
+    <None Include="Resources\4G.wav" />
+    <None Include="Resources\4Fsharp.wav" />
+    <None Include="Resources\4F.wav" />
+    <None Include="Resources\4E.wav" />
+    <None Include="Resources\4Dsharp.wav" />
+    <None Include="Resources\4D.wav" />
+    <None Include="Resources\4Csharp.wav" />
+    <None Include="Resources\4C.wav" />
+    <None Include="Resources\3zB.wav" />
+    <None Include="Resources\3zAsharp.wav" />
+    <None Include="Resources\3zA.wav" />
+    <None Include="Resources\3Gsharp.wav" />
+    <None Include="Resources\3G.wav" />
+    <None Include="Resources\3Fsharp.wav" />
+    <None Include="Resources\3F.wav" />
+    <None Include="Resources\3E.wav" />
+    <None Include="Resources\3Dsharp.wav" />
+    <None Include="Resources\3D.wav" />
+    <None Include="Resources\3Csharp.wav" />
+    <None Include="Resources\3C.wav" />
+    <None Include="Resources\2zB.wav" />
+    <None Include="Resources\2zAsharp.wav" />
+    <None Include="Resources\2zA.wav" />
+    <None Include="Resources\2Gsharp.wav" />
+    <None Include="Resources\2G.wav" />
+    <None Include="Resources\2Fsharp.wav" />
+    <None Include="Resources\2F.wav" />
+    <None Include="Resources\2E.wav" />
+    <None Include="Resources\2Dsharp.wav" />
+    <None Include="Resources\2D.wav" />
+    <None Include="Resources\2Csharp.wav" />
+    <None Include="Resources\2C.wav" />
+    <None Include="Resources\1zB.wav" />
+    <None Include="Resources\1zAsharp.wav" />
+    <None Include="Resources\1zA.wav" />
+    <None Include="Resources\1Gsharp.wav" />
+    <None Include="Resources\1G.wav" />
+    <None Include="Resources\1Fsharp.wav" />
+    <None Include="Resources\1F.wav" />
+    <None Include="Resources\1E.wav" />
+    <None Include="Resources\1Dsharp.wav" />
+    <None Include="Resources\1D.wav" />
+    <None Include="Resources\1Csharp.wav" />
+    <None Include="Resources\1C.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
