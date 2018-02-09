@@ -23,3 +23,5 @@ C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano
 C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\obj\Debug\PK Piano.exe.manifest
 C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\obj\Debug\PK Piano.application
 C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\obj\Debug\PK Piano.exe
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\bin\Debug\PK Piano.pdb
+C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\obj\Debug\PK Piano.pdb

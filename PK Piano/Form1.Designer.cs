@@ -110,6 +110,7 @@
             this.btnOctaveDown = new System.Windows.Forms.Button();
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
+            this.btnDividePrompt = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabChannelVolPan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
@@ -769,6 +770,11 @@
             // txtMultiplier
             // 
             this.txtMultiplier.Location = new System.Drawing.Point(92, 223);
+            this.txtMultiplier.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.txtMultiplier.Name = "txtMultiplier";
             this.txtMultiplier.Size = new System.Drawing.Size(63, 20);
             this.txtMultiplier.TabIndex = 18;
@@ -1004,11 +1010,23 @@
             this.DispLabel.TabIndex = 37;
             this.DispLabel.Text = "[XX]";
             // 
+            // btnDividePrompt
+            // 
+            this.btnDividePrompt.Location = new System.Drawing.Point(24, 167);
+            this.btnDividePrompt.Name = "btnDividePrompt";
+            this.btnDividePrompt.Size = new System.Drawing.Size(94, 23);
+            this.btnDividePrompt.TabIndex = 41;
+            this.btnDividePrompt.Text = "Divide by 2?";
+            this.btnDividePrompt.UseVisualStyleBackColor = true;
+            this.btnDividePrompt.Visible = false;
+            this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(620, 294);
+            this.Controls.Add(this.btnDividePrompt);
             this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.btnRest);
             this.Controls.Add(this.btnC);
@@ -1147,6 +1165,7 @@
         private System.Windows.Forms.Button btnEchoOff;
         private System.Windows.Forms.Button btnPortamento;
         private System.Windows.Forms.Button btnSetFirstDrum;
+        private System.Windows.Forms.Button btnDividePrompt;
     }
 }
 

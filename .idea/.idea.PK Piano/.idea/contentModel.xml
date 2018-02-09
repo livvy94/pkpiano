@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Vince\.Rider2017.2\system\resharper-host\local\Transient\ReSharperHost\v10\SolutionCaches\_PK Piano.619885877.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="PK Piano" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Form1.cs" t="Include" />
+        <e p="Form1.Designer.cs" t="Include" />
+        <e p="Form1.resx" t="Include" />
+        <e p="Icon.ico" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="PK Piano.csproj" t="IncludeRecursive" />
+        <e p="PK Piano_TemporaryKey.pfx" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="app.manifest" t="Include" />
+          <e p="AssemblyInfo.cs" t="Include" />
+          <e p="Resources.Designer.cs" t="Include" />
+          <e p="Resources.resx" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+        </e>
+        <e p="Resources" t="Include">
+          <e p="1C.wav" t="Include" />
+          <e p="1Csharp.wav" t="Include" />
+          <e p="1D.wav" t="Include" />
+          <e p="1Dsharp.wav" t="Include" />
+          <e p="1E.wav" t="Include" />
+          <e p="1F.wav" t="Include" />
+          <e p="1Fsharp.wav" t="Include" />
+          <e p="1G.wav" t="Include" />
+          <e p="1Gsharp.wav" t="Include" />
+          <e p="1zA.wav" t="Include" />
+          <e p="1zAsharp.wav" t="Include" />
+          <e p="1zB.wav" t="Include" />
+          <e p="2C.wav" t="Include" />
+          <e p="2Csharp.wav" t="Include" />
+          <e p="2D.wav" t="Include" />
+          <e p="2Dsharp.wav" t="Include" />
+          <e p="2E.wav" t="Include" />
+          <e p="2F.wav" t="Include" />
+          <e p="2Fsharp.wav" t="Include" />
+          <e p="2G.wav" t="Include" />
+          <e p="2Gsharp.wav" t="Include" />
+          <e p="2zA.wav" t="Include" />
+          <e p="2zAsharp.wav" t="Include" />
+          <e p="2zB.wav" t="Include" />
+          <e p="3C.wav" t="Include" />
+          <e p="3Csharp.wav" t="Include" />
+          <e p="3D.wav" t="Include" />
+          <e p="3Dsharp.wav" t="Include" />
+          <e p="3E.wav" t="Include" />
+          <e p="3F.wav" t="Include" />
+          <e p="3Fsharp.wav" t="Include" />
+          <e p="3G.wav" t="Include" />
+          <e p="3Gsharp.wav" t="Include" />
+          <e p="3zA.wav" t="Include" />
+          <e p="3zAsharp.wav" t="Include" />
+          <e p="3zB.wav" t="Include" />
+          <e p="4C.wav" t="Include" />
+          <e p="4Csharp.wav" t="Include" />
+          <e p="4D.wav" t="Include" />
+          <e p="4Dsharp.wav" t="Include" />
+          <e p="4E.wav" t="Include" />
+          <e p="4F.wav" t="Include" />
+          <e p="4Fsharp.wav" t="Include" />
+          <e p="4G.wav" t="Include" />
+          <e p="4Gsharp.wav" t="Include" />
+          <e p="4zA.wav" t="Include" />
+          <e p="4zAsharp.wav" t="Include" />
+          <e p="4zB.wav" t="Include" />
+          <e p="5C.wav" t="Include" />
+          <e p="5Csharp.wav" t="Include" />
+          <e p="5D.wav" t="Include" />
+          <e p="5Dsharp.wav" t="Include" />
+          <e p="5E.wav" t="Include" />
+          <e p="5F.wav" t="Include" />
+          <e p="5Fsharp.wav" t="Include" />
+          <e p="5G.wav" t="Include" />
+          <e p="5Gsharp.wav" t="Include" />
+          <e p="5zA.wav" t="Include" />
+          <e p="5zAsharp.wav" t="Include" />
+          <e p="5zB.wav" t="Include" />
+          <e p="6C.wav" t="Include" />
+          <e p="6Csharp.wav" t="Include" />
+          <e p="6D.wav" t="Include" />
+          <e p="6Dsharp.wav" t="Include" />
+          <e p="6E.wav" t="Include" />
+          <e p="6F.wav" t="Include" />
+          <e p="6Fsharp.wav" t="Include" />
+          <e p="6G.wav" t="Include" />
+          <e p="6Gsharp.wav" t="Include" />
+          <e p="6zA.wav" t="Include" />
+          <e p="6zAsharp.wav" t="Include" />
+          <e p="6zB.wav" t="Include" />
+          <e p="ExtraAudio Equipped!.wav" t="Include" />
+          <e p="ExtraAudio LeftRight.wav" t="Include" />
+          <e p="ExtraAudio No.wav" t="Include" />
+          <e p="ExtraAudio Text Blip.wav" t="Include" />
+          <e p="ExtraAudio The A Button.wav" t="Include" />
+          <e p="ExtraAudio UpDown Tick.wav" t="Include" />
+          <e p="ExtraAudio Window.wav" t="Include" />
+        </e>
+      </e>
+      <e p="PK Piano.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

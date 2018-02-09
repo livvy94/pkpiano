@@ -1,6 +1,6 @@
 # PK Piano
 ### A control code clipboard for the EarthBound Music Editor
-[![N|Solid](http://i.imgur.com/BgsXESo.gif)](https://forum.starmen.net/forum/Community/PKHack/PK-Piano/page/1#post2209946)
+[![N|Solid](http://i.imgur.com/BgsXESo.gif)](https://forum.starmen.net/forum/Community/PKHack/PK-Piano/page/1#post1920438)
 
 # Features:
   - Auditory response - you can hear each note as the control code is copied to the clipboard
