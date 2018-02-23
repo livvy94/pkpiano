@@ -9,6 +9,7 @@ namespace PK_Piano
         //Global variables
         bool soundIsOn = true;
         byte octave = 4; //use this with the note buttons' if statements
+        byte lastNote = 0;
 
         byte noteLength = 0x18;
         int multiplier = 1;
@@ -293,6 +294,20 @@ namespace PK_Piano
             String note = "[" + input.ToString("X2") + "]";
             DispLabel.Text = note;
             Clipboard.SetText(note);
+            
+            
+            //Do Channel Transpose-related things
+            if (lastNote != 0)
+            {
+                string transposeValue = (input - lastNote).ToString("X2");
+
+                if (transposeValue.Length == 8)
+                    transposeValue = transposeValue.Substring(6, 2);
+
+                btnChannelTranspose.Text = "Channel Transpose (last one was [" + transposeValue + "])";    
+            }
+
+            lastNote = input;
         }
 
         private void SendNote(string input)

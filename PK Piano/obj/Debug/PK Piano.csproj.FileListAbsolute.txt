@@ -25,3 +25,16 @@ C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano
 C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\obj\Debug\PK Piano.exe
 C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\bin\Debug\PK Piano.pdb
 C:\Users\Vince\Desktop\Free time\PSI Hackin\Earthbound\00 Music Hacking\PK Piano 2\pkpiano\PK Piano\obj\Debug\PK Piano.pdb
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\bin\Debug\PK Piano.exe.config
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\bin\Debug\PK Piano.exe.manifest
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\bin\Debug\PK Piano.application
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\bin\Debug\PK Piano.exe
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\bin\Debug\PK Piano.pdb
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK_Piano.Form1.resources
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK_Piano.Properties.Resources.resources
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK Piano.csproj.GenerateResource.Cache
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK Piano.TrustInfo.xml
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK Piano.exe.manifest
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK Piano.application
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK Piano.exe
+C:\Users\VJSipocz\Downloads\EBMusEd\pkpiano\PK Piano\obj\Debug\PK Piano.pdb
