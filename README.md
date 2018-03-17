@@ -1,17 +1,17 @@
 # PK Piano
 
-### A control code clipboard for the EarthBound Music Editor
+#### A control code clipboard for the EarthBound Music Editor
 
 [![N|Solid](http://i.imgur.com/BgsXESo.gif)](https://forum.starmen.net/forum/Community/PKHack/PK-Piano/page/1#post1920438)
 
-# Features:
+## Features
 
   - Auditory response - you can hear each note as the control code is copied to the clipboard
   - Easily calculate note lengths - no more using a hex calculator
   - Visual sliders for Channel Volume and Panning
   - Generates commands that enable the Super NES's distinctive Echo Buffer
 
-# How to use:
+## How to use
 
   - Press one of the buttons
   - CTRL+V to paste the hex into EBMusEd
