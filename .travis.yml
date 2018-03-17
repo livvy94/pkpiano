@@ -1,2 +1,4 @@
 language: csharp
-solution: "PK Piano.sln"
+script: 
+  - msbuild /version
+  - msbuild /p:Configuration=Release PK Piano.sln
