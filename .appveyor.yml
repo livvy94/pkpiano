@@ -1,0 +1,7 @@
+version: 1.0.{build}
+build:
+  verbosity: minimal
+artifacts:
+  - path: PK Piano\bin\Debug\PK Piano.exe
+    name: PKPiano
+    type: zip

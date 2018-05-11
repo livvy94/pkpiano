@@ -4,7 +4,7 @@ using System.Media;
 
 namespace PK_Piano
 {
-    public partial class Form1: Form
+    public partial class Form1 : Form
     {
         //Global variables
         bool soundIsOn = true;
@@ -15,7 +15,7 @@ namespace PK_Piano
         int multiplier = 1;
         byte noteStacatto = 0x7;
         byte noteVolume = 0xF;
-        
+
         byte echoChannels = 0x00;
         byte echoVolume = 0x00; //Change these defaut values to whatever the trackBars' initial values end up to be
         byte echoDelay = 0x00;
@@ -24,18 +24,27 @@ namespace PK_Piano
 
         byte numberOfLettersBeforeSound = 0; //double-check this
 
-        SoundPlayer sfxTextBlip = new SoundPlayer(Properties.Resources.ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance *every* time
-        SoundPlayer sfxEquipped = new SoundPlayer(Properties.Resources.ExtraAudio_Equipped_); //not sure if doing this will improve anything though :/
+        SoundPlayer
+            sfxTextBlip =
+                new SoundPlayer(Properties.Resources
+                    .ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance *every* time
+
+        SoundPlayer
+            sfxEquipped =
+                new SoundPlayer(Properties.Resources
+                    .ExtraAudio_Equipped_); //not sure if doing this will improve anything though :/
 
         public Form1()
-        { InitializeComponent(); }
+        {
+            InitializeComponent();
+        }
 
         private void PlayTextTypeSound(string type)
-        { 
+        {
             //Text blip logic
             byte amount = 1;
             if (type == "huge") amount = 5;
-            
+
             if (numberOfLettersBeforeSound > amount)
             {
                 numberOfLettersBeforeSound = 0;
@@ -46,14 +55,14 @@ namespace PK_Piano
 
         private void StaccatoBar_Scroll(object sender, EventArgs e)
         {
-            noteStacatto = (byte)StaccatoBar.Value;
+            noteStacatto = (byte) StaccatoBar.Value;
             LengthDisplay.Text = FormatNoteLength();
             sfxTextBlip.Play();
         }
 
         private void VolBar_Scroll(object sender, EventArgs e)
         {
-            noteVolume = (byte)VolBar.Value;
+            noteVolume = (byte) VolBar.Value;
             LengthDisplay.Text = FormatNoteLength();
             PlayTextTypeSound("tiny");
         }
@@ -61,16 +70,17 @@ namespace PK_Piano
         private string FormatNoteLength()
         {
             var output = "["
-                 + (noteLength * multiplier).ToString("X2")
-                 + " " 
-                 + noteStacatto.ToString("X")
-                 + noteVolume.ToString("X")
-                 + "]";
+                         + (noteLength * multiplier).ToString("X2")
+                         + " "
+                         + noteStacatto.ToString("X")
+                         + noteVolume.ToString("X")
+                         + "]";
             Clipboard.SetText(output);
 
-            if (noteLength * multiplier >= 0x60) //0x80 is the real value here, but it'd probably be good to have for values as low as this
+            if (noteLength * multiplier >= 0x60
+            ) //0x80 is the real value here, but it'd probably be good to have for values as low as this
                 btnDividePrompt.Visible = true; //offer to divide it by 2
-            else 
+            else
                 btnDividePrompt.Visible = false; //hide the button
 
             return output;
@@ -81,26 +91,32 @@ namespace PK_Piano
             //if noteLength is divisible by 2
             if (noteLength % 2 == 0)
             {
-                int halfsies = (byte)((noteLength * multiplier) / 2);
-                string message = "Instead of that huge value, use two notes with this value instead: [" + halfsies.ToString("X2") + "]";
+                int halfsies = (byte) ((noteLength * multiplier) / 2);
+                string message = "Instead of that huge value, use two notes with this value instead: [" +
+                                 halfsies.ToString("X2") + "]";
 
                 if (halfsies >= 0x80) //If this happens, the number is so big, even cutting it in half won't be enough.
-                {                     //btw 0x80 is the same as the note [C-1]
+                {
+                    //btw 0x80 is the same as the note [C-1]
                     if (halfsies % 3 == 0)
                     {
-                        int threedeez = (byte)((noteLength * multiplier) / 3); //Check to make sure this calculation works properly...
-                        message = message + "\r\n"                          //I'll probably try using it on a few songs and see if I need to adjust it
-                     + "...But that's also too big. Try three of this instead: [" + threedeez.ToString("X2") + "]";
+                        int threedeez =
+                            (byte) ((noteLength * multiplier) /
+                                    3); //Check to make sure this calculation works properly...
+                        message =
+                            message + "\r\n" //I'll probably try using it on a few songs and see if I need to adjust it
+                                    + "...But that's also too big. Try three of this instead: [" +
+                                    threedeez.ToString("X2") + "]";
                     }
                     else
-                    { 
+                    {
                         message = message + "\r\n"
-                     + "...But that's also too big. Try four of this instead: [" + (halfsies / 2).ToString("X2") + "]";
+                                          + "...But that's also too big. Try four of this instead: [" +
+                                          (halfsies / 2).ToString("X2") + "]";
                     }
                 }
 
                 MessageBox.Show(message, "Divided note length (Anything above [80] counts as a note and not a length)");
-                
             }
         }
 
@@ -109,18 +125,19 @@ namespace PK_Piano
             //data validation
             try
             {
-                var userInput = int.Parse(cboNoteLength.Text, System.Globalization.NumberStyles.HexNumber); //http://stackoverflow.com/questions/13158969/from-string-textbox-to-hex-0x-byte-c-sharp
-                noteLength = (byte)userInput;
+                var userInput =
+                    int.Parse(cboNoteLength.Text,
+                        System.Globalization.NumberStyles
+                            .HexNumber); //http://stackoverflow.com/questions/13158969/from-string-textbox-to-hex-0x-byte-c-sharp
+                noteLength = (byte) userInput;
             }
             catch
             {
-
                 cboNoteLength.Text = noteLength.ToString("X2");
             }
-            
+
             //update other parts of the program that use length
             LengthUpdate();
-
         }
 
         private void LengthUpdate()
@@ -131,7 +148,7 @@ namespace PK_Piano
 
         private void txtMultiplier_TextChanged(object sender, EventArgs e)
         {
-            multiplier = (int)txtMultiplier.Value;
+            multiplier = (int) txtMultiplier.Value;
             LengthDisplay.Text = FormatNoteLength();
             new SoundPlayer(Properties.Resources.ExtraAudio_UpDown_Tick).Play();
         }
@@ -155,17 +172,21 @@ namespace PK_Piano
             // Set up the delays for the ToolTip.
             // Force the ToolTip text to be displayed whether or not the form is active.
 
-            toolTip1.SetToolTip(this.trackBarEchoDelay, "If this number is too high, it might glitch the instruments in-game.\r\nBe sure to test it out in an accurate emulator like SNES9X!");
+            toolTip1.SetToolTip(this.trackBarEchoDelay,
+                "If this number is too high, it might glitch the instruments in-game.\r\nBe sure to test it out in an accurate emulator like SNES9X!");
             toolTip1.SetToolTip(this.btnVibrato, "[E3 start speed range]");
-            toolTip1.SetToolTip(this.btnPortamentoUp, "Plays the note, THEN bends the pitch.\r\n[F1 start length range]");
+            toolTip1.SetToolTip(this.btnPortamentoUp,
+                "Plays the note, THEN bends the pitch.\r\n[F1 start length range]");
             toolTip1.SetToolTip(this.btnPortamentoDown, "Bends the pitch INTO the note.\r\n[F2 start length range]");
             toolTip1.SetToolTip(this.checkBox8, "Watch out! \nThis one's used for sound effects.");
             toolTip1.SetToolTip(this.btnCopySlidingPan, "[E2 length panning]");
             toolTip1.SetToolTip(this.btnCopySlidingVolume, "[EE length volume]");
             toolTip1.SetToolTip(this.btnCopySlidingEcho, "[F8 length lvol rvol]");
             toolTip1.SetToolTip(this.btnPortamento, "C8 [F9 start length (insert note here)] ");
-            toolTip1.SetToolTip(this.btnSetFirstDrum, "Sets the first sample used by the CA-DF note system.\r\nThis is useful for making quick drum loops.");
-            toolTip1.SetToolTip(this.trackBarEchoVol, "The second half of volume levels invert the waveform!\r\nYou can set the left and right numbers seperately, too.");
+            toolTip1.SetToolTip(this.btnSetFirstDrum,
+                "Sets the first sample used by the CA-DF note system.\r\nThis is useful for making quick drum loops.");
+            toolTip1.SetToolTip(this.trackBarEchoVol,
+                "The second half of volume levels invert the waveform!\r\nYou can set the left and right numbers seperately, too.");
             //toolTip1.SetToolTip(this.ANYTHING, "");
             //toolTip1.SetToolTip(this.ANYTHING, "");
             //toolTip1.SetToolTip(this.ANYTHING, "");
@@ -177,7 +198,8 @@ namespace PK_Piano
         {
             LengthUpdate();
             var panPosition = PanningBar.Value;
-            panPosition = Math.Abs(panPosition); //They're negative numbers, so this makes them positive (takes the absolute value)
+            panPosition =
+                Math.Abs(panPosition); //They're negative numbers, so this makes them positive (takes the absolute value)
             var output = "[E1 " + panPosition.ToString("X2") + "]";
             txtPanningDisplay.Text = output;
             Clipboard.SetText(output);
@@ -200,9 +222,9 @@ namespace PK_Piano
             sfxEquipped.Play();
             LengthUpdate();
             var output = "[E2 "
-                + noteLength.ToString("X2") + " "
-                + Math.Abs(PanningBar.Value).ToString("X2")
-                + "]";
+                         + noteLength.ToString("X2") + " "
+                         + Math.Abs(PanningBar.Value).ToString("X2")
+                         + "]";
             Clipboard.SetText(output);
         }
 
@@ -211,9 +233,9 @@ namespace PK_Piano
             sfxEquipped.Play();
             LengthUpdate();
             var output = "[EE "
-                + noteLength.ToString("X2") + " "
-                + Math.Abs(ChannelVolumeBar.Value).ToString("X2")
-                + "]";
+                         + noteLength.ToString("X2") + " "
+                         + Math.Abs(ChannelVolumeBar.Value).ToString("X2")
+                         + "]";
             Clipboard.SetText(output);
         }
 
@@ -223,10 +245,10 @@ namespace PK_Piano
             LengthUpdate();
             var vol = Math.Abs(ChannelVolumeBar.Value).ToString("X2");
             var output = "[F8 "
-                + noteLength.ToString("X2") + " "
-                + vol + " "
-                + vol
-                + "]";
+                         + noteLength.ToString("X2") + " "
+                         + vol + " "
+                         + vol
+                         + "]";
             Clipboard.SetText(output);
         }
 
@@ -289,13 +311,14 @@ namespace PK_Piano
         }
 
         private void SendNote(byte input)
-        { //Takes a byte, puts it in the label, and puts it in the clipboard
+        {
+            //Takes a byte, puts it in the label, and puts it in the clipboard
             LengthUpdate();
             String note = "[" + input.ToString("X2") + "]";
             DispLabel.Text = note;
             Clipboard.SetText(note);
-            
-            
+
+
             //Do Channel Transpose-related things
             if (lastNote != 0)
             {
@@ -304,24 +327,29 @@ namespace PK_Piano
                 if (transposeValue.Length == 8)
                     transposeValue = transposeValue.Substring(6, 2);
 
-                btnChannelTranspose.Text = "Channel Transpose (last one was [" + transposeValue + "])";    
+                btnChannelTranspose.Text = "Channel Transpose (last one was [" + transposeValue + "])";
             }
 
             lastNote = input;
         }
 
         private void SendNote(string input)
-        { //An alternate version for manually setting the string
+        {
+            //An alternate version for manually setting the string
             LengthUpdate();
             DispLabel.Text = "[" + input + "]";
             Clipboard.SetText(input);
         }
 
         private void btnRest_Click(object sender, EventArgs e)
-        { SendNote(0xC9); }
+        {
+            SendNote(0xC9);
+        }
 
         private void btnContinue_Click(object sender, EventArgs e)
-        { SendNote(0xC8); }
+        {
+            SendNote(0xC8);
+        }
 
         private void btnC_Click(object sender, EventArgs e)
         {
@@ -787,21 +815,52 @@ namespace PK_Piano
         }
 
         //Checkboxes all redirect to calculateEchoChannelCode()
-        private void checkBox1_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox2_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox3_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox4_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox5_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox6_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox7_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-        private void checkBox8_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox7_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
+
+        private void checkBox8_CheckedChanged(object sender, EventArgs e)
+        {
+            CalculateEchoChannelCode();
+        }
 
         private void SetAllEchoValues()
         {
-            echoVolume = (byte)trackBarEchoVol.Value;
-            echoDelay = (byte)trackBarEchoDelay.Value;
-            echoFeedback = (byte)trackBarEchoFeedback.Value;
-            echoFilter = (byte)trackBarEchoFilter.Value;
+            echoVolume = (byte) trackBarEchoVol.Value;
+            echoDelay = (byte) trackBarEchoDelay.Value;
+            echoFeedback = (byte) trackBarEchoFeedback.Value;
+            echoFilter = (byte) trackBarEchoFilter.Value;
         }
 
         private void CalculateEchoChannelCode()
@@ -809,9 +868,9 @@ namespace PK_Piano
             SetAllEchoValues(); //I keep getting 00s until I move one of the sliders, which is annoying. Hopefully this should fix it.
 
             var scratchPaper = ""; //Build up the binary number bit by bit
-            if (checkBox8.Checked) 
+            if (checkBox8.Checked)
                 scratchPaper = scratchPaper + "1";
-            else 
+            else
                 scratchPaper = scratchPaper + "0";
 
             if (checkBox7.Checked)
@@ -850,8 +909,8 @@ namespace PK_Piano
                 scratchPaper = scratchPaper + "0";
 
             //convert scratchPaper to a real byte
-            echoChannels = (byte)Convert.ToInt32(scratchPaper, 2);
-            
+            echoChannels = (byte) Convert.ToInt32(scratchPaper, 2);
+
             CreateEchoCodes();
             new SoundPlayer(Properties.Resources.ExtraAudio_The_A_Button).Play();
         }
@@ -862,16 +921,15 @@ namespace PK_Piano
             //[F5 XX YY YY] [F7 XX YY ZZ]
             //F5 echoChannels echoVolume echoVolume
             //F7 echoDelay echoFeedback echoFilter
-            var output 
+            var output
                 = "[F5 "
-                + echoChannels.ToString("X2") + " "
-                + echoVolume.ToString("X2") + " "
-                + echoVolume.ToString("X2") + "] "
-                
-                + "[F7 "
-                + echoDelay.ToString("X2") + " "
-                + echoFeedback.ToString("X2") + " "
-                + echoFilter.ToString("X2") + "]";
+                  + echoChannels.ToString("X2") + " "
+                  + echoVolume.ToString("X2") + " "
+                  + echoVolume.ToString("X2") + "] "
+                  + "[F7 "
+                  + echoDelay.ToString("X2") + " "
+                  + echoFeedback.ToString("X2") + " "
+                  + echoFilter.ToString("X2") + "]";
 
             Clipboard.SetText(output);
             txtEchoDisplay.Text = output;

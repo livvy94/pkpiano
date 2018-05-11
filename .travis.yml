@@ -1,0 +1,4 @@
+language: csharp
+script: 
+  - msbuild /version
+  - msbuild /p:Configuration=Release "PK Piano/PK Piano.csproj"
