@@ -7,9 +7,10 @@ namespace PK_Piano
     public partial class Form1 : Form
     {
         //Global variables
-        bool soundIsOn = true;
+        bool sfxEnabled = false; //What would be a good way to have this be toggled from the form? It's crowded as is
         byte octave = 4; //use this with the note buttons' if statements
         byte lastNote = 0;
+        string transposeValue = "00"; //this is what will be copied to the clipboard for channel transpose
 
         byte noteLength = 0x18;
         int multiplier = 1;
@@ -24,15 +25,8 @@ namespace PK_Piano
 
         byte numberOfLettersBeforeSound = 0; //double-check this
 
-        SoundPlayer
-            sfxTextBlip =
-                new SoundPlayer(Properties.Resources
-                    .ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance *every* time
-
-        SoundPlayer
-            sfxEquipped =
-                new SoundPlayer(Properties.Resources
-                    .ExtraAudio_Equipped_); //not sure if doing this will improve anything though :/
+        SoundPlayer sfxTextBlip = new SoundPlayer(Properties.Resources.ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance *every* time
+        SoundPlayer sfxEquipped = new SoundPlayer(Properties.Resources.ExtraAudio_Equipped_); //not sure if doing this will improve anything though :/
 
         public Form1()
         {
@@ -41,6 +35,8 @@ namespace PK_Piano
 
         private void PlayTextTypeSound(string type)
         {
+            if (!sfxEnabled) return;
+
             //Text blip logic
             byte amount = 1;
             if (type == "huge") amount = 5;
@@ -55,30 +51,24 @@ namespace PK_Piano
 
         private void StaccatoBar_Scroll(object sender, EventArgs e)
         {
-            noteStacatto = (byte) StaccatoBar.Value;
+            noteStacatto = (byte)StaccatoBar.Value;
             LengthDisplay.Text = FormatNoteLength();
-            sfxTextBlip.Play();
+            if (sfxEnabled) sfxTextBlip.Play();
         }
 
         private void VolBar_Scroll(object sender, EventArgs e)
         {
-            noteVolume = (byte) VolBar.Value;
+            noteVolume = (byte)VolBar.Value;
             LengthDisplay.Text = FormatNoteLength();
             PlayTextTypeSound("tiny");
         }
 
         private string FormatNoteLength()
         {
-            var output = "["
-                         + (noteLength * multiplier).ToString("X2")
-                         + " "
-                         + noteStacatto.ToString("X")
-                         + noteVolume.ToString("X")
-                         + "]";
+            var output = "[" + (noteLength * multiplier).ToString("X2") + " " + noteStacatto.ToString("X") + noteVolume.ToString("X") + "]";
             Clipboard.SetText(output);
 
-            if (noteLength * multiplier >= 0x60
-            ) //0x80 is the real value here, but it'd probably be good to have for values as low as this
+            if (noteLength * multiplier >= 0x60) //0x80 is the real value here, but it'd probably be good to have for values as low as this
                 btnDividePrompt.Visible = true; //offer to divide it by 2
             else
                 btnDividePrompt.Visible = false; //hide the button
@@ -91,7 +81,7 @@ namespace PK_Piano
             //if noteLength is divisible by 2
             if (noteLength % 2 == 0)
             {
-                int halfsies = (byte) ((noteLength * multiplier) / 2);
+                int halfsies = (byte)((noteLength * multiplier) / 2);
                 string message = "Instead of that huge value, use two notes with this value instead: [" +
                                  halfsies.ToString("X2") + "]";
 
@@ -101,7 +91,7 @@ namespace PK_Piano
                     if (halfsies % 3 == 0)
                     {
                         int threedeez =
-                            (byte) ((noteLength * multiplier) /
+                            (byte)((noteLength * multiplier) /
                                     3); //Check to make sure this calculation works properly...
                         message =
                             message + "\r\n" //I'll probably try using it on a few songs and see if I need to adjust it
@@ -125,19 +115,15 @@ namespace PK_Piano
             //data validation
             try
             {
-                var userInput =
-                    int.Parse(cboNoteLength.Text,
-                        System.Globalization.NumberStyles
-                            .HexNumber); //http://stackoverflow.com/questions/13158969/from-string-textbox-to-hex-0x-byte-c-sharp
-                noteLength = (byte) userInput;
+                var userInput = int.Parse(cboNoteLength.Text, System.Globalization.NumberStyles.HexNumber); //http://stackoverflow.com/questions/13158969/from-string-textbox-to-hex-0x-byte-c-sharp
+                noteLength = (byte)userInput;
             }
             catch
             {
                 cboNoteLength.Text = noteLength.ToString("X2");
             }
 
-            //update other parts of the program that use length
-            LengthUpdate();
+            LengthUpdate(); //update other parts of the program that use length
         }
 
         private void LengthUpdate()
@@ -148,9 +134,9 @@ namespace PK_Piano
 
         private void txtMultiplier_TextChanged(object sender, EventArgs e)
         {
-            multiplier = (int) txtMultiplier.Value;
+            multiplier = (int)txtMultiplier.Value;
             LengthDisplay.Text = FormatNoteLength();
-            new SoundPlayer(Properties.Resources.ExtraAudio_UpDown_Tick).Play();
+            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_UpDown_Tick).Play();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -158,9 +144,7 @@ namespace PK_Piano
             txtMultiplier.TextChanged += new EventHandler(txtMultiplier_TextChanged);
             //The default click event for txtMultiplier doesn't do anything, so this is the next best alternative
 
-
             //Tooltip stuff from http://stackoverflow.com/questions/1339524/c-how-do-i-add-a-tooltip-to-a-control
-            // Create the ToolTip and associate with the Form container.
             var toolTip1 = new ToolTip
             {
                 AutoPopDelay = 5000,
@@ -173,7 +157,7 @@ namespace PK_Piano
             // Force the ToolTip text to be displayed whether or not the form is active.
 
             toolTip1.SetToolTip(this.trackBarEchoDelay,
-                "If this number is too high, it might glitch the instruments in-game.\r\nBe sure to test it out in an accurate emulator like SNES9X!");
+                "The higher this is, the less space you have for samples and note data.\r\nBe sure to test your song in an accurate emulator!");
             toolTip1.SetToolTip(this.btnVibrato, "[E3 start speed range]");
             toolTip1.SetToolTip(this.btnPortamentoUp,
                 "Plays the note, THEN bends the pitch.\r\n[F1 start length range]");
@@ -198,12 +182,11 @@ namespace PK_Piano
         {
             LengthUpdate();
             var panPosition = PanningBar.Value;
-            panPosition =
-                Math.Abs(panPosition); //They're negative numbers, so this makes them positive (takes the absolute value)
+            panPosition = Math.Abs(panPosition); //They're negative numbers, so this makes them positive (takes the absolute value)
             var output = "[E1 " + panPosition.ToString("X2") + "]";
             txtPanningDisplay.Text = output;
             Clipboard.SetText(output);
-            sfxTextBlip.Play();
+            if (sfxEnabled) sfxTextBlip.Play();
         }
 
         private void ChannelVolumeBar_Scroll(object sender, EventArgs e)
@@ -219,7 +202,7 @@ namespace PK_Piano
 
         private void btnCopySlidingPan_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             LengthUpdate();
             var output = "[E2 "
                          + noteLength.ToString("X2") + " "
@@ -230,7 +213,7 @@ namespace PK_Piano
 
         private void btnCopySlidingVolume_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             LengthUpdate();
             var output = "[EE "
                          + noteLength.ToString("X2") + " "
@@ -241,7 +224,7 @@ namespace PK_Piano
 
         private void btnCopySlidingEcho_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             LengthUpdate();
             var vol = Math.Abs(ChannelVolumeBar.Value).ToString("X2");
             var output = "[F8 "
@@ -254,7 +237,7 @@ namespace PK_Piano
 
         private void btnFinetune1_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F4 00]");
 
             //TODO: Make an Excel document - Instrument description, Finetune value
@@ -262,52 +245,52 @@ namespace PK_Piano
 
         private void btnTempo_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[E7 20]");
         }
 
         private void btnGlobalVolume_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[E5 F0]");
         }
 
         private void btnPortamentoUp_Click(object sender, EventArgs e)
         {
             //[F1 start length range]
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F1 00 06 01]");
         }
 
         private void btnPortamentoDown_Click(object sender, EventArgs e)
         {
             //[F2 start length range]
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F2 00 06 01]");
         }
 
         private void btnPortamentoOff_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F3]");
         }
 
         private void btnVibrato_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[E3 0C 1C 32]");
         }
 
         private void btnVibratoOff_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[E4]");
         }
 
         private void btnChannelTranspose_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
-            Clipboard.SetText("[EA 00]");
+            if (sfxEnabled) sfxEquipped.Play();
+            Clipboard.SetText("[EA " + transposeValue + "]");
         }
 
         private void SendNote(byte input)
@@ -322,7 +305,7 @@ namespace PK_Piano
             //Do Channel Transpose-related things
             if (lastNote != 0)
             {
-                string transposeValue = (input - lastNote).ToString("X2");
+                transposeValue = (input - lastNote).ToString("X2");
 
                 if (transposeValue.Length == 8)
                     transposeValue = transposeValue.Substring(6, 2);
@@ -353,449 +336,410 @@ namespace PK_Piano
 
         private void btnC_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave) 
             {
-                SendNote(0x80);
-                new SoundPlayer(Properties.Resources._1C).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x8C);
-                new SoundPlayer(Properties.Resources._2C).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x98);
-                new SoundPlayer(Properties.Resources._3C).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xA4);
-                new SoundPlayer(Properties.Resources._4C).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB0);
-                new SoundPlayer(Properties.Resources._5C).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xBC);
-                new SoundPlayer(Properties.Resources._6C).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x80);
+                    new SoundPlayer(Properties.Resources._1C).Play();
+                    break;
+                case 2:
+                    SendNote(0x8C);
+                    new SoundPlayer(Properties.Resources._2C).Play();
+                    break;
+                case 3:
+                    SendNote(0x98);
+                    new SoundPlayer(Properties.Resources._3C).Play();
+                    break;
+                case 4:
+                    SendNote(0xA4);
+                    new SoundPlayer(Properties.Resources._4C).Play();
+                    break;
+                case 5:
+                    SendNote(0xB0);
+                    new SoundPlayer(Properties.Resources._5C).Play();
+                    break;
+                case 6:
+                    SendNote(0xBC);
+                    new SoundPlayer(Properties.Resources._6C).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnCsharp_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x81);
-                new SoundPlayer(Properties.Resources._1Csharp).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x8D);
-                new SoundPlayer(Properties.Resources._2Csharp).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x99);
-                new SoundPlayer(Properties.Resources._3Csharp).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xA5);
-                new SoundPlayer(Properties.Resources._4Csharp).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB1);
-                new SoundPlayer(Properties.Resources._5Csharp).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xBD);
-                new SoundPlayer(Properties.Resources._6Csharp).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x81);
+                    new SoundPlayer(Properties.Resources._1Csharp).Play();
+                    break;
+                case 2:
+                    SendNote(0x8D);
+                    new SoundPlayer(Properties.Resources._2Csharp).Play();
+                    break;
+                case 3:
+                    SendNote(0x99);
+                    new SoundPlayer(Properties.Resources._3Csharp).Play();
+                    break;
+                case 4:
+                    SendNote(0xA5);
+                    new SoundPlayer(Properties.Resources._4Csharp).Play();
+                    break;
+                case 5:
+                    SendNote(0xB1);
+                    new SoundPlayer(Properties.Resources._5Csharp).Play();
+                    break;
+                case 6:
+                    SendNote(0xBD);
+                    new SoundPlayer(Properties.Resources._6Csharp).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnD_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x82);
-                new SoundPlayer(Properties.Resources._1D).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x8E);
-                new SoundPlayer(Properties.Resources._2D).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x9A);
-                new SoundPlayer(Properties.Resources._3D).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xA6);
-                new SoundPlayer(Properties.Resources._4D).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB2);
-                new SoundPlayer(Properties.Resources._5D).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xBE);
-                new SoundPlayer(Properties.Resources._6D).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x82);
+                    new SoundPlayer(Properties.Resources._1D).Play();
+                    break;
+                case 2:
+                    SendNote(0x8E);
+                    new SoundPlayer(Properties.Resources._2D).Play();
+                    break;
+                case 3:
+                    SendNote(0x9A);
+                    new SoundPlayer(Properties.Resources._3D).Play();
+                    break;
+                case 4:
+                    SendNote(0xA6);
+                    new SoundPlayer(Properties.Resources._4D).Play();
+                    break;
+                case 5:
+                    SendNote(0xB2);
+                    new SoundPlayer(Properties.Resources._5D).Play();
+                    break;
+                case 6:
+                    SendNote(0xBE);
+                    new SoundPlayer(Properties.Resources._6D).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnDsharp_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x83);
-                new SoundPlayer(Properties.Resources._1Dsharp).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x8F);
-                new SoundPlayer(Properties.Resources._2Dsharp).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x9B);
-                new SoundPlayer(Properties.Resources._3Dsharp).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xA7);
-                new SoundPlayer(Properties.Resources._4Dsharp).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB3);
-                new SoundPlayer(Properties.Resources._5Dsharp).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xBF);
-                new SoundPlayer(Properties.Resources._6Dsharp).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x83);
+                    new SoundPlayer(Properties.Resources._1Dsharp).Play();
+                    break;
+                case 2:
+                    SendNote(0x8F);
+                    new SoundPlayer(Properties.Resources._2Dsharp).Play();
+                    break;
+                case 3:
+                    SendNote(0x9B);
+                    new SoundPlayer(Properties.Resources._3Dsharp).Play();
+                    break;
+                case 4:
+                    SendNote(0xA7);
+                    new SoundPlayer(Properties.Resources._4Dsharp).Play();
+                    break;
+                case 5:
+                    SendNote(0xB3);
+                    new SoundPlayer(Properties.Resources._5Dsharp).Play();
+                    break;
+                case 6:
+                    SendNote(0xBF);
+                    new SoundPlayer(Properties.Resources._6Dsharp).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnE_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x84);
-                new SoundPlayer(Properties.Resources._1E).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x90);
-                new SoundPlayer(Properties.Resources._2E).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x9C);
-                new SoundPlayer(Properties.Resources._3E).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xA8);
-                new SoundPlayer(Properties.Resources._4E).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB4);
-                new SoundPlayer(Properties.Resources._5E).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC0);
-                new SoundPlayer(Properties.Resources._6E).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x84);
+                    new SoundPlayer(Properties.Resources._1E).Play();
+                    break;
+                case 2:
+                    SendNote(0x90);
+                    new SoundPlayer(Properties.Resources._2E).Play();
+                    break;
+                case 3:
+                    SendNote(0x9C);
+                    new SoundPlayer(Properties.Resources._3E).Play();
+                    break;
+                case 4:
+                    SendNote(0xA8);
+                    new SoundPlayer(Properties.Resources._4E).Play();
+                    break;
+                case 5:
+                    SendNote(0xB4);
+                    new SoundPlayer(Properties.Resources._5E).Play();
+                    break;
+                case 6:
+                    SendNote(0xC0);
+                    new SoundPlayer(Properties.Resources._6E).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnF_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x85);
-                new SoundPlayer(Properties.Resources._1F).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x91);
-                new SoundPlayer(Properties.Resources._2F).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x9D);
-                new SoundPlayer(Properties.Resources._3F).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xA9);
-                new SoundPlayer(Properties.Resources._4F).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB5);
-                new SoundPlayer(Properties.Resources._5F).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC1);
-                new SoundPlayer(Properties.Resources._6F).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x85);
+                    new SoundPlayer(Properties.Resources._1F).Play();
+                    break;
+                case 2:
+                    SendNote(0x91);
+                    new SoundPlayer(Properties.Resources._2F).Play();
+                    break;
+                case 3:
+                    SendNote(0x9D);
+                    new SoundPlayer(Properties.Resources._3F).Play();
+                    break;
+                case 4:
+                    SendNote(0xA9);
+                    new SoundPlayer(Properties.Resources._4F).Play();
+                    break;
+                case 5:
+                    SendNote(0xB5);
+                    new SoundPlayer(Properties.Resources._5F).Play();
+                    break;
+                case 6:
+                    SendNote(0xC1);
+                    new SoundPlayer(Properties.Resources._6F).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnFsharp_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x86);
-                new SoundPlayer(Properties.Resources._1Fsharp).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x92);
-                new SoundPlayer(Properties.Resources._2Fsharp).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x9E);
-                new SoundPlayer(Properties.Resources._3Fsharp).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xAA);
-                new SoundPlayer(Properties.Resources._4Fsharp).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB6);
-                new SoundPlayer(Properties.Resources._5Fsharp).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC2);
-                new SoundPlayer(Properties.Resources._6Fsharp).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x86);
+                    new SoundPlayer(Properties.Resources._1Fsharp).Play();
+                    break;
+                case 2:
+                    SendNote(0x92);
+                    new SoundPlayer(Properties.Resources._2Fsharp).Play();
+                    break;
+                case 3:
+                    SendNote(0x9E);
+                    new SoundPlayer(Properties.Resources._3Fsharp).Play();
+                    break;
+                case 4:
+                    SendNote(0xAA);
+                    new SoundPlayer(Properties.Resources._4Fsharp).Play();
+                    break;
+                case 5:
+                    SendNote(0xB6);
+                    new SoundPlayer(Properties.Resources._5Fsharp).Play();
+                    break;
+                case 6:
+                    SendNote(0xC2);
+                    new SoundPlayer(Properties.Resources._6Fsharp).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnG_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x87);
-                new SoundPlayer(Properties.Resources._1G).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x93);
-                new SoundPlayer(Properties.Resources._2G).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0x9F);
-                new SoundPlayer(Properties.Resources._3G).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xAB);
-                new SoundPlayer(Properties.Resources._4G).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB7);
-                new SoundPlayer(Properties.Resources._5G).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC3);
-                new SoundPlayer(Properties.Resources._6G).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x87);
+                    new SoundPlayer(Properties.Resources._1G).Play();
+                    break;
+                case 2:
+                    SendNote(0x93);
+                    new SoundPlayer(Properties.Resources._2G).Play();
+                    break;
+                case 3:
+                    SendNote(0x9F);
+                    new SoundPlayer(Properties.Resources._3G).Play();
+                    break;
+                case 4:
+                    SendNote(0xAB);
+                    new SoundPlayer(Properties.Resources._4G).Play();
+                    break;
+                case 5:
+                    SendNote(0xB7);
+                    new SoundPlayer(Properties.Resources._5G).Play();
+                    break;
+                case 6:
+                    SendNote(0xC3);
+                    new SoundPlayer(Properties.Resources._6G).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnGsharp_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x88);
-                new SoundPlayer(Properties.Resources._1Gsharp).Play();
-            }
-            else if (octave == 2)
-            {
-                SendNote(0x94);
-                new SoundPlayer(Properties.Resources._2Gsharp).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0xA0);
-                new SoundPlayer(Properties.Resources._3Gsharp).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xAC);
-                new SoundPlayer(Properties.Resources._4Gsharp).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB8);
-                new SoundPlayer(Properties.Resources._5Gsharp).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC4);
-                new SoundPlayer(Properties.Resources._6Gsharp).Play();
-            }
-            else
-            {
-                SendNote("XX");
+                case 1:
+                    SendNote(0x88);
+                    new SoundPlayer(Properties.Resources._1Gsharp).Play();
+                    break;
+                case 2:
+                    SendNote(0x94);
+                    new SoundPlayer(Properties.Resources._2Gsharp).Play();
+                    break;
+                case 3:
+                    SendNote(0xA0);
+                    new SoundPlayer(Properties.Resources._3Gsharp).Play();
+                    break;
+                case 4:
+                    SendNote(0xAC);
+                    new SoundPlayer(Properties.Resources._4Gsharp).Play();
+                    break;
+                case 5:
+                    SendNote(0xB8);
+                    new SoundPlayer(Properties.Resources._5Gsharp).Play();
+                    break;
+                case 6:
+                    SendNote(0xC4);
+                    new SoundPlayer(Properties.Resources._6Gsharp).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
         }
 
         private void btnA_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x89);
-                new SoundPlayer(Properties.Resources._1zA).Play();
+                case 1:
+                    SendNote(0x89);
+                    new SoundPlayer(Properties.Resources._1zA).Play();
+                    break;
+                case 2:
+                    SendNote(0x95);
+                    new SoundPlayer(Properties.Resources._2zA).Play();
+                    break;
+                case 3:
+                    SendNote(0xA1);
+                    new SoundPlayer(Properties.Resources._3zA).Play();
+                    break;
+                case 4:
+                    SendNote(0xAD);
+                    new SoundPlayer(Properties.Resources._4zA).Play();
+                    break;
+                case 5:
+                    SendNote(0xB9);
+                    new SoundPlayer(Properties.Resources._5zA).Play();
+                    break;
+                case 6:
+                    SendNote(0xC5);
+                    new SoundPlayer(Properties.Resources._6zA).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
-            else if (octave == 2)
-            {
-                SendNote(0x95);
-                new SoundPlayer(Properties.Resources._2zA).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0xA1);
-                new SoundPlayer(Properties.Resources._3zA).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xAD);
-                new SoundPlayer(Properties.Resources._4zA).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xB9);
-                new SoundPlayer(Properties.Resources._5zA).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC5);
-                new SoundPlayer(Properties.Resources._6zA).Play();
-            }
-            else SendNote("XX");
         }
 
         private void btnAsharp_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x8A);
-                new SoundPlayer(Properties.Resources._1zAsharp).Play();
+                case 1:
+                    SendNote(0x8A);
+                    new SoundPlayer(Properties.Resources._1zAsharp).Play();
+                    break;
+                case 2:
+                    SendNote(0x96);
+                    new SoundPlayer(Properties.Resources._2zAsharp).Play();
+                    break;
+                case 3:
+                    SendNote(0xA2);
+                    new SoundPlayer(Properties.Resources._3zAsharp).Play();
+                    break;
+                case 4:
+                    SendNote(0xAE);
+                    new SoundPlayer(Properties.Resources._4zAsharp).Play();
+                    break;
+                case 5:
+                    SendNote(0xBA);
+                    new SoundPlayer(Properties.Resources._5zAsharp).Play();
+                    break;
+                case 6:
+                    SendNote(0xC6);
+                    new SoundPlayer(Properties.Resources._6zAsharp).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
-            else if (octave == 2)
-            {
-                SendNote(0x96);
-                new SoundPlayer(Properties.Resources._2zAsharp).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0xA2);
-                new SoundPlayer(Properties.Resources._3zAsharp).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xAE);
-                new SoundPlayer(Properties.Resources._4zAsharp).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xBA);
-                new SoundPlayer(Properties.Resources._5zAsharp).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC6);
-                new SoundPlayer(Properties.Resources._6zAsharp).Play();
-            }
-            else SendNote("XX");
         }
 
         private void btnB_Click(object sender, EventArgs e)
         {
-            if (octave == 1)
+            switch (octave)
             {
-                SendNote(0x8B);
-                new SoundPlayer(Properties.Resources._1zB).Play();
+                case 1:
+                    SendNote(0x8B);
+                    new SoundPlayer(Properties.Resources._1zB).Play();
+                    break;
+                case 2:
+                    SendNote(0x97);
+                    new SoundPlayer(Properties.Resources._2zB).Play();
+                    break;
+                case 3:
+                    SendNote(0xA3);
+                    new SoundPlayer(Properties.Resources._3zB).Play();
+                    break;
+                case 4:
+                    SendNote(0xAF);
+                    new SoundPlayer(Properties.Resources._4zB).Play();
+                    break;
+                case 5:
+                    SendNote(0xBB);
+                    new SoundPlayer(Properties.Resources._5zB).Play();
+                    break;
+                case 6:
+                    SendNote(0xC7);
+                    new SoundPlayer(Properties.Resources._6zB).Play();
+                    break;
+                default:
+                    SendNote("XX");
+                    break;
             }
-            else if (octave == 2)
-            {
-                SendNote(0x97);
-                new SoundPlayer(Properties.Resources._2zB).Play();
-            }
-            else if (octave == 3)
-            {
-                SendNote(0xA3);
-                new SoundPlayer(Properties.Resources._3zB).Play();
-            }
-            else if (octave == 4)
-            {
-                SendNote(0xAF);
-                new SoundPlayer(Properties.Resources._4zB).Play();
-            }
-            else if (octave == 5)
-            {
-                SendNote(0xBB);
-                new SoundPlayer(Properties.Resources._5zB).Play();
-            }
-            else if (octave == 6)
-            {
-                SendNote(0xC7);
-                new SoundPlayer(Properties.Resources._6zB).Play();
-            }
-            else SendNote("XX");
         }
 
         private void btnOctaveDown_Click(object sender, EventArgs e)
@@ -803,7 +747,7 @@ namespace PK_Piano
             if (octave <= 1) return;
             octave--;
             OctaveLbl.Text = "Octave: " + octave.ToString();
-            new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
+            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
 
         private void btnOctaveUp_Click(object sender, EventArgs e)
@@ -811,7 +755,7 @@ namespace PK_Piano
             if (octave >= 6) return;
             octave++;
             OctaveLbl.Text = "Octave: " + octave.ToString();
-            new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
+            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
 
         //Checkboxes all redirect to calculateEchoChannelCode()
@@ -857,10 +801,10 @@ namespace PK_Piano
 
         private void SetAllEchoValues()
         {
-            echoVolume = (byte) trackBarEchoVol.Value;
-            echoDelay = (byte) trackBarEchoDelay.Value;
-            echoFeedback = (byte) trackBarEchoFeedback.Value;
-            echoFilter = (byte) trackBarEchoFilter.Value;
+            echoVolume = (byte)trackBarEchoVol.Value;
+            echoDelay = (byte)trackBarEchoDelay.Value;
+            echoFeedback = (byte)trackBarEchoFeedback.Value;
+            echoFilter = (byte)trackBarEchoFilter.Value;
         }
 
         private void CalculateEchoChannelCode()
@@ -909,10 +853,10 @@ namespace PK_Piano
                 scratchPaper = scratchPaper + "0";
 
             //convert scratchPaper to a real byte
-            echoChannels = (byte) Convert.ToInt32(scratchPaper, 2);
+            echoChannels = Convert.ToByte(scratchPaper, 2);
 
             CreateEchoCodes();
-            new SoundPlayer(Properties.Resources.ExtraAudio_The_A_Button).Play();
+            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_The_A_Button).Play();
         }
 
         private void CreateEchoCodes()
@@ -937,7 +881,7 @@ namespace PK_Piano
 
         private void btnEchoOff_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F6]");
         }
 
@@ -971,13 +915,13 @@ namespace PK_Piano
 
         private void btnPortamento_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("C8 [F9 00 01 ");
         }
 
         private void btnSetFirstDrum_Click(object sender, EventArgs e)
         {
-            sfxEquipped.Play();
+            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[FA XX]");
         }
     }
