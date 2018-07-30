@@ -157,7 +157,7 @@
             this.tabChannel.Name = "tabChannel";
             this.tabChannel.Size = new System.Drawing.Size(311, 247);
             this.tabChannel.TabIndex = 2;
-            this.tabChannel.Text = "Channel";
+            this.tabChannel.Text = "Channel Settings";
             this.tabChannel.UseVisualStyleBackColor = true;
             // 
             // txtChannelVolumeDisplay
@@ -636,7 +636,7 @@
             this.tabSpecial.Name = "tabSpecial";
             this.tabSpecial.Size = new System.Drawing.Size(311, 247);
             this.tabSpecial.TabIndex = 3;
-            this.tabSpecial.Text = "Special";
+            this.tabSpecial.Text = "Note Effects";
             this.tabSpecial.UseVisualStyleBackColor = true;
             // 
             // chkOpenMPT_DrumMode
