@@ -10,6 +10,7 @@ namespace PK_Piano
         //It mostly copies hex values into the clipboard, allowing me to paste them in.
         //Some calculation has to take place for the more complicated commands like echo.
         //It also calculates the hex values for note lengths, which have to be manually specified.
+        //I have been working on this and tweaking it for the past few years, so not everything is laid out how it'd be if I made it from scratch today.
         //For more information on the music engine itself, see https://wiki.superfamicom.org/snes/show/Nintendo+Music+Format+%28N-SPC%29
 
         public Form1() { InitializeComponent(); }
@@ -788,7 +789,7 @@ namespace PK_Piano
             var output = "[ED " + volume.ToString("X2") + "]";
             txtChannelVolumeDisplay.Text = output;
             Clipboard.SetText(output);
-            PlayTextTypeSound("huge");
+            if (sfxEnabled) PlayTextTypeSound("huge");
         }
 
         private void StaccatoBar_Scroll(object sender, EventArgs e)
@@ -802,7 +803,7 @@ namespace PK_Piano
         {
             noteVolume = (byte)VolBar.Value;
             LengthDisplay.Text = FormatNoteLength();
-            PlayTextTypeSound("tiny");
+            if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
         //Currently unimplemented
@@ -818,12 +819,60 @@ namespace PK_Piano
 
         private void btnMPTconvert_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This functionality is currently unimplemented.");
+            //TODO: Validation
+            //TODO: Implement drum mode
+
+            string mptColumnText = Clipboard.GetText();
+            if (mptColumnText.Trim() == "") return;
+
+            string result = MPTColumn.GetEBMdata(mptColumnText); //convert the OpenMPT note data to N-SPC format
+            Clipboard.SetText(result);
+            if (sfxEnabled) sfxEquipped.Play();
         }
 
         private void btnC8eraser_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("This functionality is currently unimplemented.");
+            int count = 0;
+            int originalLength = 0x06; //TODO: Make a control that lets the user choose which length to have here
+
+            string input = Clipboard.GetText();
+
+            if (input.Trim() == "") return;
+            //only continue if there's something there
+            //if (!int.TryParse(cboOriginalLength.Text, out originalLength)) return; //from the standalone version of this functionality I made
+
+            //split the contents on spaces to a string array
+            input = input.Replace("[", ""); //get rid of any brackets
+            input = input.Replace("]", "");
+
+            //Clear out any lingering note length commands in the text itself
+            if (input.StartsWith(originalLength.ToString("X2") + " "))
+                input = input.Replace(originalLength.ToString("X2") + " ", "");
+
+            //Make a string array with all of the notes in it
+            string[] notes = input.Split(' ');
+
+            if (notes.Length <= 1) MessageBox.Show("This looks like it's just one note. No changes necessary here!");
+
+            //check to see that only the first one is not C8
+            for (int i = 1; i < notes.Length; i++)
+            {
+                if (notes[i] != "C8")
+                {
+                    MessageBox.Show("Looks like there's more than one note in here...\r\nStripping multiple notes hasn't been implemented yet.");
+                    //TODO: Implement the stripping of multiple notes at once.
+                    //This would involve lots of note length shenanigans, though... It might not be worth doing.
+                    return;
+                }
+            }
+
+            count = notes.Length; //not note length, but the length of the array - how many strings are in there
+            int newLength = originalLength * count;
+            MessageBox.Show("Number of notes: " + count.ToString() + "\r\n"
+                          + "Equivalent note length: " + newLength.ToString("X2"));
+
+            Clipboard.SetText(newLength.ToString("X2") + " " + notes[0] + " " + originalLength.ToString("X2")); //paste this into EBMusEd for glorious ease of use
+            if (sfxEnabled) sfxEquipped.Play();
         }
 
 
@@ -855,28 +904,28 @@ namespace PK_Piano
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            PlayTextTypeSound("huge");
+            if (sfxEnabled) PlayTextTypeSound("huge");
         }
 
         private void trackBarEchoDelay_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            PlayTextTypeSound("tiny");
+            if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
         private void trackBarEchoFeedback_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            PlayTextTypeSound("huge");
+            if (sfxEnabled) PlayTextTypeSound("huge");
         }
 
         private void trackBarEchoFilter_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            PlayTextTypeSound("tiny");
+            if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
 

@@ -705,7 +705,7 @@
             this.btnMPTconvert.Name = "btnMPTconvert";
             this.btnMPTconvert.Size = new System.Drawing.Size(186, 23);
             this.btnMPTconvert.TabIndex = 43;
-            this.btnMPTconvert.Text = "Import OpenMPT Note Data";
+            this.btnMPTconvert.Text = "Convert OpenMPT Note Data";
             this.btnMPTconvert.UseVisualStyleBackColor = true;
             this.btnMPTconvert.Click += new System.EventHandler(this.btnMPTconvert_Click);
             // 
