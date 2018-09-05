@@ -70,7 +70,7 @@ namespace PK_Piano
             var output = "[" + (noteLength * multiplier).ToString("X2") + " " + noteStacatto.ToString("X") + noteVolume.ToString("X") + "]";
             Clipboard.SetText(output);
 
-            if (noteLength * multiplier >= 0x60) //0x80 is the real value here, but it'd probably be good to have for values as low as this
+            if (EBM_Note_Data.lengthIsInvalid(noteLength * multiplier))
                 btnDividePrompt.Visible = true; //offer to divide it by 2
             else
                 btnDividePrompt.Visible = false; //hide the button
@@ -80,35 +80,38 @@ namespace PK_Piano
 
         private void btnDividePrompt_Click(object sender, EventArgs e)
         {
-            //if noteLength is divisible by 2
-            if (noteLength % 2 == 0)
+            int[] lengthResult = EBM_Note_Data.validateNoteLength(noteLength * multiplier);
+            string message = "";
+            if (lengthResult[1] != 1) //only proceed if division is necessary
             {
-                int halfsies = (byte)((noteLength * multiplier) / 2);
-                string message = "Instead of that huge value, use two notes with this value instead: [" +
-                                 halfsies.ToString("X2") + "]";
+                message = "Instead of that huge value, use "
+                        + getWrittenNumber(lengthResult[1])
+                        + " notes with this value instead: "
+                        + "[" + lengthResult[0].ToString("X2") + "]";
 
-                if (halfsies >= 0x80) //If this happens, the number is so big, even cutting it in half won't be enough.
-                {
-                    //btw 0x80 is the same as the note [C-1]
-                    if (halfsies % 3 == 0)
-                    {
-                        int threedeez =
-                            (byte)((noteLength * multiplier) / 3); //Check to make sure this calculation works properly...
-                        message =
-                            message + "\r\n" //I'll try using it on a few songs and see if I need to adjust it
-                                    + "...But that's also too big. Try three of this instead: [" 
-                                    + threedeez.ToString("X2") + "]";
-                    }
-                    else
-                    {
-                        message = message + "\r\n"
-                                          + "...But that's also too big. Try four of this instead: [" +
-                                          (halfsies / 2).ToString("X2") + "]";
-                    }
-                }
-
-                MessageBox.Show(message, "Divided note length (Anything higher than [80] counts as a note and not a length)");
+                MessageBox.Show(message, "Divided note length");
             }
+        }
+
+        private string getWrittenNumber(int input)
+        {
+            string writtenNumber;
+            switch (input) //this will only be used in note length multipliers, so only these three numbers will ever be needed
+            {
+                case 2:
+                    writtenNumber = "two";
+                    break;
+                case 3:
+                    writtenNumber = "three";
+                    break;
+                case 4:
+                    writtenNumber = "four";
+                    break;
+                default:
+                    writtenNumber = "ERROR";
+                    break;
+            }
+            return writtenNumber;
         }
 
         private void cboNoteLength_TextChanged(object sender, EventArgs e)
@@ -835,6 +838,7 @@ namespace PK_Piano
             int count = 0;
             int originalLength = 0x06; //TODO: Make a control that lets the user choose which length to have here
 
+            //VALIDATION
             string input = Clipboard.GetText();
 
             if (input.Trim() == "") return;
@@ -852,8 +856,12 @@ namespace PK_Piano
             //Make a string array with all of the notes in it
             string[] notes = input.Split(' ');
 
-            if (notes.Length <= 1) MessageBox.Show("This looks like it's just one note. No changes necessary here!");
-
+            if (notes.Length <= 1)
+            {
+                MessageBox.Show("This looks like it's just one note. No changes necessary here!");
+                return;
+            }
+            
             //check to see that only the first one is not C8
             for (int i = 1; i < notes.Length; i++)
             {
@@ -867,11 +875,26 @@ namespace PK_Piano
             }
 
             count = notes.Length; //not note length, but the length of the array - how many strings are in there
-            int newLength = originalLength * count;
-            MessageBox.Show("Number of notes: " + count.ToString() + "\r\n"
-                          + "Equivalent note length: " + newLength.ToString("X2"));
+            
+            //returns [new length, appropriate multiplier]
+            int[] newLength = EBM_Note_Data.validateNoteLength(originalLength * count);
 
-            Clipboard.SetText(newLength.ToString("X2") + " " + notes[0] + " " + originalLength.ToString("X2")); //paste this into EBMusEd for glorious ease of use
+            string message = "Number of notes: " + count.ToString() + "\r\n"
+                           + "Equivalent note length: ";
+            
+            if (newLength[1] != 1)
+            {
+                message += "[" + newLength[0].ToString("X2") + "], " + getWrittenNumber(newLength[1]) + " times.";
+            }
+            else
+            {
+                message += "[" + newLength[0].ToString("X2") + "]";
+            }
+
+            MessageBox.Show(message);
+
+            //set the clipboard to the new length, whatever note is at the start of what was copied, and then the original length so when you paste it in, the rest of the column doesn't go out of whack
+            Clipboard.SetText(newLength[0].ToString("X2") + " " + notes[0] + " " + originalLength.ToString("X2")); //paste this into EBMusEd for glorious ease of use
             if (sfxEnabled) sfxEquipped.Play();
         }
 

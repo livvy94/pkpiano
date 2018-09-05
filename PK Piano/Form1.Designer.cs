@@ -1053,7 +1053,7 @@
             this.btnDividePrompt.Name = "btnDividePrompt";
             this.btnDividePrompt.Size = new System.Drawing.Size(94, 23);
             this.btnDividePrompt.TabIndex = 41;
-            this.btnDividePrompt.Text = "Divide by 2?";
+            this.btnDividePrompt.Text = "Divide length?";
             this.btnDividePrompt.UseVisualStyleBackColor = true;
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
