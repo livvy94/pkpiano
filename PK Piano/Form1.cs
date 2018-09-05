@@ -6,7 +6,8 @@ namespace PK_Piano
 {
     public partial class Form1 : Form
     {
-        //This program was created to make a chiptune tool I use slightly more intuitive.
+        //To potential employers:
+        //This program was created to make a chip music tool I use slightly more intuitive.
         //It mostly copies hex values into the clipboard, allowing me to paste them in.
         //Some calculation has to take place for the more complicated commands like echo.
         //It also calculates the hex values for note lengths, which have to be manually specified.
@@ -16,7 +17,7 @@ namespace PK_Piano
         public Form1() { InitializeComponent(); }
 
         //Global variables
-        bool sfxEnabled = false; //TODO: What would be a good way to have this be toggled from the form? It's crowded as-is...
+        bool sfxEnabled = false;
         byte octave = 4; //used in the note buttons' if statements
         byte lastNote = 0;
         string transposeValue = "00"; //this is what will be copied to the clipboard for channel transpose
@@ -961,6 +962,17 @@ namespace PK_Piano
         private void checkBox6_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
         private void checkBox7_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
         private void checkBox8_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
+
+        private void chkMiscFeedback_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkMiscFeedback.Checked)
+            {
+                sfxEnabled = true; //this is one of the global variables defined at the beginning
+                new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
+            }
+            else
+                sfxEnabled = false;
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
