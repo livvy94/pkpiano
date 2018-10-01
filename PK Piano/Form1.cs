@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Media;
+using System.Text;
 
 namespace PK_Piano
 {
@@ -842,18 +843,20 @@ namespace PK_Piano
             //VALIDATION
             string input = Clipboard.GetText();
 
-            if (input.Trim() == "") return;
-            //only continue if there's something there
-            //if (!int.TryParse(cboOriginalLength.Text, out originalLength)) return; //from the standalone version of this functionality I made
-
+            if (input.Trim() == "") return; //only continue if there's something there
+            
             //split the contents on spaces to a string array
             input = input.Replace("[", ""); //get rid of any brackets
             input = input.Replace("]", "");
 
             //Clear out any lingering note length commands in the text itself
-            if (input.StartsWith(originalLength.ToString("X2") + " "))
-                input = input.Replace(originalLength.ToString("X2") + " ", "");
-
+            int firstCode = Convert.ToInt32(input.Substring(0, 2), 16); //convert the first code in the clipboard to an int
+            if (firstCode < 0x80) //any code less than 80 (C-1) is a note length and should be removed
+            {
+                input = input.Replace(firstCode.ToString("X2") + " ", "");
+                originalLength = firstCode; //if it's not 06, it should be set appropriately so later on the right value gets put at the end of the clipboard result
+            }
+            
             //Make a string array with all of the notes in it
             string[] notes = input.Split(' ');
 
@@ -868,7 +871,7 @@ namespace PK_Piano
             {
                 if (notes[i] != "C8")
                 {
-                    MessageBox.Show("Looks like there's more than one note in here...\r\nStripping multiple notes hasn't been implemented yet.");
+                    MessageBox.Show("Looks like there's more than one note in here...\r\nStripping multiple notes hasn't been implemented yet.\r\n(The note in question is " + notes[i] + ")");
                     //TODO: Implement the stripping of multiple notes at once.
                     //This would involve lots of note length shenanigans, though... It might not be worth doing.
                     return;
@@ -895,7 +898,20 @@ namespace PK_Piano
             MessageBox.Show(message);
 
             //set the clipboard to the new length, whatever note is at the start of what was copied, and then the original length so when you paste it in, the rest of the column doesn't go out of whack
-            Clipboard.SetText(newLength[0].ToString("X2") + " " + notes[0] + " " + originalLength.ToString("X2")); //paste this into EBMusEd for glorious ease of use
+            StringBuilder result = new StringBuilder();
+            result.Append(newLength[0].ToString("X2")); //the length that the new 
+            result.Append(" ");
+            result.Append(notes[0]); //The note at the top of the clipboard contents
+            result.Append(" ");
+            
+            while (newLength[1] > 1) //this should only run if 
+            {
+                result.Append("C8 "); //put in however many C8s are needed to make this the same size as the original clipboard contents
+                newLength[1]--;
+            }
+            result.Append(originalLength.ToString("X2")); //the 06 so things don't jump around when you paste it in
+            
+            Clipboard.SetText(result.ToString()); //paste this into EBMusEd for glorious ease of use
             if (sfxEnabled) sfxEquipped.Play();
         }
 
