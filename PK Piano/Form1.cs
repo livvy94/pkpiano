@@ -15,12 +15,16 @@ namespace PK_Piano
         //I have been working on this and tweaking it for the past few years, so not everything is laid out how it'd be if I made it from scratch today.
         //For more information on the music engine itself, see https://wiki.superfamicom.org/snes/show/Nintendo+Music+Format+%28N-SPC%29
 
-        public Form1() { InitializeComponent(); }
+        public Form1()
+        {
+            echoDelay = 0x00;
+            InitializeComponent();
+        }
 
         //Global variables
         bool sfxEnabled = false;
         byte octave = 4; //used in the note buttons' if statements
-        byte lastNote = 0;
+        byte lastNote;
         string transposeValue = "00"; //this is what will be copied to the clipboard for channel transpose
 
         byte noteLength = 0x18;
@@ -28,18 +32,18 @@ namespace PK_Piano
         byte noteStacatto = 0x7; //The N-SPC note length format is [length], [staccato and volume], which might look like [18 7F]
         byte noteVolume = 0xF;
 
-        byte echoChannels = 0x00;
-        byte echoVolume = 0x00; //Change these defaut values to whatever the trackBars' initial values end up to be...
-        byte echoDelay = 0x00;
-        byte echoFeedback = 0x00;
-        byte echoFilter = 0x00;
+        byte echoChannels;
+        byte echoVolume; //Change these defaut values to whatever the trackBars' initial values end up to be...
+        byte echoDelay;
+        byte echoFeedback;
+        byte echoFilter;
         
 
         private void SendNote(byte input)
         {
             //Takes a byte, puts it in the label, and puts it in the clipboard
             LengthUpdate();
-            String note = "[" + input.ToString("X2") + "]";
+            var note = "[" + input.ToString("X2") + "]";
             DispLabel.Text = note;
             Clipboard.SetText(note);
 
@@ -52,7 +56,7 @@ namespace PK_Piano
                 if (transposeValue.Length == 8)
                     transposeValue = transposeValue.Substring(6, 2);
 
-                btnChannelTranspose.Text = "Transpose (last one was [" + transposeValue + "])";
+                btnChannelTranspose.Text = $"Transpose (last one was [{transposeValue}])";
             }
 
             lastNote = input;
@@ -63,36 +67,30 @@ namespace PK_Piano
             //An alternate version for manually setting the string
             //Probably only needed for the "XX" ones, which should hopefully never happen
             LengthUpdate();
-            DispLabel.Text = "[" + input + "]";
+            DispLabel.Text = $"[{input}]";
             Clipboard.SetText(input);
         }
         
         private string FormatNoteLength()
         {
-            var output = "[" + (noteLength * multiplier).ToString("X2") + " " + noteStacatto.ToString("X") + noteVolume.ToString("X") + "]";
+            var output = $"[{(noteLength * multiplier):X2} {noteStacatto:X}{noteVolume:X}]";
             Clipboard.SetText(output);
 
-            if (EBM_Note_Data.lengthIsInvalid(noteLength * multiplier))
-                btnDividePrompt.Visible = true; //offer to divide it by 2
-            else
-                btnDividePrompt.Visible = false; //hide the button
+            //show the divide button if the length is bigger than the maximum length a note can have
+            btnDividePrompt.Visible = EBM_Note_Data.lengthIsInvalid(noteLength * multiplier);
 
             return output;
         }
 
         private void btnDividePrompt_Click(object sender, EventArgs e)
         {
-            int[] lengthResult = EBM_Note_Data.validateNoteLength(noteLength * multiplier);
-            string message = "";
-            if (lengthResult[1] != 1) //only proceed if division is necessary
-            {
-                message = "Instead of that huge value, use "
-                        + getWrittenNumber(lengthResult[1])
-                        + " notes with this value instead: "
-                        + "[" + lengthResult[0].ToString("X2") + "]";
+            var lengthResult = EBM_Note_Data.validateNoteLength(noteLength * multiplier);
+            if (lengthResult[1] == 1) return; //only proceed if division is necessary
 
-                MessageBox.Show(message, "Divided note length");
-            }
+            var message = $"Instead of that huge value, use {getWrittenNumber(lengthResult[1])} "
+                        + $"notes with this value instead: [{lengthResult[0]:X2}]";
+
+            MessageBox.Show(message, "Divided note length");
         }
 
         private string getWrittenNumber(int input)
@@ -137,7 +135,7 @@ namespace PK_Piano
         {
             LengthDisplay.Text = FormatNoteLength();
             //There used to be other controls being updated here.
-            //TODO: Make it so this isn't referenced in so many places
+            //I'd copy this one line everywhere this line is referenced, but that doesn't seem like it'd improve things much...
         }
 
         private void txtMultiplier_TextChanged(object sender, EventArgs e)
@@ -160,50 +158,25 @@ namespace PK_Piano
             SetAllEchoValues(); //I keep getting 00s until I move one of the sliders, which is annoying. Hopefully this should fix it.
 
             var scratchPaper = ""; //Build up the binary number bit by bit
-            if (checkBox8.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
 
-            if (checkBox7.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
-
-            if (checkBox6.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
-
-            if (checkBox5.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
-
-            if (checkBox4.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
-
-            if (checkBox3.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
-
-            if (checkBox2.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
-
-            if (checkBox1.Checked)
-                scratchPaper = scratchPaper + "1";
-            else
-                scratchPaper = scratchPaper + "0";
+            scratchPaper += getBinaryNumber(checkBox8.Checked);
+            scratchPaper += getBinaryNumber(checkBox7.Checked);
+            scratchPaper += getBinaryNumber(checkBox6.Checked);
+            scratchPaper += getBinaryNumber(checkBox5.Checked);
+            scratchPaper += getBinaryNumber(checkBox4.Checked);
+            scratchPaper += getBinaryNumber(checkBox3.Checked);
+            scratchPaper += getBinaryNumber(checkBox2.Checked);
+            scratchPaper += getBinaryNumber(checkBox1.Checked);
             
             echoChannels = Convert.ToByte(scratchPaper, 2); //convert scratchPaper to a real byte
             CreateEchoCodes();
 
             if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_The_A_Button).Play();
+        }
+
+        private string getBinaryNumber(bool input)
+        {
+            return input ? "1" : "0";
         }
 
         private void CreateEchoCodes()
@@ -213,15 +186,8 @@ namespace PK_Piano
             //Control code syntax:
             //F5 echoChannels volume_L volume_R
             //F7 delay feedback filter
-            var output
-                = "[F5 "
-                  + echoChannels.ToString("X2") + " "
-                  + echoVolume.ToString("X2") + " "
-                  + echoVolume.ToString("X2") + "] "
-                  + "[F7 "
-                  + echoDelay.ToString("X2") + " "
-                  + echoFeedback.ToString("X2") + " "
-                  + echoFilter.ToString("X2") + "]";
+            var output = $"[F5 {echoChannels:X2} {echoVolume:X2} {echoVolume:X2}] "
+                       + $"[F7 {echoDelay:X2} {echoFeedback:X2} {echoFilter:X2}]";
 
             Clipboard.SetText(output);
             txtEchoDisplay.Text = output;
@@ -650,7 +616,7 @@ namespace PK_Piano
         {
             if (octave <= 1) return;
             octave--;
-            OctaveLbl.Text = "Octave: " + octave.ToString();
+            OctaveLbl.Text = $"Octave: {octave}";
             if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
 
@@ -658,7 +624,7 @@ namespace PK_Piano
         {
             if (octave >= 6) return;
             octave++;
-            OctaveLbl.Text = "Octave: " + octave.ToString();
+            OctaveLbl.Text = $"Octave: {octave}";
             if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
         
@@ -672,8 +638,8 @@ namespace PK_Piano
 
         private void btnFinetune1_Click(object sender, EventArgs e)
         {
-            //TODO: Make an Excel document - Instrument description, Finetune value
-            //Document where the finetune effect is used in the game's unmodified music data
+            //Unfortunately, documenting finetune data in the vanilla ROM is quite an undertaking...
+            //Just look at other songs for reference :(
             if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F4 00]");
         }
@@ -682,10 +648,7 @@ namespace PK_Piano
         {
             if (sfxEnabled) sfxEquipped.Play();
             LengthUpdate();
-            var output = "[E2 "
-                         + noteLength.ToString("X2") + " "
-                         + Math.Abs(PanningBar.Value).ToString("X2")
-                         + "]";
+            var output = $"[E2 {noteLength:X2} {Math.Abs(PanningBar.Value):X2}]"; //[E2 length panning]
             Clipboard.SetText(output);
         }
 
@@ -693,10 +656,7 @@ namespace PK_Piano
         {
             if (sfxEnabled) sfxEquipped.Play();
             LengthUpdate();
-            var output = "[EE "
-                         + noteLength.ToString("X2") + " "
-                         + Math.Abs(ChannelVolumeBar.Value).ToString("X2")
-                         + "]";
+            var output = $"[EE {noteLength:X2} {Math.Abs(ChannelVolumeBar.Value):X2}]"; //[EE length volume]
             Clipboard.SetText(output);
         }
 
@@ -705,11 +665,7 @@ namespace PK_Piano
             if (sfxEnabled) sfxEquipped.Play();
             LengthUpdate();
             var vol = Math.Abs(ChannelVolumeBar.Value).ToString("X2");
-            var output = "[F8 "
-                         + noteLength.ToString("X2") + " "
-                         + vol + " "
-                         + vol
-                         + "]";
+            var output = $"[F8 {noteLength:X2} {vol} {vol}]"; //[F8 length vol vol]
             Clipboard.SetText(output);
         }
 
@@ -734,7 +690,7 @@ namespace PK_Piano
         private void btnSetFirstDrum_Click(object sender, EventArgs e)
         {
             if (sfxEnabled) sfxEquipped.Play();
-            Clipboard.SetText("[FA XX]");
+            Clipboard.SetText("[FA 00]");
         }
 
         private void btnPortamentoUp_Click(object sender, EventArgs e)
@@ -780,7 +736,7 @@ namespace PK_Piano
             LengthUpdate();
             var panPosition = PanningBar.Value;
             panPosition = Math.Abs(panPosition); //They're negative numbers, so this makes them positive (takes the absolute value)
-            var output = "[E1 " + panPosition.ToString("X2") + "]";
+            var output = $"[E1 {panPosition:X2}]"; //[E1 panning]
             txtPanningDisplay.Text = output;
             Clipboard.SetText(output);
             if (sfxEnabled) sfxTextBlip.Play();
@@ -791,7 +747,7 @@ namespace PK_Piano
             LengthUpdate();
             //ChannelVolumeBar and txtChannelVolumeDisplay
             var volume = ChannelVolumeBar.Value;
-            var output = "[ED " + volume.ToString("X2") + "]";
+            var output = $"[ED {volume:X2}]"; //[ED volume]
             txtChannelVolumeDisplay.Text = output;
             Clipboard.SetText(output);
             if (sfxEnabled) PlayTextTypeSound("huge");
@@ -811,7 +767,6 @@ namespace PK_Piano
             if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
-        //Currently unimplemented
         private void btnTremolo_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This control code is currently unimplemented.");
@@ -825,32 +780,30 @@ namespace PK_Piano
         private void btnMPTconvert_Click(object sender, EventArgs e)
         {
             //TODO: Validation
-            //TODO: Implement drum mode
 
-            string mptColumnText = Clipboard.GetText();
-            if (mptColumnText.Trim() == "") return;
+            var mptColumnText = Clipboard.GetText();
+            if (string.IsNullOrWhiteSpace(mptColumnText)) return;
 
-            string result = MPTColumn.GetEBMdata(mptColumnText); //convert the OpenMPT note data to N-SPC format
+            var result = MPTColumn.GetEBMdata(mptColumnText); //convert the OpenMPT note data to N-SPC format
             Clipboard.SetText(result);
             if (sfxEnabled) sfxEquipped.Play();
         }
 
         private void btnC8eraser_Click(object sender, EventArgs e)
         {
-            int count = 0;
             int originalLength = 0x06; //TODO: Make a control that lets the user choose which length to have here
 
             //VALIDATION
             string input = Clipboard.GetText();
 
-            if (input.Trim() == "") return; //only continue if there's something there
+            if (string.IsNullOrWhiteSpace(input)) return; //only continue if there's something there
             
             //split the contents on spaces to a string array
             input = input.Replace("[", ""); //get rid of any brackets
             input = input.Replace("]", "");
 
             //Clear out any lingering note length commands in the text itself
-            int firstCode = Convert.ToInt32(input.Substring(0, 2), 16); //convert the first code in the clipboard to an int
+            var firstCode = Convert.ToInt32(input.Substring(0, 2), 16); //convert the first code in the clipboard to an int
             if (firstCode < 0x80) //any code less than 80 (C-1) is a note length and should be removed
             {
                 input = input.Replace(firstCode.ToString("X2") + " ", "");
@@ -858,7 +811,7 @@ namespace PK_Piano
             }
             
             //Make a string array with all of the notes in it
-            string[] notes = input.Split(' ');
+            var notes = input.Split(' ');
 
             if (notes.Length <= 1)
             {
@@ -867,7 +820,7 @@ namespace PK_Piano
             }
             
             //check to see that only the first one is not C8
-            for (int i = 1; i < notes.Length; i++)
+            for (var i = 1; i < notes.Length; i++)
             {
                 if (notes[i] != "C8")
                 {
@@ -878,27 +831,23 @@ namespace PK_Piano
                 }
             }
 
-            count = notes.Length; //not note length, but the length of the array - how many strings are in there
+            var count = notes.Length;
             
             //returns [new length, appropriate multiplier]
-            int[] newLength = EBM_Note_Data.validateNoteLength(originalLength * count);
+            var newLength = EBM_Note_Data.validateNoteLength(originalLength * count);
 
-            string message = "Number of notes: " + count.ToString() + "\r\n"
-                           + "Equivalent note length: ";
+            var message = $"Number of notes: {count}\r\n"
+                        + "Equivalent note length: ";
             
             if (newLength[1] != 1)
-            {
-                message += "[" + newLength[0].ToString("X2") + "], " + getWrittenNumber(newLength[1]) + " times.";
-            }
+                message += $"[{newLength[0]:X2}], {getWrittenNumber(newLength[1])} times.";
             else
-            {
-                message += "[" + newLength[0].ToString("X2") + "]";
-            }
+                message += $"[{newLength[0]:X2}]";
 
             MessageBox.Show(message);
 
             //set the clipboard to the new length, whatever note is at the start of what was copied, and then the original length so when you paste it in, the rest of the column doesn't go out of whack
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             result.Append(newLength[0].ToString("X2")); //the length that the new 
             result.Append(" ");
             result.Append(notes[0]); //The note at the top of the clipboard contents
@@ -920,7 +869,7 @@ namespace PK_Piano
         //Text blip stuff
         //If the sfxEnabled boolean value is set to true, then various parts of the UI will give audio feedback.
         //I'm getting kind of tired of it, though, so I'm going to make it toggleable in the future.
-        byte numberOfLettersBeforeSound = 0;
+        byte numberOfLettersBeforeSound;
         SoundPlayer sfxTextBlip = new SoundPlayer(Properties.Resources.ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance of SoundPlayer *every* time
         SoundPlayer sfxEquipped = new SoundPlayer(Properties.Resources.ExtraAudio_Equipped_);
 
@@ -986,13 +935,12 @@ namespace PK_Piano
                 sfxEnabled = true; //this is one of the global variables defined at the beginning
                 new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
             }
-            else
-                sfxEnabled = false;
+            else sfxEnabled = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            txtMultiplier.TextChanged += new EventHandler(txtMultiplier_TextChanged); //The default click event for txtMultiplier doesn't do anything, so this is the next best alternative
+            txtMultiplier.TextChanged += txtMultiplier_TextChanged; //The default click event for txtMultiplier doesn't do anything, so this is the next best alternative
 
             //Tooltip stuff from http://stackoverflow.com/questions/1339524/c-how-do-i-add-a-tooltip-to-a-control
             var toolTip1 = new ToolTip
@@ -1013,7 +961,7 @@ namespace PK_Piano
             toolTip1.SetToolTip(btnCopySlidingEcho, "[F8 length lvol rvol]");
             toolTip1.SetToolTip(btnPortamento, "C8 [F9 start length (insert note here)] ");
             toolTip1.SetToolTip(btnSetFirstDrum, "Sets the first sample used by the CA-DF note system.\r\nThis is useful for making quick drum loops.");
-            toolTip1.SetToolTip(trackBarEchoVol, "The second half of volume levels invert the waveform!\r\nYou can set the left and right numbers seperately, too.");
+            toolTip1.SetToolTip(trackBarEchoVol, "The second half of volume levels invert the waveform!\r\nYou can set the left and right numbers separately, too.");
             //toolTip1.SetToolTip(ANYTHING, "");
             //toolTip1.SetToolTip(ANYTHING, "");
             //toolTip1.SetToolTip(ANYTHING, "");

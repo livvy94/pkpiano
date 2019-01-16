@@ -8,10 +8,10 @@ namespace PK_Piano
     {
         public static string GetEBMdata(string input)
         {
-            StringBuilder result = new StringBuilder();
-            string[] rows = input.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            var result = new StringBuilder();
+            var rows = input.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            string rowStatus = validation(rows);
+            var rowStatus = validation(rows);
             if (rowStatus != "Valid!") return rowStatus; //display the error message if something's up
 
             foreach (string row in rows)

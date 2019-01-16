@@ -75,7 +75,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabSpecial = new System.Windows.Forms.TabPage();
-            this.chkOpenMPT_DrumMode = new System.Windows.Forms.CheckBox();
             this.btnTremoloOff = new System.Windows.Forms.Button();
             this.btnPortamentoOff = new System.Windows.Forms.Button();
             this.btnC8eraser = new System.Windows.Forms.Button();
@@ -86,6 +85,9 @@
             this.btnPortamento = new System.Windows.Forms.Button();
             this.btnVibrato = new System.Windows.Forms.Button();
             this.btnVibratoOff = new System.Windows.Forms.Button();
+            this.tabOther = new System.Windows.Forms.TabPage();
+            this.label16 = new System.Windows.Forms.Label();
+            this.chkMiscFeedback = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
             this.LengthDisplay = new System.Windows.Forms.Label();
             this.VolBar = new System.Windows.Forms.TrackBar();
@@ -114,9 +116,6 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
-            this.tabOther = new System.Windows.Forms.TabPage();
-            this.chkMiscFeedback = new System.Windows.Forms.CheckBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabChannel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
@@ -127,10 +126,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoVol)).BeginInit();
             this.tabSpecial.SuspendLayout();
+            this.tabOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).BeginInit();
-            this.tabOther.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -626,7 +625,6 @@
             // 
             // tabSpecial
             // 
-            this.tabSpecial.Controls.Add(this.chkOpenMPT_DrumMode);
             this.tabSpecial.Controls.Add(this.btnTremoloOff);
             this.tabSpecial.Controls.Add(this.btnPortamentoOff);
             this.tabSpecial.Controls.Add(this.btnC8eraser);
@@ -643,16 +641,6 @@
             this.tabSpecial.TabIndex = 3;
             this.tabSpecial.Text = "Note Effects";
             this.tabSpecial.UseVisualStyleBackColor = true;
-            // 
-            // chkOpenMPT_DrumMode
-            // 
-            this.chkOpenMPT_DrumMode.AutoSize = true;
-            this.chkOpenMPT_DrumMode.Location = new System.Drawing.Point(19, 189);
-            this.chkOpenMPT_DrumMode.Name = "chkOpenMPT_DrumMode";
-            this.chkOpenMPT_DrumMode.Size = new System.Drawing.Size(81, 17);
-            this.chkOpenMPT_DrumMode.TabIndex = 44;
-            this.chkOpenMPT_DrumMode.Text = "Drum Mode";
-            this.chkOpenMPT_DrumMode.UseVisualStyleBackColor = true;
             // 
             // btnTremoloOff
             // 
@@ -753,6 +741,38 @@
             this.btnVibratoOff.Text = "Vibrato off";
             this.btnVibratoOff.UseVisualStyleBackColor = true;
             this.btnVibratoOff.Click += new System.EventHandler(this.btnVibratoOff_Click);
+            // 
+            // tabOther
+            // 
+            this.tabOther.Controls.Add(this.label16);
+            this.tabOther.Controls.Add(this.chkMiscFeedback);
+            this.tabOther.Location = new System.Drawing.Point(4, 22);
+            this.tabOther.Name = "tabOther";
+            this.tabOther.Padding = new System.Windows.Forms.Padding(3);
+            this.tabOther.Size = new System.Drawing.Size(311, 247);
+            this.tabOther.TabIndex = 5;
+            this.tabOther.Text = "Other";
+            this.tabOther.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(62, 118);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(188, 13);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "(I may put more stuff here in the future)";
+            // 
+            // chkMiscFeedback
+            // 
+            this.chkMiscFeedback.AutoSize = true;
+            this.chkMiscFeedback.Location = new System.Drawing.Point(6, 6);
+            this.chkMiscFeedback.Name = "chkMiscFeedback";
+            this.chkMiscFeedback.Size = new System.Drawing.Size(153, 17);
+            this.chkMiscFeedback.TabIndex = 0;
+            this.chkMiscFeedback.Text = "Enable misc. sound effects";
+            this.chkMiscFeedback.UseVisualStyleBackColor = true;
+            this.chkMiscFeedback.CheckedChanged += new System.EventHandler(this.chkMiscFeedback_CheckedChanged);
             // 
             // label23
             // 
@@ -1063,38 +1083,6 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
-            // tabOther
-            // 
-            this.tabOther.Controls.Add(this.label16);
-            this.tabOther.Controls.Add(this.chkMiscFeedback);
-            this.tabOther.Location = new System.Drawing.Point(4, 22);
-            this.tabOther.Name = "tabOther";
-            this.tabOther.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOther.Size = new System.Drawing.Size(311, 247);
-            this.tabOther.TabIndex = 5;
-            this.tabOther.Text = "Other";
-            this.tabOther.UseVisualStyleBackColor = true;
-            // 
-            // chkMiscFeedback
-            // 
-            this.chkMiscFeedback.AutoSize = true;
-            this.chkMiscFeedback.Location = new System.Drawing.Point(6, 6);
-            this.chkMiscFeedback.Name = "chkMiscFeedback";
-            this.chkMiscFeedback.Size = new System.Drawing.Size(153, 17);
-            this.chkMiscFeedback.TabIndex = 0;
-            this.chkMiscFeedback.Text = "Enable misc. sound effects";
-            this.chkMiscFeedback.UseVisualStyleBackColor = true;
-            this.chkMiscFeedback.CheckedChanged += new System.EventHandler(this.chkMiscFeedback_CheckedChanged);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(62, 118);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(188, 13);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "(I may put more stuff here in the future)";
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1147,12 +1135,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoDelay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoVol)).EndInit();
             this.tabSpecial.ResumeLayout(false);
-            this.tabSpecial.PerformLayout();
+            this.tabOther.ResumeLayout(false);
+            this.tabOther.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).EndInit();
-            this.tabOther.ResumeLayout(false);
-            this.tabOther.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1242,7 +1229,6 @@
         private System.Windows.Forms.Button btnDividePrompt;
         private System.Windows.Forms.Button btnC8eraser;
         private System.Windows.Forms.Button btnMPTconvert;
-        private System.Windows.Forms.CheckBox chkOpenMPT_DrumMode;
         private System.Windows.Forms.Button btnTremoloOff;
         private System.Windows.Forms.Button btnTremolo;
         private System.Windows.Forms.TabPage tabOther;
