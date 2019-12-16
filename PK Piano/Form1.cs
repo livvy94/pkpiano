@@ -7,12 +7,12 @@ namespace PK_Piano
 {
     public partial class Form1 : Form
     {
-        //To potential employers:
-        //This program was created to make a chip music tool I use slightly more intuitive.
+        //I created this program to make the EarthBound Music Editor easier for myself to use.
         //It mostly copies hex values into the clipboard, allowing me to paste them in.
-        //Some calculation has to take place for the more complicated commands like echo.
+        //Some calculation has to take place for the more complicated commands like the echo buffer.
         //It also calculates the hex values for note lengths, which have to be manually specified.
-        //I have been working on this and tweaking it for the past few years, so not everything is laid out how it'd be if I made it from scratch today.
+        //The first version of this program was written in 2012. I was taking a VB course in my first semester of college, and made this as a fun side project.
+        //As a result, hoever, the code isn't laid out how it'd be if I made something like this from scratch today.
         //For more information on the music engine itself, see https://wiki.superfamicom.org/snes/show/Nintendo+Music+Format+%28N-SPC%29
 
         public Form1()
@@ -21,7 +21,6 @@ namespace PK_Piano
             InitializeComponent();
         }
 
-        //Global variables
         bool sfxEnabled = false;
         byte octave = 4; //used in the note buttons' if statements
         byte lastNote;
@@ -42,13 +41,25 @@ namespace PK_Piano
         private void SendNote(byte input)
         {
             //Takes a byte, puts it in the label, and puts it in the clipboard
-            LengthUpdate();
+            FormatNoteLength();
             var note = "[" + input.ToString("X2") + "]";
             DispLabel.Text = note;
             Clipboard.SetText(note);
 
+            UpdateChannelTranspose(input);
+        }
 
-            //Set the Channel Transpose button's text
+        private void SendNote(string input)
+        {
+            //An alternate version for manually setting the string
+            //Probably only needed for the "XX" ones, which should hopefully never happen
+            FormatNoteLength();
+            DispLabel.Text = $"[{input}]";
+            Clipboard.SetText(input);
+        }
+
+        private void UpdateChannelTranspose(byte input)
+        {
             if (lastNote != 0)
             {
                 transposeValue = (input - lastNote).ToString("X2");
@@ -56,19 +67,10 @@ namespace PK_Piano
                 if (transposeValue.Length == 8)
                     transposeValue = transposeValue.Substring(6, 2);
 
-                btnChannelTranspose.Text = $"Transpose (last one was [{transposeValue}])";
+                btnChannelTranspose.Text = $"Transpose (last one was [{transposeValue}])"; //set the button text
             }
 
             lastNote = input;
-        }
-
-        private void SendNote(string input)
-        {
-            //An alternate version for manually setting the string
-            //Probably only needed for the "XX" ones, which should hopefully never happen
-            LengthUpdate();
-            DispLabel.Text = $"[{input}]";
-            Clipboard.SetText(input);
         }
         
         private string FormatNoteLength()
@@ -79,6 +81,7 @@ namespace PK_Piano
             //show the divide button if the length is bigger than the maximum length a note can have
             btnDividePrompt.Visible = EBM_Note_Data.lengthIsInvalid(noteLength * multiplier);
 
+            LengthDisplay.Text = output;
             return output;
         }
 
@@ -128,14 +131,7 @@ namespace PK_Piano
                 cboNoteLength.Text = noteLength.ToString("X2");
             }
 
-            LengthUpdate(); //update other parts of the program that use length
-        }
-
-        private void LengthUpdate()
-        {
-            LengthDisplay.Text = FormatNoteLength();
-            //There used to be other controls being updated here.
-            //I'd copy this one line everywhere this line is referenced, but that doesn't seem like it'd improve things much...
+            FormatNoteLength(); //update other parts of the program that use length
         }
 
         private void txtMultiplier_TextChanged(object sender, EventArgs e)
@@ -647,7 +643,7 @@ namespace PK_Piano
         private void btnCopySlidingPan_Click(object sender, EventArgs e)
         {
             if (sfxEnabled) sfxEquipped.Play();
-            LengthUpdate();
+            FormatNoteLength();
             var output = $"[E2 {noteLength:X2} {Math.Abs(PanningBar.Value):X2}]"; //[E2 length panning]
             Clipboard.SetText(output);
         }
@@ -655,7 +651,7 @@ namespace PK_Piano
         private void btnCopySlidingVolume_Click(object sender, EventArgs e)
         {
             if (sfxEnabled) sfxEquipped.Play();
-            LengthUpdate();
+            FormatNoteLength();
             var output = $"[EE {noteLength:X2} {Math.Abs(ChannelVolumeBar.Value):X2}]"; //[EE length volume]
             Clipboard.SetText(output);
         }
@@ -663,7 +659,7 @@ namespace PK_Piano
         private void btnCopySlidingEcho_Click(object sender, EventArgs e)
         {
             if (sfxEnabled) sfxEquipped.Play();
-            LengthUpdate();
+            FormatNoteLength();
             var vol = Math.Abs(ChannelVolumeBar.Value).ToString("X2");
             var output = $"[F8 {noteLength:X2} {vol} {vol}]"; //[F8 length vol vol]
             Clipboard.SetText(output);
@@ -733,7 +729,7 @@ namespace PK_Piano
         
         private void PanningBar_Scroll(object sender, EventArgs e)
         {
-            LengthUpdate();
+            FormatNoteLength();
             var panPosition = PanningBar.Value;
             panPosition = Math.Abs(panPosition); //They're negative numbers, so this makes them positive (takes the absolute value)
             var output = $"[E1 {panPosition:X2}]"; //[E1 panning]
@@ -744,7 +740,7 @@ namespace PK_Piano
 
         private void ChannelVolumeBar_Scroll(object sender, EventArgs e)
         {
-            LengthUpdate();
+            FormatNoteLength();
             //ChannelVolumeBar and txtChannelVolumeDisplay
             var volume = ChannelVolumeBar.Value;
             var output = $"[ED {volume:X2}]"; //[ED volume]

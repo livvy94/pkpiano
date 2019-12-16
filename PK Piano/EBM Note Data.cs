@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PK_Piano
+﻿namespace PK_Piano
 {
     //These classes are a very recent addition. TODO: Move more of the logic to classes like this
     class EBM_Note_Data

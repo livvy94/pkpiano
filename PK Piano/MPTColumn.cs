@@ -6,13 +6,15 @@ namespace PK_Piano
     //These classes are a very recent addition. TODO: Move more of the logic to classes like this
     class MPTColumn
     {
+        public const string VALID = "Valid!";
+
         public static string GetEBMdata(string input)
         {
             var result = new StringBuilder();
             var rows = input.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
             var rowStatus = validation(rows);
-            if (rowStatus != "Valid!") return rowStatus; //display the error message if something's up
+            if (rowStatus != VALID) return rowStatus; //display the error message if something's up
 
             foreach (string row in rows)
             {
@@ -29,7 +31,7 @@ namespace PK_Piano
 
         public static string validation(string[] input)
         {
-            string errorMessage = "Valid!";
+            string errorMessage = VALID;
 
             if (input.Length < 2)
                 errorMessage = "(Not enough rows to process)";
