@@ -30,26 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabChannel = new System.Windows.Forms.TabPage();
-            this.txtChannelVolumeDisplay = new System.Windows.Forms.Label();
-            this.btnChannelTranspose = new System.Windows.Forms.Button();
-            this.txtPanningDisplay = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.btnCopySlidingEcho = new System.Windows.Forms.Button();
-            this.ChannelVolumeBar = new System.Windows.Forms.TrackBar();
-            this.label13 = new System.Windows.Forms.Label();
-            this.btnCopySlidingVolume = new System.Windows.Forms.Button();
-            this.PanningBar = new System.Windows.Forms.TrackBar();
-            this.btnFinetune1 = new System.Windows.Forms.Button();
-            this.btnCopySlidingPan = new System.Windows.Forms.Button();
             this.tabInitial = new System.Windows.Forms.TabPage();
             this.btnEchoOff = new System.Windows.Forms.Button();
             this.btnSetFirstDrum = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.txtEchoDisplay = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
+            this.btnCopySlidingEcho = new System.Windows.Forms.Button();
             this.trackBarEchoFilter = new System.Windows.Forms.TrackBar();
             this.trackBarEchoFeedback = new System.Windows.Forms.TrackBar();
+            this.btnFinetune1 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.trackBarEchoDelay = new System.Windows.Forms.TrackBar();
             this.label12 = new System.Windows.Forms.Label();
@@ -74,19 +63,29 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.tabSpecial = new System.Windows.Forms.TabPage();
+            this.tabChannel = new System.Windows.Forms.TabPage();
+            this.btnChannelTranspose = new System.Windows.Forms.Button();
             this.btnTremoloOff = new System.Windows.Forms.Button();
-            this.btnPortamentoOff = new System.Windows.Forms.Button();
-            this.btnC8eraser = new System.Windows.Forms.Button();
+            this.txtChannelVolumeDisplay = new System.Windows.Forms.Label();
+            this.txtPanningDisplay = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.ChannelVolumeBar = new System.Windows.Forms.TrackBar();
+            this.label13 = new System.Windows.Forms.Label();
             this.btnPortamentoUp = new System.Windows.Forms.Button();
-            this.btnTremolo = new System.Windows.Forms.Button();
+            this.PanningBar = new System.Windows.Forms.TrackBar();
+            this.btnC8eraser = new System.Windows.Forms.Button();
+            this.btnCopySlidingVolume = new System.Windows.Forms.Button();
+            this.btnCopySlidingPan = new System.Windows.Forms.Button();
             this.btnMPTconvert = new System.Windows.Forms.Button();
-            this.btnPortamentoDown = new System.Windows.Forms.Button();
-            this.btnPortamento = new System.Windows.Forms.Button();
             this.btnVibrato = new System.Windows.Forms.Button();
+            this.btnPortamentoDown = new System.Windows.Forms.Button();
+            this.btnTremolo = new System.Windows.Forms.Button();
             this.btnVibratoOff = new System.Windows.Forms.Button();
+            this.btnPortamento = new System.Windows.Forms.Button();
+            this.btnPortamentoOff = new System.Windows.Forms.Button();
             this.tabOther = new System.Windows.Forms.TabPage();
-            this.label16 = new System.Windows.Forms.Label();
+            this.cboWaveform = new System.Windows.Forms.ComboBox();
+            this.btnTuning = new System.Windows.Forms.Button();
             this.chkMiscFeedback = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
             this.LengthDisplay = new System.Windows.Forms.Label();
@@ -117,15 +116,14 @@
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.tabChannel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).BeginInit();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFeedback)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoVol)).BeginInit();
-            this.tabSpecial.SuspendLayout();
+            this.tabChannel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).BeginInit();
             this.tabOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).BeginInit();
@@ -134,147 +132,14 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabChannel);
             this.tabControl1.Controls.Add(this.tabInitial);
-            this.tabControl1.Controls.Add(this.tabSpecial);
+            this.tabControl1.Controls.Add(this.tabChannel);
             this.tabControl1.Controls.Add(this.tabOther);
             this.tabControl1.Location = new System.Drawing.Point(292, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(319, 273);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabChannel
-            // 
-            this.tabChannel.Controls.Add(this.txtChannelVolumeDisplay);
-            this.tabChannel.Controls.Add(this.btnChannelTranspose);
-            this.tabChannel.Controls.Add(this.txtPanningDisplay);
-            this.tabChannel.Controls.Add(this.label14);
-            this.tabChannel.Controls.Add(this.btnCopySlidingEcho);
-            this.tabChannel.Controls.Add(this.ChannelVolumeBar);
-            this.tabChannel.Controls.Add(this.label13);
-            this.tabChannel.Controls.Add(this.btnCopySlidingVolume);
-            this.tabChannel.Controls.Add(this.PanningBar);
-            this.tabChannel.Controls.Add(this.btnFinetune1);
-            this.tabChannel.Controls.Add(this.btnCopySlidingPan);
-            this.tabChannel.Location = new System.Drawing.Point(4, 22);
-            this.tabChannel.Name = "tabChannel";
-            this.tabChannel.Size = new System.Drawing.Size(311, 247);
-            this.tabChannel.TabIndex = 2;
-            this.tabChannel.Text = "Channel Settings";
-            this.tabChannel.UseVisualStyleBackColor = true;
-            // 
-            // txtChannelVolumeDisplay
-            // 
-            this.txtChannelVolumeDisplay.AutoSize = true;
-            this.txtChannelVolumeDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.txtChannelVolumeDisplay.Location = new System.Drawing.Point(7, 78);
-            this.txtChannelVolumeDisplay.Name = "txtChannelVolumeDisplay";
-            this.txtChannelVolumeDisplay.Size = new System.Drawing.Size(52, 13);
-            this.txtChannelVolumeDisplay.TabIndex = 32;
-            this.txtChannelVolumeDisplay.Text = "[ED XX]";
-            // 
-            // btnChannelTranspose
-            // 
-            this.btnChannelTranspose.Location = new System.Drawing.Point(100, 145);
-            this.btnChannelTranspose.Name = "btnChannelTranspose";
-            this.btnChannelTranspose.Size = new System.Drawing.Size(196, 23);
-            this.btnChannelTranspose.TabIndex = 26;
-            this.btnChannelTranspose.Text = "Transpose";
-            this.btnChannelTranspose.UseVisualStyleBackColor = true;
-            this.btnChannelTranspose.Click += new System.EventHandler(this.btnChannelTranspose_Click);
-            // 
-            // txtPanningDisplay
-            // 
-            this.txtPanningDisplay.AutoSize = true;
-            this.txtPanningDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.txtPanningDisplay.Location = new System.Drawing.Point(7, 27);
-            this.txtPanningDisplay.Name = "txtPanningDisplay";
-            this.txtPanningDisplay.Size = new System.Drawing.Size(50, 13);
-            this.txtPanningDisplay.TabIndex = 31;
-            this.txtPanningDisplay.Text = "[E1 XX]";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(4, 65);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(90, 13);
-            this.label14.TabIndex = 25;
-            this.label14.Text = "Channel Volume: ";
-            // 
-            // btnCopySlidingEcho
-            // 
-            this.btnCopySlidingEcho.Location = new System.Drawing.Point(145, 116);
-            this.btnCopySlidingEcho.Name = "btnCopySlidingEcho";
-            this.btnCopySlidingEcho.Size = new System.Drawing.Size(67, 23);
-            this.btnCopySlidingEcho.TabIndex = 25;
-            this.btnCopySlidingEcho.Text = "Echo Vol";
-            this.btnCopySlidingEcho.UseVisualStyleBackColor = true;
-            this.btnCopySlidingEcho.Click += new System.EventHandler(this.btnCopySlidingEcho_Click);
-            // 
-            // ChannelVolumeBar
-            // 
-            this.ChannelVolumeBar.Location = new System.Drawing.Point(100, 65);
-            this.ChannelVolumeBar.Maximum = 255;
-            this.ChannelVolumeBar.Name = "ChannelVolumeBar";
-            this.ChannelVolumeBar.Size = new System.Drawing.Size(196, 45);
-            this.ChannelVolumeBar.SmallChange = 24;
-            this.ChannelVolumeBar.TabIndex = 22;
-            this.ChannelVolumeBar.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.ChannelVolumeBar.Value = 255;
-            this.ChannelVolumeBar.Scroll += new System.EventHandler(this.ChannelVolumeBar_Scroll);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 14);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(86, 13);
-            this.label13.TabIndex = 23;
-            this.label13.Text = "Stereo Panning: ";
-            // 
-            // btnCopySlidingVolume
-            // 
-            this.btnCopySlidingVolume.Location = new System.Drawing.Point(100, 116);
-            this.btnCopySlidingVolume.Name = "btnCopySlidingVolume";
-            this.btnCopySlidingVolume.Size = new System.Drawing.Size(39, 23);
-            this.btnCopySlidingVolume.TabIndex = 24;
-            this.btnCopySlidingVolume.Text = "Vol";
-            this.btnCopySlidingVolume.UseVisualStyleBackColor = true;
-            this.btnCopySlidingVolume.Click += new System.EventHandler(this.btnCopySlidingVolume_Click);
-            // 
-            // PanningBar
-            // 
-            this.PanningBar.Location = new System.Drawing.Point(100, 14);
-            this.PanningBar.Maximum = 0;
-            this.PanningBar.Minimum = -20;
-            this.PanningBar.Name = "PanningBar";
-            this.PanningBar.Size = new System.Drawing.Size(196, 45);
-            this.PanningBar.TabIndex = 21;
-            this.PanningBar.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.PanningBar.Value = -10;
-            this.PanningBar.Scroll += new System.EventHandler(this.PanningBar_Scroll);
-            // 
-            // btnFinetune1
-            // 
-            this.btnFinetune1.Location = new System.Drawing.Point(100, 174);
-            this.btnFinetune1.Name = "btnFinetune1";
-            this.btnFinetune1.Size = new System.Drawing.Size(196, 23);
-            this.btnFinetune1.TabIndex = 2;
-            this.btnFinetune1.Text = "Finetune";
-            this.btnFinetune1.UseVisualStyleBackColor = true;
-            this.btnFinetune1.Click += new System.EventHandler(this.btnFinetune1_Click);
-            // 
-            // btnCopySlidingPan
-            // 
-            this.btnCopySlidingPan.Location = new System.Drawing.Point(217, 116);
-            this.btnCopySlidingPan.Name = "btnCopySlidingPan";
-            this.btnCopySlidingPan.Size = new System.Drawing.Size(79, 23);
-            this.btnCopySlidingPan.TabIndex = 23;
-            this.btnCopySlidingPan.Text = "Sliding pan";
-            this.btnCopySlidingPan.UseVisualStyleBackColor = true;
-            this.btnCopySlidingPan.Click += new System.EventHandler(this.btnCopySlidingPan_Click);
+            this.tabControl1.Size = new System.Drawing.Size(382, 265);
+            this.tabControl1.TabIndex = 21;
             // 
             // tabInitial
             // 
@@ -282,9 +147,10 @@
             this.tabInitial.Controls.Add(this.btnSetFirstDrum);
             this.tabInitial.Controls.Add(this.label15);
             this.tabInitial.Controls.Add(this.txtEchoDisplay);
-            this.tabInitial.Controls.Add(this.label24);
+            this.tabInitial.Controls.Add(this.btnCopySlidingEcho);
             this.tabInitial.Controls.Add(this.trackBarEchoFilter);
             this.tabInitial.Controls.Add(this.trackBarEchoFeedback);
+            this.tabInitial.Controls.Add(this.btnFinetune1);
             this.tabInitial.Controls.Add(this.label9);
             this.tabInitial.Controls.Add(this.trackBarEchoDelay);
             this.tabInitial.Controls.Add(this.label12);
@@ -311,7 +177,7 @@
             this.tabInitial.Controls.Add(this.checkBox1);
             this.tabInitial.Location = new System.Drawing.Point(4, 22);
             this.tabInitial.Name = "tabInitial";
-            this.tabInitial.Size = new System.Drawing.Size(311, 247);
+            this.tabInitial.Size = new System.Drawing.Size(374, 239);
             this.tabInitial.TabIndex = 4;
             this.tabInitial.Text = "Initial Setup";
             this.tabInitial.UseVisualStyleBackColor = true;
@@ -321,17 +187,17 @@
             this.btnEchoOff.Location = new System.Drawing.Point(247, 10);
             this.btnEchoOff.Name = "btnEchoOff";
             this.btnEchoOff.Size = new System.Drawing.Size(57, 42);
-            this.btnEchoOff.TabIndex = 27;
+            this.btnEchoOff.TabIndex = 34;
             this.btnEchoOff.Text = "Echo off";
             this.btnEchoOff.UseVisualStyleBackColor = true;
             this.btnEchoOff.Click += new System.EventHandler(this.btnEchoOff_Click);
             // 
             // btnSetFirstDrum
             // 
-            this.btnSetFirstDrum.Location = new System.Drawing.Point(247, 160);
+            this.btnSetFirstDrum.Location = new System.Drawing.Point(247, 135);
             this.btnSetFirstDrum.Name = "btnSetFirstDrum";
             this.btnSetFirstDrum.Size = new System.Drawing.Size(57, 42);
-            this.btnSetFirstDrum.TabIndex = 35;
+            this.btnSetFirstDrum.TabIndex = 38;
             this.btnSetFirstDrum.Text = "Set first drum";
             this.btnSetFirstDrum.UseVisualStyleBackColor = true;
             this.btnSetFirstDrum.Click += new System.EventHandler(this.btnSetFirstDrum_Click);
@@ -347,22 +213,23 @@
             // 
             // txtEchoDisplay
             // 
-            this.txtEchoDisplay.AutoSize = true;
-            this.txtEchoDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.txtEchoDisplay.Location = new System.Drawing.Point(62, 218);
+            this.txtEchoDisplay.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtEchoDisplay.Location = new System.Drawing.Point(247, 189);
             this.txtEchoDisplay.Name = "txtEchoDisplay";
-            this.txtEchoDisplay.Size = new System.Drawing.Size(175, 13);
+            this.txtEchoDisplay.Size = new System.Drawing.Size(120, 42);
             this.txtEchoDisplay.TabIndex = 25;
             this.txtEchoDisplay.Text = "[F5 XX YY YY] [F7 XX YY ZZ]";
+            this.txtEchoDisplay.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label24
+            // btnCopySlidingEcho
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(16, 218);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(40, 13);
-            this.label24.TabIndex = 24;
-            this.label24.Text = "Result:";
+            this.btnCopySlidingEcho.Location = new System.Drawing.Point(310, 10);
+            this.btnCopySlidingEcho.Name = "btnCopySlidingEcho";
+            this.btnCopySlidingEcho.Size = new System.Drawing.Size(57, 42);
+            this.btnCopySlidingEcho.TabIndex = 35;
+            this.btnCopySlidingEcho.Text = "Slide";
+            this.btnCopySlidingEcho.UseVisualStyleBackColor = true;
+            this.btnCopySlidingEcho.Click += new System.EventHandler(this.btnCopySlidingEcho_Click);
             // 
             // trackBarEchoFilter
             // 
@@ -371,8 +238,8 @@
             this.trackBarEchoFilter.Maximum = 8;
             this.trackBarEchoFilter.Name = "trackBarEchoFilter";
             this.trackBarEchoFilter.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarEchoFilter.Size = new System.Drawing.Size(45, 132);
-            this.trackBarEchoFilter.TabIndex = 23;
+            this.trackBarEchoFilter.Size = new System.Drawing.Size(45, 161);
+            this.trackBarEchoFilter.TabIndex = 33;
             this.trackBarEchoFilter.Value = 3;
             this.trackBarEchoFilter.Scroll += new System.EventHandler(this.trackBarEchoFilter_Scroll);
             // 
@@ -383,12 +250,22 @@
             this.trackBarEchoFeedback.Maximum = 255;
             this.trackBarEchoFeedback.Name = "trackBarEchoFeedback";
             this.trackBarEchoFeedback.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarEchoFeedback.Size = new System.Drawing.Size(45, 132);
+            this.trackBarEchoFeedback.Size = new System.Drawing.Size(45, 161);
             this.trackBarEchoFeedback.SmallChange = 5;
-            this.trackBarEchoFeedback.TabIndex = 22;
+            this.trackBarEchoFeedback.TabIndex = 32;
             this.trackBarEchoFeedback.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBarEchoFeedback.Value = 48;
             this.trackBarEchoFeedback.Scroll += new System.EventHandler(this.trackBarEchoFeedback_Scroll);
+            // 
+            // btnFinetune1
+            // 
+            this.btnFinetune1.Location = new System.Drawing.Point(310, 135);
+            this.btnFinetune1.Name = "btnFinetune1";
+            this.btnFinetune1.Size = new System.Drawing.Size(57, 42);
+            this.btnFinetune1.TabIndex = 39;
+            this.btnFinetune1.Text = "Channel Finetune";
+            this.btnFinetune1.UseVisualStyleBackColor = true;
+            this.btnFinetune1.Click += new System.EventHandler(this.btnFinetune1_Click);
             // 
             // label9
             // 
@@ -405,8 +282,8 @@
             this.trackBarEchoDelay.Location = new System.Drawing.Point(79, 70);
             this.trackBarEchoDelay.Name = "trackBarEchoDelay";
             this.trackBarEchoDelay.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarEchoDelay.Size = new System.Drawing.Size(45, 132);
-            this.trackBarEchoDelay.TabIndex = 21;
+            this.trackBarEchoDelay.Size = new System.Drawing.Size(45, 161);
+            this.trackBarEchoDelay.TabIndex = 31;
             this.trackBarEchoDelay.Value = 3;
             this.trackBarEchoDelay.Scroll += new System.EventHandler(this.trackBarEchoDelay_Scroll);
             // 
@@ -430,20 +307,20 @@
             // 
             // btnGlobalVolume
             // 
-            this.btnGlobalVolume.Location = new System.Drawing.Point(247, 115);
+            this.btnGlobalVolume.Location = new System.Drawing.Point(310, 87);
             this.btnGlobalVolume.Name = "btnGlobalVolume";
             this.btnGlobalVolume.Size = new System.Drawing.Size(57, 42);
-            this.btnGlobalVolume.TabIndex = 4;
+            this.btnGlobalVolume.TabIndex = 37;
             this.btnGlobalVolume.Text = "Global Volume";
             this.btnGlobalVolume.UseVisualStyleBackColor = true;
             this.btnGlobalVolume.Click += new System.EventHandler(this.btnGlobalVolume_Click);
             // 
             // btnTempo
             // 
-            this.btnTempo.Location = new System.Drawing.Point(247, 70);
+            this.btnTempo.Location = new System.Drawing.Point(247, 87);
             this.btnTempo.Name = "btnTempo";
             this.btnTempo.Size = new System.Drawing.Size(57, 42);
-            this.btnTempo.TabIndex = 3;
+            this.btnTempo.TabIndex = 36;
             this.btnTempo.Text = "Tempo";
             this.btnTempo.UseVisualStyleBackColor = true;
             this.btnTempo.Click += new System.EventHandler(this.btnTempo_Click);
@@ -464,9 +341,9 @@
             this.trackBarEchoVol.Maximum = 255;
             this.trackBarEchoVol.Name = "trackBarEchoVol";
             this.trackBarEchoVol.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBarEchoVol.Size = new System.Drawing.Size(45, 132);
+            this.trackBarEchoVol.Size = new System.Drawing.Size(45, 161);
             this.trackBarEchoVol.SmallChange = 5;
-            this.trackBarEchoVol.TabIndex = 17;
+            this.trackBarEchoVol.TabIndex = 30;
             this.trackBarEchoVol.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBarEchoVol.Value = 96;
             this.trackBarEchoVol.Scroll += new System.EventHandler(this.trackBarEchoVol_Scroll);
@@ -486,7 +363,7 @@
             this.checkBox8.Location = new System.Drawing.Point(226, 26);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(15, 14);
-            this.checkBox8.TabIndex = 14;
+            this.checkBox8.TabIndex = 29;
             this.checkBox8.UseVisualStyleBackColor = true;
             this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             // 
@@ -505,7 +382,7 @@
             this.checkBox7.Location = new System.Drawing.Point(205, 26);
             this.checkBox7.Name = "checkBox7";
             this.checkBox7.Size = new System.Drawing.Size(15, 14);
-            this.checkBox7.TabIndex = 12;
+            this.checkBox7.TabIndex = 28;
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
             // 
@@ -524,7 +401,7 @@
             this.checkBox6.Location = new System.Drawing.Point(184, 26);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(15, 14);
-            this.checkBox6.TabIndex = 10;
+            this.checkBox6.TabIndex = 27;
             this.checkBox6.UseVisualStyleBackColor = true;
             this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             // 
@@ -543,7 +420,7 @@
             this.checkBox5.Location = new System.Drawing.Point(163, 26);
             this.checkBox5.Name = "checkBox5";
             this.checkBox5.Size = new System.Drawing.Size(15, 14);
-            this.checkBox5.TabIndex = 8;
+            this.checkBox5.TabIndex = 26;
             this.checkBox5.UseVisualStyleBackColor = true;
             this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
@@ -562,7 +439,7 @@
             this.checkBox4.Location = new System.Drawing.Point(142, 26);
             this.checkBox4.Name = "checkBox4";
             this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 6;
+            this.checkBox4.TabIndex = 25;
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
             // 
@@ -581,7 +458,7 @@
             this.checkBox3.Location = new System.Drawing.Point(121, 26);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(15, 14);
-            this.checkBox3.TabIndex = 4;
+            this.checkBox3.TabIndex = 24;
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
@@ -600,7 +477,7 @@
             this.checkBox2.Location = new System.Drawing.Point(100, 26);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 2;
+            this.checkBox2.TabIndex = 23;
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
@@ -619,165 +496,283 @@
             this.checkBox1.Location = new System.Drawing.Point(79, 26);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 0;
+            this.checkBox1.TabIndex = 22;
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // tabSpecial
+            // tabChannel
             // 
-            this.tabSpecial.Controls.Add(this.btnTremoloOff);
-            this.tabSpecial.Controls.Add(this.btnPortamentoOff);
-            this.tabSpecial.Controls.Add(this.btnC8eraser);
-            this.tabSpecial.Controls.Add(this.btnPortamentoUp);
-            this.tabSpecial.Controls.Add(this.btnTremolo);
-            this.tabSpecial.Controls.Add(this.btnMPTconvert);
-            this.tabSpecial.Controls.Add(this.btnPortamentoDown);
-            this.tabSpecial.Controls.Add(this.btnPortamento);
-            this.tabSpecial.Controls.Add(this.btnVibrato);
-            this.tabSpecial.Controls.Add(this.btnVibratoOff);
-            this.tabSpecial.Location = new System.Drawing.Point(4, 22);
-            this.tabSpecial.Name = "tabSpecial";
-            this.tabSpecial.Size = new System.Drawing.Size(311, 247);
-            this.tabSpecial.TabIndex = 3;
-            this.tabSpecial.Text = "Note Effects";
-            this.tabSpecial.UseVisualStyleBackColor = true;
+            this.tabChannel.Controls.Add(this.btnChannelTranspose);
+            this.tabChannel.Controls.Add(this.btnTremoloOff);
+            this.tabChannel.Controls.Add(this.txtChannelVolumeDisplay);
+            this.tabChannel.Controls.Add(this.txtPanningDisplay);
+            this.tabChannel.Controls.Add(this.label14);
+            this.tabChannel.Controls.Add(this.ChannelVolumeBar);
+            this.tabChannel.Controls.Add(this.label13);
+            this.tabChannel.Controls.Add(this.btnPortamentoUp);
+            this.tabChannel.Controls.Add(this.PanningBar);
+            this.tabChannel.Controls.Add(this.btnC8eraser);
+            this.tabChannel.Controls.Add(this.btnCopySlidingVolume);
+            this.tabChannel.Controls.Add(this.btnCopySlidingPan);
+            this.tabChannel.Controls.Add(this.btnMPTconvert);
+            this.tabChannel.Controls.Add(this.btnVibrato);
+            this.tabChannel.Controls.Add(this.btnPortamentoDown);
+            this.tabChannel.Controls.Add(this.btnTremolo);
+            this.tabChannel.Controls.Add(this.btnVibratoOff);
+            this.tabChannel.Controls.Add(this.btnPortamento);
+            this.tabChannel.Controls.Add(this.btnPortamentoOff);
+            this.tabChannel.Location = new System.Drawing.Point(4, 22);
+            this.tabChannel.Name = "tabChannel";
+            this.tabChannel.Size = new System.Drawing.Size(374, 239);
+            this.tabChannel.TabIndex = 2;
+            this.tabChannel.Text = "Channel Effects";
+            this.tabChannel.UseVisualStyleBackColor = true;
+            // 
+            // btnChannelTranspose
+            // 
+            this.btnChannelTranspose.Location = new System.Drawing.Point(93, 72);
+            this.btnChannelTranspose.Name = "btnChannelTranspose";
+            this.btnChannelTranspose.Size = new System.Drawing.Size(77, 53);
+            this.btnChannelTranspose.TabIndex = 48;
+            this.btnChannelTranspose.Text = "Transpose";
+            this.btnChannelTranspose.UseVisualStyleBackColor = true;
+            this.btnChannelTranspose.Click += new System.EventHandler(this.btnChannelTranspose_Click);
             // 
             // btnTremoloOff
             // 
-            this.btnTremoloOff.Location = new System.Drawing.Point(201, 94);
+            this.btnTremoloOff.Location = new System.Drawing.Point(303, 40);
             this.btnTremoloOff.Name = "btnTremoloOff";
-            this.btnTremoloOff.Size = new System.Drawing.Size(102, 23);
-            this.btnTremoloOff.TabIndex = 35;
-            this.btnTremoloOff.Text = "Tremolo off";
+            this.btnTremoloOff.Size = new System.Drawing.Size(61, 23);
+            this.btnTremoloOff.TabIndex = 46;
+            this.btnTremoloOff.Text = "Off";
             this.btnTremoloOff.UseVisualStyleBackColor = true;
             this.btnTremoloOff.Click += new System.EventHandler(this.btnTremoloOff_Click);
             // 
-            // btnPortamentoOff
+            // txtChannelVolumeDisplay
             // 
-            this.btnPortamentoOff.Location = new System.Drawing.Point(200, 7);
-            this.btnPortamentoOff.Name = "btnPortamentoOff";
-            this.btnPortamentoOff.Size = new System.Drawing.Size(103, 51);
-            this.btnPortamentoOff.TabIndex = 31;
-            this.btnPortamentoOff.Text = "Slide Off";
-            this.btnPortamentoOff.UseVisualStyleBackColor = true;
-            this.btnPortamentoOff.Click += new System.EventHandler(this.btnPortamentoOff_Click);
+            this.txtChannelVolumeDisplay.AutoSize = true;
+            this.txtChannelVolumeDisplay.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtChannelVolumeDisplay.Location = new System.Drawing.Point(213, 202);
+            this.txtChannelVolumeDisplay.Name = "txtChannelVolumeDisplay";
+            this.txtChannelVolumeDisplay.Size = new System.Drawing.Size(56, 14);
+            this.txtChannelVolumeDisplay.TabIndex = 32;
+            this.txtChannelVolumeDisplay.Text = "[ED XX]";
             // 
-            // btnC8eraser
+            // txtPanningDisplay
             // 
-            this.btnC8eraser.Location = new System.Drawing.Point(200, 160);
-            this.btnC8eraser.Name = "btnC8eraser";
-            this.btnC8eraser.Size = new System.Drawing.Size(102, 23);
-            this.btnC8eraser.TabIndex = 42;
-            this.btnC8eraser.Text = "C8 Eraser";
-            this.btnC8eraser.UseVisualStyleBackColor = true;
-            this.btnC8eraser.Click += new System.EventHandler(this.btnC8eraser_Click);
+            this.txtPanningDisplay.AutoSize = true;
+            this.txtPanningDisplay.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPanningDisplay.Location = new System.Drawing.Point(213, 151);
+            this.txtPanningDisplay.Name = "txtPanningDisplay";
+            this.txtPanningDisplay.Size = new System.Drawing.Size(56, 14);
+            this.txtPanningDisplay.TabIndex = 31;
+            this.txtPanningDisplay.Text = "[E1 XX]";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(213, 189);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(84, 13);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Channel Volume";
+            // 
+            // ChannelVolumeBar
+            // 
+            this.ChannelVolumeBar.Location = new System.Drawing.Point(11, 189);
+            this.ChannelVolumeBar.Maximum = 255;
+            this.ChannelVolumeBar.Name = "ChannelVolumeBar";
+            this.ChannelVolumeBar.Size = new System.Drawing.Size(196, 45);
+            this.ChannelVolumeBar.SmallChange = 24;
+            this.ChannelVolumeBar.TabIndex = 53;
+            this.ChannelVolumeBar.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.ChannelVolumeBar.Value = 255;
+            this.ChannelVolumeBar.Scroll += new System.EventHandler(this.ChannelVolumeBar_Scroll);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(213, 138);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(46, 13);
+            this.label13.TabIndex = 23;
+            this.label13.Text = "Panning";
             // 
             // btnPortamentoUp
             // 
-            this.btnPortamentoUp.Location = new System.Drawing.Point(7, 7);
+            this.btnPortamentoUp.Location = new System.Drawing.Point(9, 10);
             this.btnPortamentoUp.Name = "btnPortamentoUp";
-            this.btnPortamentoUp.Size = new System.Drawing.Size(187, 23);
-            this.btnPortamentoUp.TabIndex = 6;
+            this.btnPortamentoUp.Size = new System.Drawing.Size(101, 23);
+            this.btnPortamentoUp.TabIndex = 40;
             this.btnPortamentoUp.Text = "Slide from note";
             this.btnPortamentoUp.UseVisualStyleBackColor = true;
             this.btnPortamentoUp.Click += new System.EventHandler(this.btnPortamentoUp_Click);
             // 
-            // btnTremolo
+            // PanningBar
             // 
-            this.btnTremolo.Location = new System.Drawing.Point(8, 93);
-            this.btnTremolo.Name = "btnTremolo";
-            this.btnTremolo.Size = new System.Drawing.Size(187, 23);
-            this.btnTremolo.TabIndex = 34;
-            this.btnTremolo.Text = "Tremolo";
-            this.btnTremolo.UseVisualStyleBackColor = true;
-            this.btnTremolo.Click += new System.EventHandler(this.btnTremolo_Click);
+            this.PanningBar.Location = new System.Drawing.Point(11, 138);
+            this.PanningBar.Maximum = 0;
+            this.PanningBar.Minimum = -20;
+            this.PanningBar.Name = "PanningBar";
+            this.PanningBar.Size = new System.Drawing.Size(196, 45);
+            this.PanningBar.TabIndex = 51;
+            this.PanningBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.PanningBar.Value = -10;
+            this.PanningBar.Scroll += new System.EventHandler(this.PanningBar_Scroll);
+            // 
+            // btnC8eraser
+            // 
+            this.btnC8eraser.Location = new System.Drawing.Point(303, 72);
+            this.btnC8eraser.Name = "btnC8eraser";
+            this.btnC8eraser.Size = new System.Drawing.Size(61, 53);
+            this.btnC8eraser.TabIndex = 50;
+            this.btnC8eraser.Text = "C8 Eraser";
+            this.btnC8eraser.UseVisualStyleBackColor = true;
+            this.btnC8eraser.Click += new System.EventHandler(this.btnC8eraser_Click);
+            // 
+            // btnCopySlidingVolume
+            // 
+            this.btnCopySlidingVolume.Location = new System.Drawing.Point(322, 192);
+            this.btnCopySlidingVolume.Name = "btnCopySlidingVolume";
+            this.btnCopySlidingVolume.Size = new System.Drawing.Size(43, 23);
+            this.btnCopySlidingVolume.TabIndex = 54;
+            this.btnCopySlidingVolume.Text = "Slide";
+            this.btnCopySlidingVolume.UseVisualStyleBackColor = true;
+            this.btnCopySlidingVolume.Click += new System.EventHandler(this.btnCopySlidingVolume_Click);
+            // 
+            // btnCopySlidingPan
+            // 
+            this.btnCopySlidingPan.Location = new System.Drawing.Point(322, 140);
+            this.btnCopySlidingPan.Name = "btnCopySlidingPan";
+            this.btnCopySlidingPan.Size = new System.Drawing.Size(43, 23);
+            this.btnCopySlidingPan.TabIndex = 52;
+            this.btnCopySlidingPan.Text = "Slide";
+            this.btnCopySlidingPan.UseVisualStyleBackColor = true;
+            this.btnCopySlidingPan.Click += new System.EventHandler(this.btnCopySlidingPan_Click);
             // 
             // btnMPTconvert
             // 
-            this.btnMPTconvert.Location = new System.Drawing.Point(8, 160);
+            this.btnMPTconvert.Location = new System.Drawing.Point(176, 72);
             this.btnMPTconvert.Name = "btnMPTconvert";
-            this.btnMPTconvert.Size = new System.Drawing.Size(186, 23);
-            this.btnMPTconvert.TabIndex = 43;
-            this.btnMPTconvert.Text = "Convert OpenMPT Note Data";
+            this.btnMPTconvert.Size = new System.Drawing.Size(121, 53);
+            this.btnMPTconvert.TabIndex = 49;
+            this.btnMPTconvert.Text = "Convert OpenMPT Note Data Column";
             this.btnMPTconvert.UseVisualStyleBackColor = true;
             this.btnMPTconvert.Click += new System.EventHandler(this.btnMPTconvert_Click);
             // 
-            // btnPortamentoDown
-            // 
-            this.btnPortamentoDown.Location = new System.Drawing.Point(8, 35);
-            this.btnPortamentoDown.Name = "btnPortamentoDown";
-            this.btnPortamentoDown.Size = new System.Drawing.Size(186, 23);
-            this.btnPortamentoDown.TabIndex = 7;
-            this.btnPortamentoDown.Text = "Slide to note";
-            this.btnPortamentoDown.UseVisualStyleBackColor = true;
-            this.btnPortamentoDown.Click += new System.EventHandler(this.btnPortamentoDown_Click);
-            // 
-            // btnPortamento
-            // 
-            this.btnPortamento.Location = new System.Drawing.Point(8, 122);
-            this.btnPortamento.Name = "btnPortamento";
-            this.btnPortamento.Size = new System.Drawing.Size(187, 23);
-            this.btnPortamento.TabIndex = 34;
-            this.btnPortamento.Text = "Note-based pitch bend";
-            this.btnPortamento.UseVisualStyleBackColor = true;
-            this.btnPortamento.Click += new System.EventHandler(this.btnPortamento_Click);
-            // 
             // btnVibrato
             // 
-            this.btnVibrato.Location = new System.Drawing.Point(8, 64);
+            this.btnVibrato.Location = new System.Drawing.Point(196, 10);
             this.btnVibrato.Name = "btnVibrato";
-            this.btnVibrato.Size = new System.Drawing.Size(187, 23);
-            this.btnVibrato.TabIndex = 32;
+            this.btnVibrato.Size = new System.Drawing.Size(101, 23);
+            this.btnVibrato.TabIndex = 43;
             this.btnVibrato.Text = "Vibrato";
             this.btnVibrato.UseVisualStyleBackColor = true;
             this.btnVibrato.Click += new System.EventHandler(this.btnVibrato_Click);
             // 
+            // btnPortamentoDown
+            // 
+            this.btnPortamentoDown.Location = new System.Drawing.Point(10, 38);
+            this.btnPortamentoDown.Name = "btnPortamentoDown";
+            this.btnPortamentoDown.Size = new System.Drawing.Size(100, 23);
+            this.btnPortamentoDown.TabIndex = 41;
+            this.btnPortamentoDown.Text = "Slide to note";
+            this.btnPortamentoDown.UseVisualStyleBackColor = true;
+            this.btnPortamentoDown.Click += new System.EventHandler(this.btnPortamentoDown_Click);
+            // 
+            // btnTremolo
+            // 
+            this.btnTremolo.Location = new System.Drawing.Point(196, 39);
+            this.btnTremolo.Name = "btnTremolo";
+            this.btnTremolo.Size = new System.Drawing.Size(101, 23);
+            this.btnTremolo.TabIndex = 45;
+            this.btnTremolo.Text = "Tremolo";
+            this.btnTremolo.UseVisualStyleBackColor = true;
+            this.btnTremolo.Click += new System.EventHandler(this.btnTremolo_Click);
+            // 
             // btnVibratoOff
             // 
-            this.btnVibratoOff.Location = new System.Drawing.Point(201, 64);
+            this.btnVibratoOff.Location = new System.Drawing.Point(303, 10);
             this.btnVibratoOff.Name = "btnVibratoOff";
-            this.btnVibratoOff.Size = new System.Drawing.Size(102, 23);
-            this.btnVibratoOff.TabIndex = 33;
-            this.btnVibratoOff.Text = "Vibrato off";
+            this.btnVibratoOff.Size = new System.Drawing.Size(61, 23);
+            this.btnVibratoOff.TabIndex = 44;
+            this.btnVibratoOff.Text = "Off";
             this.btnVibratoOff.UseVisualStyleBackColor = true;
             this.btnVibratoOff.Click += new System.EventHandler(this.btnVibratoOff_Click);
             // 
+            // btnPortamento
+            // 
+            this.btnPortamento.Location = new System.Drawing.Point(10, 72);
+            this.btnPortamento.Name = "btnPortamento";
+            this.btnPortamento.Size = new System.Drawing.Size(78, 53);
+            this.btnPortamento.TabIndex = 47;
+            this.btnPortamento.Text = "Note-based pitch bend";
+            this.btnPortamento.UseVisualStyleBackColor = true;
+            this.btnPortamento.Click += new System.EventHandler(this.btnPortamento_Click);
+            // 
+            // btnPortamentoOff
+            // 
+            this.btnPortamentoOff.Location = new System.Drawing.Point(116, 10);
+            this.btnPortamentoOff.Name = "btnPortamentoOff";
+            this.btnPortamentoOff.Size = new System.Drawing.Size(61, 51);
+            this.btnPortamentoOff.TabIndex = 42;
+            this.btnPortamentoOff.Text = "Slide Off";
+            this.btnPortamentoOff.UseVisualStyleBackColor = true;
+            this.btnPortamentoOff.Click += new System.EventHandler(this.btnPortamentoOff_Click);
+            // 
             // tabOther
             // 
-            this.tabOther.Controls.Add(this.label16);
+            this.tabOther.Controls.Add(this.cboWaveform);
+            this.tabOther.Controls.Add(this.btnTuning);
             this.tabOther.Controls.Add(this.chkMiscFeedback);
             this.tabOther.Location = new System.Drawing.Point(4, 22);
             this.tabOther.Name = "tabOther";
             this.tabOther.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOther.Size = new System.Drawing.Size(311, 247);
+            this.tabOther.Size = new System.Drawing.Size(374, 239);
             this.tabOther.TabIndex = 5;
             this.tabOther.Text = "Other";
             this.tabOther.UseVisualStyleBackColor = true;
             // 
-            // label16
+            // cboWaveform
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(62, 118);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(188, 13);
-            this.label16.TabIndex = 1;
-            this.label16.Text = "(I may put more stuff here in the future)";
+            this.cboWaveform.FormattingEnabled = true;
+            this.cboWaveform.Items.AddRange(new object[] {
+            "Sine",
+            "Square",
+            "Sawtooth",
+            "Triangle",
+            "Noise"});
+            this.cboWaveform.Location = new System.Drawing.Point(141, 31);
+            this.cboWaveform.Name = "cboWaveform";
+            this.cboWaveform.Size = new System.Drawing.Size(74, 21);
+            this.cboWaveform.TabIndex = 57;
+            this.cboWaveform.SelectedIndexChanged += new System.EventHandler(this.cboWaveform_SelectedIndexChanged);
+            // 
+            // btnTuning
+            // 
+            this.btnTuning.Location = new System.Drawing.Point(6, 29);
+            this.btnTuning.Name = "btnTuning";
+            this.btnTuning.Size = new System.Drawing.Size(129, 23);
+            this.btnTuning.TabIndex = 56;
+            this.btnTuning.Text = "Play Tuning Waveform";
+            this.btnTuning.UseVisualStyleBackColor = true;
+            this.btnTuning.Click += new System.EventHandler(this.btnTuning_Click);
             // 
             // chkMiscFeedback
             // 
             this.chkMiscFeedback.AutoSize = true;
             this.chkMiscFeedback.Location = new System.Drawing.Point(6, 6);
             this.chkMiscFeedback.Name = "chkMiscFeedback";
-            this.chkMiscFeedback.Size = new System.Drawing.Size(153, 17);
-            this.chkMiscFeedback.TabIndex = 0;
-            this.chkMiscFeedback.Text = "Enable misc. sound effects";
+            this.chkMiscFeedback.Size = new System.Drawing.Size(140, 17);
+            this.chkMiscFeedback.TabIndex = 55;
+            this.chkMiscFeedback.Text = "Enable UI sound effects";
             this.chkMiscFeedback.UseVisualStyleBackColor = true;
             this.chkMiscFeedback.CheckedChanged += new System.EventHandler(this.chkMiscFeedback_CheckedChanged);
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(21, 252);
+            this.label23.Location = new System.Drawing.Point(21, 251);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(40, 13);
             this.label23.TabIndex = 15;
@@ -785,18 +780,18 @@
             // 
             // LengthDisplay
             // 
-            this.LengthDisplay.AutoSize = true;
-            this.LengthDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LengthDisplay.Location = new System.Drawing.Point(89, 252);
+            this.LengthDisplay.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LengthDisplay.Location = new System.Drawing.Point(92, 251);
             this.LengthDisplay.Name = "LengthDisplay";
-            this.LengthDisplay.Size = new System.Drawing.Size(51, 13);
+            this.LengthDisplay.Size = new System.Drawing.Size(63, 16);
             this.LengthDisplay.TabIndex = 14;
             this.LengthDisplay.Text = "[XX XX]";
+            this.LengthDisplay.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // VolBar
             // 
             this.VolBar.LargeChange = 50;
-            this.VolBar.Location = new System.Drawing.Point(224, 188);
+            this.VolBar.Location = new System.Drawing.Point(224, 182);
             this.VolBar.Maximum = 15;
             this.VolBar.Name = "VolBar";
             this.VolBar.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -809,7 +804,7 @@
             // StaccatoBar
             // 
             this.StaccatoBar.LargeChange = 50;
-            this.StaccatoBar.Location = new System.Drawing.Point(173, 188);
+            this.StaccatoBar.Location = new System.Drawing.Point(173, 182);
             this.StaccatoBar.Maximum = 7;
             this.StaccatoBar.Name = "StaccatoBar";
             this.StaccatoBar.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -823,7 +818,7 @@
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(165, 172);
+            this.label21.Location = new System.Drawing.Point(165, 166);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(111, 13);
             this.label21.TabIndex = 5;
@@ -831,14 +826,15 @@
             // 
             // txtMultiplier
             // 
-            this.txtMultiplier.Location = new System.Drawing.Point(92, 223);
+            this.txtMultiplier.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtMultiplier.Location = new System.Drawing.Point(92, 226);
             this.txtMultiplier.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.txtMultiplier.Name = "txtMultiplier";
-            this.txtMultiplier.Size = new System.Drawing.Size(63, 20);
+            this.txtMultiplier.Size = new System.Drawing.Size(63, 22);
             this.txtMultiplier.TabIndex = 18;
             this.txtMultiplier.Value = new decimal(new int[] {
             1,
@@ -849,7 +845,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(21, 225);
+            this.label20.Location = new System.Drawing.Point(21, 228);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(51, 13);
             this.label20.TabIndex = 3;
@@ -858,7 +854,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(21, 199);
+            this.label19.Location = new System.Drawing.Point(21, 201);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(65, 13);
             this.label19.TabIndex = 1;
@@ -866,6 +862,7 @@
             // 
             // cboNoteLength
             // 
+            this.cboNoteLength.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboNoteLength.FormattingEnabled = true;
             this.cboNoteLength.Items.AddRange(new object[] {
             "06",
@@ -873,9 +870,9 @@
             "18",
             "30",
             "60"});
-            this.cboNoteLength.Location = new System.Drawing.Point(92, 196);
+            this.cboNoteLength.Location = new System.Drawing.Point(92, 198);
             this.cboNoteLength.Name = "cboNoteLength";
-            this.cboNoteLength.Size = new System.Drawing.Size(63, 21);
+            this.cboNoteLength.Size = new System.Drawing.Size(63, 22);
             this.cboNoteLength.TabIndex = 17;
             this.cboNoteLength.Text = "18";
             this.cboNoteLength.TextChanged += new System.EventHandler(this.cboNoteLength_TextChanged);
@@ -1074,9 +1071,9 @@
             // 
             // btnDividePrompt
             // 
-            this.btnDividePrompt.Location = new System.Drawing.Point(24, 167);
+            this.btnDividePrompt.Location = new System.Drawing.Point(12, 161);
             this.btnDividePrompt.Name = "btnDividePrompt";
-            this.btnDividePrompt.Size = new System.Drawing.Size(94, 23);
+            this.btnDividePrompt.Size = new System.Drawing.Size(143, 31);
             this.btnDividePrompt.TabIndex = 41;
             this.btnDividePrompt.Text = "Divide length?";
             this.btnDividePrompt.UseVisualStyleBackColor = true;
@@ -1086,7 +1083,7 @@
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(620, 294);
+            this.ClientSize = new System.Drawing.Size(682, 285);
             this.Controls.Add(this.btnDividePrompt);
             this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.btnRest);
@@ -1124,17 +1121,16 @@
             this.Text = "PK Piano";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
-            this.tabChannel.ResumeLayout(false);
-            this.tabChannel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).EndInit();
             this.tabInitial.ResumeLayout(false);
             this.tabInitial.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFeedback)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoDelay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoVol)).EndInit();
-            this.tabSpecial.ResumeLayout(false);
+            this.tabChannel.ResumeLayout(false);
+            this.tabChannel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).EndInit();
             this.tabOther.ResumeLayout(false);
             this.tabOther.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).EndInit();
@@ -1148,7 +1144,6 @@
         #endregion
 
         private System.Windows.Forms.TabPage tabChannel;
-        private System.Windows.Forms.TabPage tabSpecial;
         private System.Windows.Forms.TabPage tabInitial;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBox8;
@@ -1200,10 +1195,7 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label19;
         internal System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.Label txtChannelVolumeDisplay;
-        private System.Windows.Forms.Label txtPanningDisplay;
         private System.Windows.Forms.Label txtEchoDisplay;
-        private System.Windows.Forms.Label label24;
         internal System.Windows.Forms.Button btnContinue;
         internal System.Windows.Forms.Button btnRest;
         internal System.Windows.Forms.Button btnC;
@@ -1233,7 +1225,10 @@
         private System.Windows.Forms.Button btnTremolo;
         private System.Windows.Forms.TabPage tabOther;
         private System.Windows.Forms.CheckBox chkMiscFeedback;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label txtChannelVolumeDisplay;
+        private System.Windows.Forms.Label txtPanningDisplay;
+        private System.Windows.Forms.ComboBox cboWaveform;
+        private System.Windows.Forms.Button btnTuning;
     }
 }
 

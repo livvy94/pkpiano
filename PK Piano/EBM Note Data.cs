@@ -93,10 +93,7 @@
 
         public static bool lengthIsInvalid(int length)
         {
-            if (length > 0x7F)
-                return true; //numbers higher than 0x7F count as notes and not note lengths
-
-            return false;
+            return length > 0x7F; //numbers higher than 0x7F count as notes and not note lengths
         }
 
         public static int[] validateNoteLength(int length)
@@ -106,10 +103,10 @@
             //result[0] is the new length
             //result[1] is the appropriate multiplier
             //...should I make this into a class? Probably.
-            
+
             result[0] = length; //if this makes it to the end, then there was no change necessary
             result[1] = multiplier;
-            
+
             while (lengthIsInvalid(result[0]))
             {
                 multiplier++;

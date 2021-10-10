@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PK_Piano</RootNamespace>
     <AssemblyName>PK Piano</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
@@ -39,6 +39,7 @@
     <ErrorReport>none</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +51,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>6FC77D3DBEDC95B0D2E84C0F2A870F4F20B6C0A3</ManifestCertificateThumbprint>
@@ -77,8 +79,38 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.2.0.1\lib\netstandard2.0\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Asio, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.Asio.2.0.0\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.Core.2.0.0\lib\netstandard2.0\NAudio.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Midi, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.Midi.2.0.1\lib\netstandard2.0\NAudio.Midi.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Wasapi, Version=2.0.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.Wasapi.2.0.0\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WinForms, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.WinForms.2.0.1\lib\net472\NAudio.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WinMM, Version=2.0.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.WinMM.2.0.1\lib\netstandard2.0\NAudio.WinMM.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -99,6 +131,7 @@
     <Compile Include="MPTColumn.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToneGenerator.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -112,7 +145,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="PK Piano_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -151,85 +184,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
-    <None Include="Resources\ExtraAudio Window.wav" />
     <None Include="Resources\ExtraAudio UpDown Tick.wav" />
     <None Include="Resources\ExtraAudio The A Button.wav" />
     <None Include="Resources\ExtraAudio Text Blip.wav" />
-    <None Include="Resources\ExtraAudio No.wav" />
     <None Include="Resources\ExtraAudio LeftRight.wav" />
     <None Include="Resources\ExtraAudio Equipped!.wav" />
-    <None Include="Resources\6zB.wav" />
-    <None Include="Resources\6zAsharp.wav" />
-    <None Include="Resources\6zA.wav" />
-    <None Include="Resources\6Gsharp.wav" />
-    <None Include="Resources\6G.wav" />
-    <None Include="Resources\6Fsharp.wav" />
-    <None Include="Resources\6F.wav" />
-    <None Include="Resources\6E.wav" />
-    <None Include="Resources\6Dsharp.wav" />
-    <None Include="Resources\6D.wav" />
-    <None Include="Resources\6Csharp.wav" />
-    <None Include="Resources\6C.wav" />
-    <None Include="Resources\5zB.wav" />
-    <None Include="Resources\5zAsharp.wav" />
-    <None Include="Resources\5zA.wav" />
-    <None Include="Resources\5Gsharp.wav" />
-    <None Include="Resources\5G.wav" />
-    <None Include="Resources\5Fsharp.wav" />
-    <None Include="Resources\5F.wav" />
-    <None Include="Resources\5E.wav" />
-    <None Include="Resources\5Dsharp.wav" />
-    <None Include="Resources\5D.wav" />
-    <None Include="Resources\5Csharp.wav" />
-    <None Include="Resources\5C.wav" />
-    <None Include="Resources\4zB.wav" />
-    <None Include="Resources\4zAsharp.wav" />
-    <None Include="Resources\4zA.wav" />
-    <None Include="Resources\4Gsharp.wav" />
-    <None Include="Resources\4G.wav" />
-    <None Include="Resources\4Fsharp.wav" />
-    <None Include="Resources\4F.wav" />
-    <None Include="Resources\4E.wav" />
-    <None Include="Resources\4Dsharp.wav" />
-    <None Include="Resources\4D.wav" />
-    <None Include="Resources\4Csharp.wav" />
-    <None Include="Resources\4C.wav" />
-    <None Include="Resources\3zB.wav" />
-    <None Include="Resources\3zAsharp.wav" />
-    <None Include="Resources\3zA.wav" />
-    <None Include="Resources\3Gsharp.wav" />
-    <None Include="Resources\3G.wav" />
-    <None Include="Resources\3Fsharp.wav" />
-    <None Include="Resources\3F.wav" />
-    <None Include="Resources\3E.wav" />
-    <None Include="Resources\3Dsharp.wav" />
-    <None Include="Resources\3D.wav" />
-    <None Include="Resources\3Csharp.wav" />
-    <None Include="Resources\3C.wav" />
-    <None Include="Resources\2zB.wav" />
-    <None Include="Resources\2zAsharp.wav" />
-    <None Include="Resources\2zA.wav" />
-    <None Include="Resources\2Gsharp.wav" />
-    <None Include="Resources\2G.wav" />
-    <None Include="Resources\2Fsharp.wav" />
-    <None Include="Resources\2F.wav" />
-    <None Include="Resources\2E.wav" />
-    <None Include="Resources\2Dsharp.wav" />
-    <None Include="Resources\2D.wav" />
-    <None Include="Resources\2Csharp.wav" />
-    <None Include="Resources\2C.wav" />
-    <None Include="Resources\1zB.wav" />
-    <None Include="Resources\1zAsharp.wav" />
-    <None Include="Resources\1zA.wav" />
-    <None Include="Resources\1Gsharp.wav" />
-    <None Include="Resources\1G.wav" />
-    <None Include="Resources\1Fsharp.wav" />
-    <None Include="Resources\1F.wav" />
-    <None Include="Resources\1E.wav" />
-    <None Include="Resources\1Dsharp.wav" />
-    <None Include="Resources\1D.wav" />
-    <None Include="Resources\1Csharp.wav" />
-    <None Include="Resources\1C.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
