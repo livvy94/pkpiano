@@ -3,10 +3,9 @@ using System.Text;
 
 namespace PK_Piano
 {
-    //These classes are a very recent addition. TODO: Move more of the logic to classes like this
     class MPTColumn
     {
-        public const string VALID = "Valid!";
+        public const string VALID = "Valid!"; //TODO: make this validation thing less janky
 
         public static string GetEBMdata(string input)
         {

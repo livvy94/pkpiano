@@ -4,6 +4,7 @@ using System.Media;
 using System.Text;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using System.Collections.Generic;
 
 namespace PK_Piano
 {
@@ -30,8 +31,7 @@ namespace PK_Piano
         byte echoDelay;
         byte echoFeedback;
         byte echoFilter;
-
-        ToneGenerator.PlaybackThing playbackThing = new ToneGenerator.PlaybackThing();
+        readonly ToneGenerator.PlaybackThing playbackThing = new ToneGenerator.PlaybackThing();
 
         private void SendNote(byte input)
         {
@@ -730,78 +730,128 @@ namespace PK_Piano
 
         private void btnC8eraser_Click(object sender, EventArgs e)
         {
-            int originalLength = 0x06; //TODO: write something that doesn't rely on this being here and just adds all lengths up
-
             //VALIDATION
-            string input = Clipboard.GetText();
+            //string clipboardContents = Clipboard.GetText();
+            //if (string.IsNullOrWhiteSpace(clipboardContents)) return; //only continue if there's something there
+            //if (clipboardContents.Contains("Not enough rows to process")) return;
 
-            if (string.IsNullOrWhiteSpace(input)) return; //only continue if there's something there
-            if (input.Contains("Not enough rows to process")) return;
+            //clipboardContents = clipboardContents.Replace("[", "").Replace("]", ""); //get rid of brackets
+            //var input = SongPiece.StringToBytes(clipboardContents);
+            var input = SongPiece.StringToBytes("0C 7F A7 C8 0C A7 C8");
+            var goodVersion = SongPiece.StringToBytes("18 7F A7 18 A7");
+            var optimizedBytes = ProcessBytes(input);
 
-            //split the contents on spaces to a string array
-            input = input.Replace("[", "").Replace("]", ""); //get rid of brackets
-
-            //Clear out any lingering note length commands in the text itself
-            var firstCode = Convert.ToInt32(input.Substring(0, 2), 16); //convert the first code in the clipboard to an int
-            if (firstCode > 0xE0) return; //E0 to FF are all effect commands
-            if (firstCode < 0x80) //any code less than 80 (C-1) is a note length and should be removed
-            {
-                input = input.Replace(firstCode.ToString("X2") + " ", "");
-                originalLength = firstCode; //if it's not 06, it should be set appropriately so later on the right value gets put at the end of the clipboard result
-            }
-
-            //Make a string array with all of the notes in it
-            var notes = input.Split(' ');
-
-            if (notes.Length <= 1)
-            {
-                MessageBox.Show("This looks like it's just one note. No changes necessary here!");
-                return;
-            }
-
-            //check to see that only the first one is not C8
-            for (var i = 1; i < notes.Length; i++)
-            {
-                if (notes[i] != "C8")
-                {
-                    MessageBox.Show("Looks like there's more than one note in here...\r\nStripping multiple notes hasn't been implemented yet.\r\n(The note in question is " + notes[i] + ")");
-                    return;
-                }
-            }
-
-            var count = notes.Length;
-
-            //returns [new length, appropriate multiplier]
-            var newLength = EBM_Note_Data.validateNoteLength(originalLength * count);
-
-            var message = $"Number of notes: {count}\r\n"
-                        + "Equivalent note length: ";
-
-            if (newLength[1] != 1)
-                message += $"[{newLength[0]:X2}], {getWrittenNumber(newLength[1])} times.";
-            else
-                message += $"[{newLength[0]:X2}]";
-
-            MessageBox.Show(message);
-
-            //set the clipboard to the new length, whatever note is at the start of what was copied, and then the original length so when you paste it in, the rest of the column doesn't go out of whack
-            var result = new StringBuilder();
-            result.Append(newLength[0].ToString("X2")); //the length that the new
-            result.Append(" ");
-            result.Append(notes[0]); //The note at the top of the clipboard contents
-            result.Append(" ");
-
-            while (newLength[1] > 1) //this should only run if
-            {
-                result.Append("C8 "); //put in however many C8s are needed to make this the same size as the original clipboard contents
-                newLength[1]--;
-            }
-            result.Append(originalLength.ToString("X2")); //the 06 so things don't jump around when you paste it in
-
-            Clipboard.SetText(result.ToString()); //paste this into EBMusEd for glorious ease of use
+            RunTest(optimizedBytes, goodVersion);
+            //Clipboard.SetText(result.ToString());
             if (sfxEnabled) sfxEquipped.Play();
         }
 
+        public static List<byte> ProcessBytes(List<byte> bytesInput)
+        {
+            var result = new List<byte>();
+            var piece = new SongPiece();
+            bool lastByteWasANote = false;
+            bool lastByteWasANoteLength = false;
+            bool lastByteWasAnEffect = false;
+            int effectSkip = 0;
+            foreach (var b in bytesInput)
+            {
+                if (effectSkip > 0) //for effects with parameters, which shouldn't be processed
+                {
+                    effectSkip--;
+                    piece.tempNoteCollection.Add(b); //add the effect, byte by byte
+                    continue;
+                }
+
+                if (lastByteWasAnEffect)
+                {
+                    result.AddRange(piece.ParseHex());
+                    piece = new SongPiece(piece.noteLength, piece.noteLengthMultiplier); //keep the old note settings!
+                    lastByteWasAnEffect = false;
+                }
+
+                if (SongPiece.IsNoteLength(b))
+                {
+                    //Skip redundant note lengths
+                    if (b == piece.noteLength && piece.noteLengthMultiplier == 1)
+                        continue;
+
+                    if (lastByteWasANote)
+                    {
+                        //Add the contents of tempNoteCollection to the result
+                        result.AddRange(piece.ParseHex());
+                        lastByteWasANote = false;
+                        piece = new SongPiece(); //clear out everything and start from scratch
+                    }
+
+                    if (lastByteWasANoteLength)
+                    {
+                        piece.noteStyle = b; //It's a note style, like 7F
+                        lastByteWasANoteLength = false;
+                    }
+                    else
+                    {
+                        piece.noteLength = b;
+                        lastByteWasANoteLength = true;
+                    }
+
+                    continue;
+                }
+
+                if (SongPiece.IsNote(b))
+                {
+                    lastByteWasANote = true;
+                    lastByteWasANoteLength = false; //just in case
+                    if (b == 0xC8)
+                    {
+                        piece.noteLengthMultiplier++; //keep track of how many C8s there have been
+                        continue;
+                    }
+                    else
+                    {
+                        piece.tempNoteCollection.Add(b); //add the note to the collection
+                    }
+                }
+
+                if (SongPiece.IsEffect(b))
+                {
+                    effectSkip = SongPiece.GetNumberOfParameters(b);
+                    piece.tempNoteCollection.Add(b);
+                    lastByteWasAnEffect = true;
+                }
+            }
+
+            //Add any remaining notes to result
+            result.AddRange(piece.ParseHex());
+            return result;
+        }
+
+        public static void RunTest(List<byte> resultBytes, List<byte> goodVersionBytes)
+        {
+            //DIY unit test
+            string result = "";
+            foreach (var b in resultBytes)
+            {
+                result += b.ToString("X2") + " "; //convert the list back into a string
+            }
+
+            string goodVersion = "";
+            foreach (var b in goodVersionBytes)
+            {
+                goodVersion += b.ToString("X2") + " "; //convert the list back into a string
+            }
+
+            result = result.Trim();
+            goodVersion = goodVersion.Trim();
+
+            var message = "";
+            if (result == goodVersion)
+                message += "*** PASS ***\r\n";
+            else
+                message += "*** FAIL ***\r\n";
+            message += "Result:\r\n" + result + "\r\nDesired output:\r\n" + goodVersion;
+            MessageBox.Show(message);
+        }
 
 
         //Text blip stuff
