@@ -28,10 +28,12 @@ namespace PK_Piano
 
 		public List<byte> ParseHex()
 		{
-			var result = new List<byte>();
-			result.Add((byte)(noteLength * noteLengthMultiplier));
+            var result = new List<byte>
+            {
+                (byte)(noteLength * noteLengthMultiplier)
+            };
 
-			if (noteStyle != 0xFF)
+            if (noteStyle != 0xFF)
 				result.Add(noteStyle);
 
 			result.AddRange(tempNoteCollection);

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Media;
-using System.Text;
-using NAudio.Wave;
+﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using System;
 using System.Collections.Generic;
+using System.Media;
+using System.Windows.Forms;
 
 namespace PK_Piano
 {
@@ -731,43 +730,44 @@ namespace PK_Piano
         private void btnC8eraser_Click(object sender, EventArgs e)
         {
             //VALIDATION
-            //string clipboardContents = Clipboard.GetText();
-            //if (string.IsNullOrWhiteSpace(clipboardContents)) return; //only continue if there's something there
-            //if (clipboardContents.Contains("Not enough rows to process")) return;
+            string clipboardContents = Clipboard.GetText();
+            if (string.IsNullOrWhiteSpace(clipboardContents)) return; //only continue if there's something there
+            if (clipboardContents.Contains("Not enough rows to process")) return;
+            clipboardContents = clipboardContents.Replace("[", "").Replace("]", ""); //get rid of brackets
 
-            //clipboardContents = clipboardContents.Replace("[", "").Replace("]", ""); //get rid of brackets
-            //var input = SongPiece.StringToBytes(clipboardContents);
-            var input = SongPiece.StringToBytes("0C 7F A7 C8 0C A7 C8");
-            var goodVersion = SongPiece.StringToBytes("18 7F A7 18 A7");
+            List<byte> input;
+
+            try
+            {
+                input = SongPiece.StringToBytes(clipboardContents);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            //var input = SongPiece.StringToBytes("0C A7 C8 C8"); //DIY Unit Test
+            //var goodVersion = SongPiece.StringToBytes("24 A7");
             var optimizedBytes = ProcessBytes(input);
+            //RunTest(optimizedBytes, goodVersion);
 
-            RunTest(optimizedBytes, goodVersion);
-            //Clipboard.SetText(result.ToString());
+            Clipboard.SetText(optimizedBytes);
             if (sfxEnabled) sfxEquipped.Play();
         }
 
-        public static List<byte> ProcessBytes(List<byte> bytesInput)
+        public static string ProcessBytes(List<byte> bytesInput)
         {
+            const string NO_NOTE_LENGTH_ERROR = "In order for the C8 Eraser function to work correctly, each note needs a note length in front of it.";
             var result = new List<byte>();
             var piece = new SongPiece();
             bool lastByteWasANote = false;
             bool lastByteWasANoteLength = false;
-            bool lastByteWasAnEffect = false;
-            int effectSkip = 0;
             foreach (var b in bytesInput)
             {
-                if (effectSkip > 0) //for effects with parameters, which shouldn't be processed
+                if (piece.tempNoteCollection.Count > 1)
                 {
-                    effectSkip--;
-                    piece.tempNoteCollection.Add(b); //add the effect, byte by byte
-                    continue;
-                }
-
-                if (lastByteWasAnEffect)
-                {
-                    result.AddRange(piece.ParseHex());
-                    piece = new SongPiece(piece.noteLength, piece.noteLengthMultiplier); //keep the old note settings!
-                    lastByteWasAnEffect = false;
+                    throw new Exception(NO_NOTE_LENGTH_ERROR);
                 }
 
                 if (SongPiece.IsNoteLength(b))
@@ -805,61 +805,74 @@ namespace PK_Piano
                     if (b == 0xC8)
                     {
                         piece.noteLengthMultiplier++; //keep track of how many C8s there have been
-                        continue;
                     }
                     else
                     {
                         piece.tempNoteCollection.Add(b); //add the note to the collection
                     }
+                    continue;
                 }
 
                 if (SongPiece.IsEffect(b))
                 {
-                    effectSkip = SongPiece.GetNumberOfParameters(b);
-                    piece.tempNoteCollection.Add(b);
-                    lastByteWasAnEffect = true;
+                    //I'm abandoning this functionality, but if anyone would like to try
+                    //implementing it, I'd greatly appreciate it.
+                    throw new Exception($"Effects such as {b:X2} are not supported yet.");
                 }
+            }
+
+            if (piece.noteLength == 0xFF)
+            {
+                throw new Exception(NO_NOTE_LENGTH_ERROR);
             }
 
             //Add any remaining notes to result
             result.AddRange(piece.ParseHex());
-            return result;
-        }
 
-        public static void RunTest(List<byte> resultBytes, List<byte> goodVersionBytes)
-        {
-            //DIY unit test
-            string result = "";
-            foreach (var b in resultBytes)
+            //Convert the byte array to a string
+            var resultString = "";
+            foreach (var num in result)
             {
-                result += b.ToString("X2") + " "; //convert the list back into a string
+                resultString += num.ToString("X2") + ' ';
             }
 
-            string goodVersion = "";
-            foreach (var b in goodVersionBytes)
-            {
-                goodVersion += b.ToString("X2") + " "; //convert the list back into a string
-            }
-
-            result = result.Trim();
-            goodVersion = goodVersion.Trim();
-
-            var message = "";
-            if (result == goodVersion)
-                message += "*** PASS ***\r\n";
-            else
-                message += "*** FAIL ***\r\n";
-            message += "Result:\r\n" + result + "\r\nDesired output:\r\n" + goodVersion;
-            MessageBox.Show(message);
+            return resultString.TrimEnd(' ');
         }
+
+        //public static void RunTest(List<byte> resultBytes, List<byte> goodVersionBytes)
+        //{
+        //    //DIY Unit Test
+        //    string result = "";
+        //    foreach (var b in resultBytes)
+        //    {
+        //        result += b.ToString("X2") + " "; //convert the list back into a string
+        //    }
+
+        //    string goodVersion = "";
+        //    foreach (var b in goodVersionBytes)
+        //    {
+        //        goodVersion += b.ToString("X2") + " "; //convert the list back into a string
+        //    }
+
+        //    result = result.Trim();
+        //    goodVersion = goodVersion.Trim();
+
+        //    var message = "";
+        //    if (result == goodVersion)
+        //        message += "*** PASS ***\r\n";
+        //    else
+        //        message += "*** FAIL ***\r\n";
+        //    message += "Result:\r\n" + result + "\r\nDesired output:\r\n" + goodVersion;
+        //    MessageBox.Show(message);
+        //}
 
 
         //Text blip stuff
         //If the sfxEnabled boolean value is set to true, then various parts of the UI will give audio feedback.
         //I'm getting kind of tired of it, though, so I'm going to make it toggleable in the future.
         byte numberOfLettersBeforeSound;
-        SoundPlayer sfxTextBlip = new SoundPlayer(Properties.Resources.ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance of SoundPlayer *every* time
-        SoundPlayer sfxEquipped = new SoundPlayer(Properties.Resources.ExtraAudio_Equipped_);
+        readonly SoundPlayer sfxTextBlip = new SoundPlayer(Properties.Resources.ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance of SoundPlayer *every* time
+        readonly SoundPlayer sfxEquipped = new SoundPlayer(Properties.Resources.ExtraAudio_Equipped_);
 
         private void PlayTextTypeSound(string type)
         {
@@ -957,6 +970,14 @@ namespace PK_Piano
 
             toolTip1.SetToolTip(btnCopySlidingPan, "[E2 length panning]");
             toolTip1.SetToolTip(btnCopySlidingVolume, "[EE length volume]");
+
+            toolTip1.SetToolTip(btnTremolo, "[EB start speed range]");
+            toolTip1.SetToolTip(btnChannelTranspose, "Transpose a channel by a number of semitones.");
+            toolTip1.SetToolTip(btnMPTconvert, "Convert a single channel of notes copied from an OpenMPT module.");
+            toolTip1.SetToolTip(btnC8eraser, "Take a bunch of notes in the clipboard and attempt to optimize them.");
+
+            toolTip1.SetToolTip(btnTempo, "[E7 tempo]");
+            toolTip1.SetToolTip(btnGlobalVolume, "[E5 volume]");
 
             //toolTip1.SetToolTip(ANYTHING, "");
             //toolTip1.SetToolTip(ANYTHING, "");
