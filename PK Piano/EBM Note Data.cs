@@ -10,32 +10,32 @@
             string result = "";
 
             //no instrument checking because it'll be different anyways
-
+            const string templengthlol = "06 ";
             switch (octave)
             {
                 case "1":
-                    result = GetHexCode(0x80, note);
+                    result = templengthlol + GetHexCode(0x80, note);
                     break;
                 case "2":
-                    result = GetHexCode(0x8C, note);
+                    result = templengthlol + GetHexCode(0x8C, note);
                     break;
                 case "3":
-                    result = GetHexCode(0x98, note);
+                    result = templengthlol + GetHexCode(0x98, note);
                     break;
                 case "4":
-                    result = GetHexCode(0xA4, note);
+                    result = templengthlol + GetHexCode(0xA4, note);
                     break;
                 case "5":
-                    result = GetHexCode(0xB0, note);
+                    result = templengthlol + GetHexCode(0xB0, note);
                     break;
                 case "6":
-                    result = GetHexCode(0xBC, note);
+                    result = templengthlol + GetHexCode(0xBC, note);
                     break;
                 case ".":
                     result = "C8 "; //tie
                     break;
                 case "^":
-                    result = "C9 "; //rest
+                    result = templengthlol + "C9 "; //rest
                     break;
                 case "=":
                     result = "C8 "; //this is a volume envelope fade, for which N-SPC doesn't have an equivalent
@@ -48,55 +48,32 @@
         static string GetHexCode(int startingHex, string MPTnote)
         {
             int result = 0xFF;
+            int offset = 0;
             switch (MPTnote)
             {
-                case "C-": //those '-' characters are just placeholders for when a sharp is not present
-                    result = startingHex;
-                    break;
-                case "C#":
-                    result = startingHex + 0x01;
-                    break;
-                case "D-":
-                    result = startingHex + 0x02;
-                    break;
-                case "D#":
-                    result = startingHex + 0x03;
-                    break;
-                case "E-":
-                    result = startingHex + 0x04;
-                    break;
-                case "F-":
-                    result = startingHex + 0x05;
-                    break;
-                case "F#":
-                    result = startingHex + 0x06;
-                    break;
-                case "G-":
-                    result = startingHex + 0x07;
-                    break;
-                case "G#":
-                    result = startingHex + 0x08;
-                    break;
-                case "A-":
-                    result = startingHex + 0x09;
-                    break;
-                case "A#":
-                    result = startingHex + 0x0A;
-                    break;
-                case "B-":
-                    result = startingHex + 0x0B;
-                    break;
+                case "C-": offset = 0; break;
+                case "C#": offset = 1; break;
+                case "D-": offset = 2; break;
+                case "D#": offset = 3; break;
+                case "E-": offset = 4; break;
+                case "F-": offset = 5; break;
+                case "F#": offset = 6; break;
+                case "G-": offset = 7; break;
+                case "G#": offset = 8; break;
+                case "A-": offset = 9; break;
+                case "A#": offset = 10; break;
+                case "B-": offset = 11; break;
             }
-
+            result = startingHex + offset;
             return result.ToString("X") + " ";
         }
 
-        public static bool lengthIsInvalid(int length)
+        public static bool LengthIsInvalid(int length)
         {
             return length > 0x7F; //numbers higher than 0x7F count as notes and not note lengths
         }
 
-        public static int[] validateNoteLength(int length)
+        public static int[] ValidateNoteLength(int length)
         {
             int multiplier = 1;
             int[] result = new int[2];
@@ -107,7 +84,7 @@
             result[0] = length; //if this makes it to the end, then there was no change necessary
             result[1] = multiplier;
 
-            while (lengthIsInvalid(result[0]))
+            while (LengthIsInvalid(result[0]))
             {
                 multiplier++;
                 result[0] = length / multiplier;

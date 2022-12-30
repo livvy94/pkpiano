@@ -32,15 +32,24 @@ namespace PK_Piano
         byte echoFilter;
         readonly ToneGenerator.PlaybackThing playbackThing = new ToneGenerator.PlaybackThing();
 
-        private void SendNote(byte input)
+        private void SendNote(byte firstOctaveNote)
         {
+            //The number we're giving this function is that of the first octave
+            //So, apply the octave global variable to get the right value!
+            //Except for C8 or C9. Those shouldn't be affected by octave stuff.
+            byte result;
+            if (firstOctaveNote < 0xC8)
+                result = (byte)(firstOctaveNote + (octave - 1) * 0xC);
+            else
+                result = firstOctaveNote;
+
             //Takes a byte, puts it in the label, and puts it in the clipboard
             FormatNoteLength();
-            var note = "[" + input.ToString("X2") + "]";
+            var note = "[" + result.ToString("X2") + "]";
             DispLabel.Text = note;
             Clipboard.SetText(note);
 
-            UpdateChannelTranspose(input);
+            UpdateChannelTranspose(result);
         }
 
         private void SendNote(string input)
@@ -85,7 +94,7 @@ namespace PK_Piano
             var output = $"[{multipliedLength:X2} {noteStacatto:X}{noteVolume:X}]";
 
             //show the divide button if the length is bigger than the maximum length a note can have
-            btnDividePrompt.Visible = EBM_Note_Data.lengthIsInvalid(multipliedLength);
+            btnDividePrompt.Visible = EBM_Note_Data.LengthIsInvalid(multipliedLength);
 
             LengthDisplay.Text = output;
             Clipboard.SetText(output);
@@ -94,7 +103,7 @@ namespace PK_Piano
 
         private void btnDividePrompt_Click(object sender, EventArgs e)
         {
-            var lengthResult = EBM_Note_Data.validateNoteLength(noteLength * multiplier);
+            var lengthResult = EBM_Note_Data.ValidateNoteLength(noteLength * multiplier);
             if (lengthResult[1] == 1) return; //only proceed if division is necessary
 
             var message = $"Instead of that huge value, use {getWrittenNumber(lengthResult[1])} "
@@ -105,7 +114,7 @@ namespace PK_Piano
 
         private string getWrittenNumber(int input)
         {
-            string writtenNumber;
+            string writtenNumber = "ERROR";
             switch (input) //this will only be used in note length multipliers, so only these three numbers will ever be needed
             {
                 case 2:
@@ -116,9 +125,6 @@ namespace PK_Piano
                     break;
                 case 4:
                     writtenNumber = "four";
-                    break;
-                default:
-                    writtenNumber = "ERROR";
                     break;
             }
             return writtenNumber;
@@ -160,26 +166,24 @@ namespace PK_Piano
         {
             SetAllEchoValues(); //I keep getting 00s until I move one of the sliders, which is annoying. Hopefully this should fix it.
 
-            var scratchPaper = ""; //Build up the binary number bit by bit
-
-            scratchPaper += getBinaryNumber(checkBox8.Checked);
-            scratchPaper += getBinaryNumber(checkBox7.Checked);
-            scratchPaper += getBinaryNumber(checkBox6.Checked);
-            scratchPaper += getBinaryNumber(checkBox5.Checked);
-            scratchPaper += getBinaryNumber(checkBox4.Checked);
-            scratchPaper += getBinaryNumber(checkBox3.Checked);
-            scratchPaper += getBinaryNumber(checkBox2.Checked);
-            scratchPaper += getBinaryNumber(checkBox1.Checked);
-
-            echoChannels = Convert.ToByte(scratchPaper, 2); //convert scratchPaper to a real byte
+            echoChannels = GetNumberFromBooleans(checkBox8.Checked, checkBox7.Checked, checkBox6.Checked, checkBox5.Checked, checkBox4.Checked, checkBox3.Checked, checkBox2.Checked, checkBox1.Checked);
             CreateEchoCodes();
 
             if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_The_A_Button).Play();
         }
 
-        private string getBinaryNumber(bool input)
+        private byte GetNumberFromBooleans(bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7, bool b8)
         {
-            return input ? "1" : "0";
+            byte result = 0; //this converts the bools to a number by adding their respective binary weights
+            if (b1) result += 1;
+            if (b2) result += 2;
+            if (b3) result += 4;
+            if (b4) result += 8;
+            if (b5) result += 16;
+            if (b6) result += 32;
+            if (b7) result += 64;
+            if (b8) result += 128;
+            return result;
         }
 
         private void CreateEchoCodes()
@@ -207,366 +211,92 @@ namespace PK_Piano
             SendNote(0xC8);
         }
 
+        //These button click events are MASSIVELY simplified from before.
+        //Now, the hex value for the note of the lowest octave is passed
+        //and it adds it up appropriately!
+
         private void btnC_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "C", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x80);
-                    break;
-                case 2:
-                    SendNote(0x8C);
-                    break;
-                case 3:
-                    SendNote(0x98);
-                    break;
-                case 4:
-                    SendNote(0xA4);
-                    break;
-                case 5:
-                    SendNote(0xB0);
-                    break;
-                case 6:
-                    SendNote(0xBC);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x80);
         }
 
         private void btnCsharp_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "C#", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x81);
-                    break;
-                case 2:
-                    SendNote(0x8D);
-                    break;
-                case 3:
-                    SendNote(0x99);
-                    break;
-                case 4:
-                    SendNote(0xA5);
-                    break;
-                case 5:
-                    SendNote(0xB1);
-                    break;
-                case 6:
-                    SendNote(0xBD);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x81);
         }
 
         private void btnD_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "D", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x82);
-                    break;
-                case 2:
-                    SendNote(0x8E);
-                    break;
-                case 3:
-                    SendNote(0x9A);
-                    break;
-                case 4:
-                    SendNote(0xA6);
-                    break;
-                case 5:
-                    SendNote(0xB2);
-                    break;
-                case 6:
-                    SendNote(0xBE);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x82);
         }
 
         private void btnDsharp_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "D#", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x83);
-                    break;
-                case 2:
-                    SendNote(0x8F);
-                    break;
-                case 3:
-                    SendNote(0x9B);
-                    break;
-                case 4:
-                    SendNote(0xA7);
-                    break;
-                case 5:
-                    SendNote(0xB3);
-                    break;
-                case 6:
-                    SendNote(0xBF);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x83);
         }
 
         private void btnE_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "E", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x84);
-                    break;
-                case 2:
-                    SendNote(0x90);
-                    break;
-                case 3:
-                    SendNote(0x9C);
-                    break;
-                case 4:
-                    SendNote(0xA8);
-                    break;
-                case 5:
-                    SendNote(0xB4);
-                    break;
-                case 6:
-                    SendNote(0xC0);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x84);
         }
 
         private void btnF_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "F", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x85);
-                    break;
-                case 2:
-                    SendNote(0x91);
-                    break;
-                case 3:
-                    SendNote(0x9D);
-                    break;
-                case 4:
-                    SendNote(0xA9);
-                    break;
-                case 5:
-                    SendNote(0xB5);
-                    break;
-                case 6:
-                    SendNote(0xC1);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x85);
         }
 
         private void btnFsharp_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "F#", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x86);
-                    break;
-                case 2:
-                    SendNote(0x92);
-                    break;
-                case 3:
-                    SendNote(0x9E);
-                    break;
-                case 4:
-                    SendNote(0xAA);
-                    break;
-                case 5:
-                    SendNote(0xB6);
-                    break;
-                case 6:
-                    SendNote(0xC2);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x86);
         }
 
         private void btnG_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "G", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x87);
-                    break;
-                case 2:
-                    SendNote(0x93);
-                    break;
-                case 3:
-                    SendNote(0x9F);
-                    break;
-                case 4:
-                    SendNote(0xAB);
-                    break;
-                case 5:
-                    SendNote(0xB7);
-                    break;
-                case 6:
-                    SendNote(0xC3);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x87);
         }
 
         private void btnGsharp_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "G#", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x88);
-                    break;
-                case 2:
-                    SendNote(0x94);
-                    break;
-                case 3:
-                    SendNote(0xA0);
-                    break;
-                case 4:
-                    SendNote(0xAC);
-                    break;
-                case 5:
-                    SendNote(0xB8);
-                    break;
-                case 6:
-                    SendNote(0xC4);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x88);
         }
 
         private void btnA_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "A", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x89);
-                    break;
-                case 2:
-                    SendNote(0x95);
-                    break;
-                case 3:
-                    SendNote(0xA1);
-                    break;
-                case 4:
-                    SendNote(0xAD);
-                    break;
-                case 5:
-                    SendNote(0xB9);
-                    break;
-                case 6:
-                    SendNote(0xC5);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x89);
         }
 
         private void btnAsharp_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "A#", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x8A);
-                    break;
-                case 2:
-                    SendNote(0x96);
-                    break;
-                case 3:
-                    SendNote(0xA2);
-                    break;
-                case 4:
-                    SendNote(0xAE);
-                    break;
-                case 5:
-                    SendNote(0xBA);
-                    break;
-                case 6:
-                    SendNote(0xC6);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x8A);
         }
 
         private void btnB_Click(object sender, EventArgs e)
         {
             ToneGenerator.PlayTone(playbackThing, "B", octave);
-            switch (octave)
-            {
-                case 1:
-                    SendNote(0x8B);
-                    break;
-                case 2:
-                    SendNote(0x97);
-                    break;
-                case 3:
-                    SendNote(0xA3);
-                    break;
-                case 4:
-                    SendNote(0xAF);
-                    break;
-                case 5:
-                    SendNote(0xBB);
-                    break;
-                case 6:
-                    SendNote(0xC7);
-                    break;
-                default:
-                    SendNote("XX");
-                    break;
-            }
+            SendNote(0x8B);
         }
 
         private void btnOctaveDown_Click(object sender, EventArgs e)
         {
-            if (octave <= 1) return;
-            octave--;
+            octave = (byte)Math.Max(1, octave - 1);
             OctaveLbl.Text = $"Octave: {octave}";
             if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
 
         private void btnOctaveUp_Click(object sender, EventArgs e)
         {
-            if (octave >= 6) return;
-            octave++;
+            octave = (byte)Math.Min(6, octave + 1);
             OctaveLbl.Text = $"Octave: {octave}";
             if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
@@ -576,7 +306,7 @@ namespace PK_Piano
         private void btnChannelTranspose_Click(object sender, EventArgs e)
         {
             if (sfxEnabled) sfxEquipped.Play();
-            Clipboard.SetText("[EA " + transposeValue + "]");
+            Clipboard.SetText($"[EA {transposeValue}]");
         }
 
         private void btnFinetune1_Click(object sender, EventArgs e)
@@ -717,10 +447,13 @@ namespace PK_Piano
 
         private void btnMPTconvert_Click(object sender, EventArgs e)
         {
-            //TODO: Validation
-
-            var mptColumnText = Clipboard.GetText();
+            var mptColumnText = Clipboard.GetText(); //get clipboard contents and validate it
             if (string.IsNullOrWhiteSpace(mptColumnText)) return;
+            if (!mptColumnText.Contains("ModPlug Tracker"))
+            {
+                MessageBox.Show("Please copy something from OpenMPT!");
+                return;
+            }
 
             var result = MPTColumn.GetEBMdata(mptColumnText); //convert the OpenMPT note data to N-SPC format
             Clipboard.SetText(result);

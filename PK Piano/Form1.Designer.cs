@@ -115,6 +115,7 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
+            this.tabADSR = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -134,6 +135,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabInitial);
             this.tabControl1.Controls.Add(this.tabChannel);
+            this.tabControl1.Controls.Add(this.tabADSR);
             this.tabControl1.Controls.Add(this.tabOther);
             this.tabControl1.Location = new System.Drawing.Point(292, 12);
             this.tabControl1.Name = "tabControl1";
@@ -1080,6 +1082,15 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
+            // tabADSR
+            // 
+            this.tabADSR.Location = new System.Drawing.Point(4, 22);
+            this.tabADSR.Name = "tabADSR";
+            this.tabADSR.Size = new System.Drawing.Size(374, 239);
+            this.tabADSR.TabIndex = 6;
+            this.tabADSR.Text = "ADSR";
+            this.tabADSR.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1229,6 +1240,7 @@
         private System.Windows.Forms.Label txtPanningDisplay;
         private System.Windows.Forms.ComboBox cboWaveform;
         private System.Windows.Forms.Button btnTuning;
+        private System.Windows.Forms.TabPage tabADSR;
     }
 }
 
