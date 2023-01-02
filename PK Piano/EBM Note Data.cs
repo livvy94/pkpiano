@@ -14,32 +14,23 @@
             switch (octave)
             {
                 case "1":
-                    result = templengthlol + GetHexCode(0x80, note);
-                    break;
+                    result = templengthlol + GetHexCode(0x80, note); break;
                 case "2":
-                    result = templengthlol + GetHexCode(0x8C, note);
-                    break;
+                    result = templengthlol + GetHexCode(0x8C, note); break;
                 case "3":
-                    result = templengthlol + GetHexCode(0x98, note);
-                    break;
+                    result = templengthlol + GetHexCode(0x98, note); break;
                 case "4":
-                    result = templengthlol + GetHexCode(0xA4, note);
-                    break;
+                    result = templengthlol + GetHexCode(0xA4, note); break;
                 case "5":
-                    result = templengthlol + GetHexCode(0xB0, note);
-                    break;
+                    result = templengthlol + GetHexCode(0xB0, note); break;
                 case "6":
-                    result = templengthlol + GetHexCode(0xBC, note);
-                    break;
+                    result = templengthlol + GetHexCode(0xBC, note); break;
                 case ".":
-                    result = "C8 "; //tie
-                    break;
+                    result = "C8 "; break; //tie
                 case "^":
-                    result = templengthlol + "C9 "; //rest
-                    break;
+                    result = templengthlol + "C9 "; break; //rest
                 case "=":
-                    result = "C8 "; //this is a volume envelope fade, for which N-SPC doesn't have an equivalent
-                    break;
+                    result = "C8 "; break; //this is a volume envelope fade, for which N-SPC doesn't have an equivalent
             }
 
             return result;
