@@ -83,6 +83,17 @@
             this.btnVibratoOff = new System.Windows.Forms.Button();
             this.btnPortamento = new System.Windows.Forms.Button();
             this.btnPortamentoOff = new System.Windows.Forms.Button();
+            this.tabADSR = new System.Windows.Forms.TabPage();
+            this.btnApply = new System.Windows.Forms.Button();
+            this.txtGAIN = new System.Windows.Forms.TextBox();
+            this.txtTuningSub = new System.Windows.Forms.TextBox();
+            this.txtADSR2 = new System.Windows.Forms.TextBox();
+            this.txtTuningMult = new System.Windows.Forms.TextBox();
+            this.txtADSR1 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.lblSPCFilename = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.lstInstruments = new System.Windows.Forms.ListBox();
             this.tabOther = new System.Windows.Forms.TabPage();
             this.cboWaveform = new System.Windows.Forms.ComboBox();
             this.btnTuning = new System.Windows.Forms.Button();
@@ -115,7 +126,8 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
-            this.tabADSR = new System.Windows.Forms.TabPage();
+            this.btnApplyToOtherSPC = new System.Windows.Forms.Button();
+            this.btnCopyInstrumentTable = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -125,6 +137,7 @@
             this.tabChannel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).BeginInit();
+            this.tabADSR.SuspendLayout();
             this.tabOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).BeginInit();
@@ -722,6 +735,120 @@
             this.btnPortamentoOff.UseVisualStyleBackColor = true;
             this.btnPortamentoOff.Click += new System.EventHandler(this.btnPortamentoOff_Click);
             // 
+            // tabADSR
+            // 
+            this.tabADSR.Controls.Add(this.btnCopyInstrumentTable);
+            this.tabADSR.Controls.Add(this.btnApplyToOtherSPC);
+            this.tabADSR.Controls.Add(this.btnApply);
+            this.tabADSR.Controls.Add(this.txtGAIN);
+            this.tabADSR.Controls.Add(this.txtTuningSub);
+            this.tabADSR.Controls.Add(this.txtADSR2);
+            this.tabADSR.Controls.Add(this.txtTuningMult);
+            this.tabADSR.Controls.Add(this.txtADSR1);
+            this.tabADSR.Controls.Add(this.label17);
+            this.tabADSR.Controls.Add(this.lblSPCFilename);
+            this.tabADSR.Controls.Add(this.label16);
+            this.tabADSR.Controls.Add(this.lstInstruments);
+            this.tabADSR.Location = new System.Drawing.Point(4, 22);
+            this.tabADSR.Name = "tabADSR";
+            this.tabADSR.Size = new System.Drawing.Size(374, 239);
+            this.tabADSR.TabIndex = 6;
+            this.tabADSR.Text = "ADSR";
+            this.tabADSR.UseVisualStyleBackColor = true;
+            // 
+            // btnApply
+            // 
+            this.btnApply.Location = new System.Drawing.Point(190, 65);
+            this.btnApply.Name = "btnApply";
+            this.btnApply.Size = new System.Drawing.Size(164, 31);
+            this.btnApply.TabIndex = 3;
+            this.btnApply.Text = "Apply...";
+            this.btnApply.UseVisualStyleBackColor = true;
+            // 
+            // txtGAIN
+            // 
+            this.txtGAIN.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.txtGAIN.Location = new System.Drawing.Point(252, 39);
+            this.txtGAIN.MaxLength = 2;
+            this.txtGAIN.Name = "txtGAIN";
+            this.txtGAIN.Size = new System.Drawing.Size(25, 26);
+            this.txtGAIN.TabIndex = 2;
+            // 
+            // txtTuningSub
+            // 
+            this.txtTuningSub.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.txtTuningSub.Location = new System.Drawing.Point(329, 40);
+            this.txtTuningSub.MaxLength = 2;
+            this.txtTuningSub.Name = "txtTuningSub";
+            this.txtTuningSub.Size = new System.Drawing.Size(25, 26);
+            this.txtTuningSub.TabIndex = 2;
+            // 
+            // txtADSR2
+            // 
+            this.txtADSR2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.txtADSR2.Location = new System.Drawing.Point(221, 39);
+            this.txtADSR2.MaxLength = 2;
+            this.txtADSR2.Name = "txtADSR2";
+            this.txtADSR2.Size = new System.Drawing.Size(25, 26);
+            this.txtADSR2.TabIndex = 2;
+            // 
+            // txtTuningMult
+            // 
+            this.txtTuningMult.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.txtTuningMult.Location = new System.Drawing.Point(298, 39);
+            this.txtTuningMult.MaxLength = 2;
+            this.txtTuningMult.Name = "txtTuningMult";
+            this.txtTuningMult.Size = new System.Drawing.Size(25, 26);
+            this.txtTuningMult.TabIndex = 2;
+            // 
+            // txtADSR1
+            // 
+            this.txtADSR1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
+            this.txtADSR1.Location = new System.Drawing.Point(190, 39);
+            this.txtADSR1.MaxLength = 2;
+            this.txtADSR1.Name = "txtADSR1";
+            this.txtADSR1.Size = new System.Drawing.Size(25, 26);
+            this.txtADSR1.TabIndex = 2;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(295, 23);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(40, 13);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "Tuning";
+            // 
+            // lblSPCFilename
+            // 
+            this.lblSPCFilename.AutoSize = true;
+            this.lblSPCFilename.Location = new System.Drawing.Point(5, 4);
+            this.lblSPCFilename.Name = "lblSPCFilename";
+            this.lblSPCFilename.Size = new System.Drawing.Size(153, 13);
+            this.lblSPCFilename.TabIndex = 1;
+            this.lblSPCFilename.Text = "Click here to load an SPC file...";
+            this.lblSPCFilename.Click += new System.EventHandler(this.lblSPCFilename_Click);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(187, 23);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(87, 13);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "ADSR and GAIN";
+            // 
+            // lstInstruments
+            // 
+            this.lstInstruments.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstInstruments.FormattingEnabled = true;
+            this.lstInstruments.ItemHeight = 15;
+            this.lstInstruments.Location = new System.Drawing.Point(21, 23);
+            this.lstInstruments.Name = "lstInstruments";
+            this.lstInstruments.Size = new System.Drawing.Size(160, 199);
+            this.lstInstruments.TabIndex = 0;
+            this.lstInstruments.SelectedIndexChanged += new System.EventHandler(this.lstInstruments_SelectedIndexChanged);
+            // 
             // tabOther
             // 
             this.tabOther.Controls.Add(this.cboWaveform);
@@ -1082,14 +1209,23 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
-            // tabADSR
+            // btnApplyToOtherSPC
             // 
-            this.tabADSR.Location = new System.Drawing.Point(4, 22);
-            this.tabADSR.Name = "tabADSR";
-            this.tabADSR.Size = new System.Drawing.Size(374, 239);
-            this.tabADSR.TabIndex = 6;
-            this.tabADSR.Text = "ADSR";
-            this.tabADSR.UseVisualStyleBackColor = true;
+            this.btnApplyToOtherSPC.Location = new System.Drawing.Point(190, 99);
+            this.btnApplyToOtherSPC.Name = "btnApplyToOtherSPC";
+            this.btnApplyToOtherSPC.Size = new System.Drawing.Size(164, 31);
+            this.btnApplyToOtherSPC.TabIndex = 3;
+            this.btnApplyToOtherSPC.Text = "Apply to another SPC file...";
+            this.btnApplyToOtherSPC.UseVisualStyleBackColor = true;
+            // 
+            // btnCopyInstrumentTable
+            // 
+            this.btnCopyInstrumentTable.Location = new System.Drawing.Point(190, 136);
+            this.btnCopyInstrumentTable.Name = "btnCopyInstrumentTable";
+            this.btnCopyInstrumentTable.Size = new System.Drawing.Size(164, 31);
+            this.btnCopyInstrumentTable.TabIndex = 3;
+            this.btnCopyInstrumentTable.Text = "Copy to clipboard...";
+            this.btnCopyInstrumentTable.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -1142,6 +1278,8 @@
             this.tabChannel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).EndInit();
+            this.tabADSR.ResumeLayout(false);
+            this.tabADSR.PerformLayout();
             this.tabOther.ResumeLayout(false);
             this.tabOther.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).EndInit();
@@ -1241,6 +1379,18 @@
         private System.Windows.Forms.ComboBox cboWaveform;
         private System.Windows.Forms.Button btnTuning;
         private System.Windows.Forms.TabPage tabADSR;
+        private System.Windows.Forms.Button btnApply;
+        private System.Windows.Forms.TextBox txtGAIN;
+        private System.Windows.Forms.TextBox txtTuningSub;
+        private System.Windows.Forms.TextBox txtADSR2;
+        private System.Windows.Forms.TextBox txtTuningMult;
+        private System.Windows.Forms.TextBox txtADSR1;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label lblSPCFilename;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.ListBox lstInstruments;
+        private System.Windows.Forms.Button btnCopyInstrumentTable;
+        private System.Windows.Forms.Button btnApplyToOtherSPC;
     }
 }
 

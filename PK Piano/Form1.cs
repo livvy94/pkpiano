@@ -1,5 +1,6 @@
 ﻿using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using PK_Piano.SPC_File_Editing;
 using System;
 using System.Collections.Generic;
 using System.Media;
@@ -31,6 +32,9 @@ namespace PK_Piano
         byte echoFeedback;
         byte echoFilter;
         readonly ToneGenerator.PlaybackThing playbackThing = new ToneGenerator.PlaybackThing();
+
+        string currentSPCfilepath = string.Empty;
+        List<Instrument> loadedInstruments = new List<Instrument>();
 
         private void SendNote(byte firstOctaveNote)
         {
@@ -470,22 +474,23 @@ namespace PK_Piano
 
             List<byte> input;
 
-            try
-            {
-                input = SongPiece.StringToBytes(clipboardContents);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return;
-            }
+            //Get the note sequence from the clipboard
+            //try
+            //{
+            //    input = SongPiece.StringToBytes(clipboardContents);
+            //}
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //    return;
+            //}
 
-            //var input = SongPiece.StringToBytes("0C A7 C8 C8"); //DIY Unit Test
-            //var goodVersion = SongPiece.StringToBytes("24 A7");
-            var optimizedBytes = ProcessBytes(input);
-            //RunTest(optimizedBytes, goodVersion);
+            input = SongPiece.StringToBytes("0C A7 C8 C8"); //DIY Unit Test
+            List<byte> goodVersion = SongPiece.StringToBytes("24 A7");
+            List<byte> optimizedBytes = SongPiece.StringToBytes(ProcessBytes(input));
+            RunTest(optimizedBytes, goodVersion);
 
-            Clipboard.SetText(optimizedBytes);
+            Clipboard.SetText(optimizedBytes.ToString());
             if (sfxEnabled) sfxEquipped.Play();
         }
 
@@ -572,32 +577,32 @@ namespace PK_Piano
             return resultString.TrimEnd(' ');
         }
 
-        //public static void RunTest(List<byte> resultBytes, List<byte> goodVersionBytes)
-        //{
-        //    //DIY Unit Test
-        //    string result = "";
-        //    foreach (var b in resultBytes)
-        //    {
-        //        result += b.ToString("X2") + " "; //convert the list back into a string
-        //    }
+        public static void RunTest(List<byte> resultBytes, List<byte> goodVersionBytes)
+        {
+            //DIY Unit Test
+            var result = string.Empty;
+            foreach (var b in resultBytes)
+            {
+                result += b.ToString("X2") + " "; //convert the list back into a string
+            }
 
-        //    string goodVersion = "";
-        //    foreach (var b in goodVersionBytes)
-        //    {
-        //        goodVersion += b.ToString("X2") + " "; //convert the list back into a string
-        //    }
+            var goodVersion = string.Empty;
+            foreach (var b in goodVersionBytes)
+            {
+                goodVersion += b.ToString("X2") + " "; //convert the list back into a string
+            }
 
-        //    result = result.Trim();
-        //    goodVersion = goodVersion.Trim();
+            result = result.Trim();
+            goodVersion = goodVersion.Trim();
 
-        //    var message = "";
-        //    if (result == goodVersion)
-        //        message += "*** PASS ***\r\n";
-        //    else
-        //        message += "*** FAIL ***\r\n";
-        //    message += "Result:\r\n" + result + "\r\nDesired output:\r\n" + goodVersion;
-        //    MessageBox.Show(message);
-        //}
+            var message = string.Empty;
+            if (result == goodVersion)
+                message += "*** PASS ***\r\n";
+            else
+                message += "*** FAIL ***\r\n";
+            message += "Result:\r\n" + result + "\r\nDesired output:\r\n" + goodVersion;
+            MessageBox.Show(message);
+        }
 
 
         //Text blip stuff
@@ -738,6 +743,64 @@ namespace PK_Piano
                 playbackThing.type = SignalGeneratorType.Triangle;
             else
                 playbackThing.type = SignalGeneratorType.White;
+        }
+
+        private void lblSPCFilename_Click(object sender, EventArgs e)
+        {
+            //Clear everything so there isn't any junk data hanging around
+            lstInstruments.Items.Clear();
+            loadedInstruments.Clear();
+            currentSPCfilepath = string.Empty;
+            lblSPCFilename.Text = "Click here to load an SPC file...";
+            UpdateADSRTextboxes(null);
+
+            currentSPCfilepath = SPC_IO.ShowOFD();
+            if (NoFileLoaded()) return; //bad result from the ofd
+
+            loadedInstruments = SPC_IO.LoadInstruments(currentSPCfilepath);
+
+            UpdateInstruments();
+        }
+
+        private void UpdateInstruments()
+        {
+            if (NoFileLoaded()) return;
+
+            foreach (var instrument in loadedInstruments)
+            {
+                lstInstruments.Items.Add(instrument);
+            }
+
+            lblSPCFilename.Text = currentSPCfilepath;
+        }
+
+        private bool NoFileLoaded() => currentSPCfilepath == string.Empty;
+
+        private void lstInstruments_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if (lstInstruments.Items.Count < 1) return; //will I need this?
+            Instrument CurrentInstrument = (Instrument)lstInstruments.SelectedItem;
+            UpdateADSRTextboxes(CurrentInstrument);
+        }
+
+        private void UpdateADSRTextboxes(Instrument instrument)
+        {
+            if (instrument != null)
+            {
+                txtADSR1.Text = instrument.ADSR1.ToString("X2");
+                txtADSR2.Text = instrument.ADSR2.ToString("X2");
+                txtGAIN.Text = instrument.GAIN.ToString("X2");
+                txtTuningMult.Text = instrument.TuningMultiplier.ToString("X2");
+                txtTuningSub.Text = instrument.TuningSub.ToString("X2");
+            }
+            else
+            {
+                txtADSR1.Clear();
+                txtADSR2.Clear();
+                txtGAIN.Clear();
+                txtTuningMult.Clear();
+                txtTuningSub.Clear();
+            }
         }
     }
 }
