@@ -84,6 +84,7 @@
             this.btnPortamento = new System.Windows.Forms.Button();
             this.btnPortamentoOff = new System.Windows.Forms.Button();
             this.tabADSR = new System.Windows.Forms.TabPage();
+            this.label18 = new System.Windows.Forms.Label();
             this.btnCopyInstrumentTable = new System.Windows.Forms.Button();
             this.btnApplyToOtherSPC = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
@@ -128,7 +129,6 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -758,6 +758,16 @@
             this.tabADSR.Text = "ADSR";
             this.tabADSR.UseVisualStyleBackColor = true;
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(333, 220);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(38, 13);
+            this.label18.TabIndex = 4;
+            this.label18.Text = "Help!?";
+            this.label18.Click += new System.EventHandler(this.ADSRhelp_Click);
+            // 
             // btnCopyInstrumentTable
             // 
             this.btnCopyInstrumentTable.Location = new System.Drawing.Point(190, 136);
@@ -766,6 +776,7 @@
             this.btnCopyInstrumentTable.TabIndex = 3;
             this.btnCopyInstrumentTable.Text = "Copy to clipboard...";
             this.btnCopyInstrumentTable.UseVisualStyleBackColor = true;
+            this.btnCopyInstrumentTable.Click += new System.EventHandler(this.btnCopyInstrumentTable_Click);
             // 
             // btnApplyToOtherSPC
             // 
@@ -775,6 +786,7 @@
             this.btnApplyToOtherSPC.TabIndex = 3;
             this.btnApplyToOtherSPC.Text = "Apply to another SPC file...";
             this.btnApplyToOtherSPC.UseVisualStyleBackColor = true;
+            this.btnApplyToOtherSPC.Click += new System.EventHandler(this.btnApplyToOtherSPC_Click);
             // 
             // btnApply
             // 
@@ -1234,16 +1246,6 @@
             this.btnDividePrompt.UseVisualStyleBackColor = true;
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(333, 220);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(38, 13);
-            this.label18.TabIndex = 4;
-            this.label18.Text = "Help!?";
-            this.label18.Click += new System.EventHandler(this.ADSRhelp_Click);
             // 
             // Form1
             // 

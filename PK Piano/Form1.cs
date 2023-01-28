@@ -877,5 +877,15 @@ namespace PK_Piano
             Clipboard.SetText("https://vince94.neocities.org/cool/ADSR"); //TODO: who the eff is Vince?
             MessageBox.Show("Go to the URL in your clipboard!");
         }
+
+        private void btnApplyToOtherSPC_Click(object sender, EventArgs e)
+        {
+            //TODO: Do the stuff from Apply but open an OFD and save in that file instead
+        }
+
+        private void btnCopyInstrumentTable_Click(object sender, EventArgs e)
+        {
+            //TODO: Generate a config.txt-style data table and copy it to the clipboard
+        }
     }
 }
