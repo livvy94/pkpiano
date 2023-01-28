@@ -747,6 +747,11 @@ namespace PK_Piano
 
         private void lblSPCFilename_Click(object sender, EventArgs e)
         {
+            //TODO: Make it so it's a pipe-separated thing
+            //so that it has the filename right there, but the filepath is still accessible
+            //And also that it looks nice!
+            //Like: foo.spc | C:\Users\Olivia\Dropbox\Programming scratchpad\foo.spc
+
             //Clear everything so there isn't any junk data hanging around
             lstInstruments.Items.Clear();
             loadedInstruments.Clear();
@@ -801,6 +806,76 @@ namespace PK_Piano
                 txtTuningMult.Clear();
                 txtTuningSub.Clear();
             }
+        }
+
+        private void btnApply_Click(object sender, EventArgs e)
+        {
+            Instrument selectedInstrument = (Instrument)lstInstruments.SelectedItem;
+            var result = new Instrument(selectedInstrument.Index, HexBox(txtADSR1), HexBox(txtADSR2), HexBox(txtGAIN), HexBox(txtTuningMult), HexBox(txtTuningSub));
+
+            //Change the selected item to match the textboxes!
+            ChangeSelectedInstrument(lstInstruments, result);
+
+            var NewInstTable = Instrument.MakeHex(loadedInstruments);
+            var itSavedCorrectly = SPC_IO.SaveInstruments(currentSPCfilepath, NewInstTable);
+
+            if (itSavedCorrectly)
+                MessageBox.Show($"Saved to {currentSPCfilepath}!");
+            else
+                MessageBox.Show("Something went wrong while saving to the SPC file!");
+        }
+
+        private void ChangeSelectedInstrument(ListBox listbox, Instrument newInstrument)
+        {
+            //Replace the currently-selected item with an Instrument object based on the textboxes
+            var i = listbox.SelectedIndex;
+            if (i != -1)
+            {
+                listbox.Items[i] = newInstrument;
+            }
+            listbox.SelectedItem = newInstrument;
+
+            //update the global loadedInstruments thing
+            loadedInstruments.Clear();
+            foreach (var item in listbox.Items)
+            {
+                loadedInstruments.Add((Instrument)item);
+            }
+        }
+
+        private byte HexBox(TextBox textbox)
+        {
+            return byte.Parse(textbox.Text, System.Globalization.NumberStyles.HexNumber);
+        }
+
+        private bool ValidateHexBox(TextBox textbox)
+        {
+            if (!byte.TryParse(textbox.Text, System.Globalization.NumberStyles.HexNumber, null, out _))
+            {
+                textbox.Clear();
+            }
+            return true;
+        }
+
+        public void ValidateAllTextBoxes()
+        {
+            ValidateHexBox(txtADSR1);
+            ValidateHexBox(txtADSR2);
+            ValidateHexBox(txtGAIN);
+            ValidateHexBox(txtTuningMult);
+            ValidateHexBox(txtTuningSub);
+        }
+
+        private void txtADSR1_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
+        private void txtADSR2_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
+        private void txtGAIN_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
+        private void txtTuningMult_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
+        private void txtTuningSub_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
+
+        private void ADSRhelp_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText("https://vince94.neocities.org/cool/ADSR"); //TODO: who the eff is Vince?
+            MessageBox.Show("Go to the URL in your clipboard!");
         }
     }
 }

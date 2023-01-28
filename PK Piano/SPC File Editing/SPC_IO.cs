@@ -35,22 +35,25 @@ namespace PK_Piano.SPC_File_Editing
             return instruments;
         }
 
-        public void SaveInstruments(string path, Instrument[] instruments)
+        public static bool SaveInstruments(string path, byte[] newInstrumentTable)
         {
-            using (var fs = new FileStream(path, FileMode.Open))
+            try
             {
-                var offset = FindInstrumentTableOffset(fs);
-
-                fs.Seek(offset, SeekOrigin.Begin);
-                foreach (var instrument in instruments)
+                using (var fs = new FileStream(path, FileMode.Open))
                 {
-                    fs.WriteByte(instrument.Index);
-                    fs.WriteByte(instrument.ADSR1);
-                    fs.WriteByte(instrument.ADSR2);
-                    fs.WriteByte(instrument.GAIN);
-                    fs.WriteByte(instrument.TuningMultiplier);
-                    fs.WriteByte(instrument.TuningSub);
+                    var offset = FindInstrumentTableOffset(fs);
+
+                    fs.Seek(offset, SeekOrigin.Begin);
+                    foreach (var b in newInstrumentTable)
+                    {
+                        fs.WriteByte(b); //TODO: find a better way to do this than writing all the bytes individually
+                    }
                 }
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

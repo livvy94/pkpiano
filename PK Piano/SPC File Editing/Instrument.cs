@@ -29,7 +29,7 @@ namespace PK_Piano.SPC_File_Editing
             return result;
         }
 
-        public byte[] MakeHex(List<Instrument> instruments)
+        public static byte[] MakeHex(List<Instrument> instruments)
         {
             var result = new List<byte>();
 
@@ -46,6 +46,4 @@ namespace PK_Piano.SPC_File_Editing
             return result.ToArray();
         }
     }
-
-
 }

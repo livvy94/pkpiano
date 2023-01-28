@@ -84,6 +84,8 @@
             this.btnPortamento = new System.Windows.Forms.Button();
             this.btnPortamentoOff = new System.Windows.Forms.Button();
             this.tabADSR = new System.Windows.Forms.TabPage();
+            this.btnCopyInstrumentTable = new System.Windows.Forms.Button();
+            this.btnApplyToOtherSPC = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.txtGAIN = new System.Windows.Forms.TextBox();
             this.txtTuningSub = new System.Windows.Forms.TextBox();
@@ -126,8 +128,7 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
-            this.btnApplyToOtherSPC = new System.Windows.Forms.Button();
-            this.btnCopyInstrumentTable = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -737,6 +738,7 @@
             // 
             // tabADSR
             // 
+            this.tabADSR.Controls.Add(this.label18);
             this.tabADSR.Controls.Add(this.btnCopyInstrumentTable);
             this.tabADSR.Controls.Add(this.btnApplyToOtherSPC);
             this.tabADSR.Controls.Add(this.btnApply);
@@ -756,6 +758,24 @@
             this.tabADSR.Text = "ADSR";
             this.tabADSR.UseVisualStyleBackColor = true;
             // 
+            // btnCopyInstrumentTable
+            // 
+            this.btnCopyInstrumentTable.Location = new System.Drawing.Point(190, 136);
+            this.btnCopyInstrumentTable.Name = "btnCopyInstrumentTable";
+            this.btnCopyInstrumentTable.Size = new System.Drawing.Size(164, 31);
+            this.btnCopyInstrumentTable.TabIndex = 3;
+            this.btnCopyInstrumentTable.Text = "Copy to clipboard...";
+            this.btnCopyInstrumentTable.UseVisualStyleBackColor = true;
+            // 
+            // btnApplyToOtherSPC
+            // 
+            this.btnApplyToOtherSPC.Location = new System.Drawing.Point(190, 99);
+            this.btnApplyToOtherSPC.Name = "btnApplyToOtherSPC";
+            this.btnApplyToOtherSPC.Size = new System.Drawing.Size(164, 31);
+            this.btnApplyToOtherSPC.TabIndex = 3;
+            this.btnApplyToOtherSPC.Text = "Apply to another SPC file...";
+            this.btnApplyToOtherSPC.UseVisualStyleBackColor = true;
+            // 
             // btnApply
             // 
             this.btnApply.Location = new System.Drawing.Point(190, 65);
@@ -764,6 +784,7 @@
             this.btnApply.TabIndex = 3;
             this.btnApply.Text = "Apply...";
             this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
             // txtGAIN
             // 
@@ -773,6 +794,7 @@
             this.txtGAIN.Name = "txtGAIN";
             this.txtGAIN.Size = new System.Drawing.Size(25, 26);
             this.txtGAIN.TabIndex = 2;
+            this.txtGAIN.TextChanged += new System.EventHandler(this.txtGAIN_TextChanged);
             // 
             // txtTuningSub
             // 
@@ -782,6 +804,7 @@
             this.txtTuningSub.Name = "txtTuningSub";
             this.txtTuningSub.Size = new System.Drawing.Size(25, 26);
             this.txtTuningSub.TabIndex = 2;
+            this.txtTuningSub.TextChanged += new System.EventHandler(this.txtTuningSub_TextChanged);
             // 
             // txtADSR2
             // 
@@ -791,6 +814,7 @@
             this.txtADSR2.Name = "txtADSR2";
             this.txtADSR2.Size = new System.Drawing.Size(25, 26);
             this.txtADSR2.TabIndex = 2;
+            this.txtADSR2.TextChanged += new System.EventHandler(this.txtADSR2_TextChanged);
             // 
             // txtTuningMult
             // 
@@ -800,6 +824,7 @@
             this.txtTuningMult.Name = "txtTuningMult";
             this.txtTuningMult.Size = new System.Drawing.Size(25, 26);
             this.txtTuningMult.TabIndex = 2;
+            this.txtTuningMult.TextChanged += new System.EventHandler(this.txtTuningMult_TextChanged);
             // 
             // txtADSR1
             // 
@@ -809,6 +834,7 @@
             this.txtADSR1.Name = "txtADSR1";
             this.txtADSR1.Size = new System.Drawing.Size(25, 26);
             this.txtADSR1.TabIndex = 2;
+            this.txtADSR1.TextChanged += new System.EventHandler(this.txtADSR1_TextChanged);
             // 
             // label17
             // 
@@ -1209,23 +1235,15 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
-            // btnApplyToOtherSPC
+            // label18
             // 
-            this.btnApplyToOtherSPC.Location = new System.Drawing.Point(190, 99);
-            this.btnApplyToOtherSPC.Name = "btnApplyToOtherSPC";
-            this.btnApplyToOtherSPC.Size = new System.Drawing.Size(164, 31);
-            this.btnApplyToOtherSPC.TabIndex = 3;
-            this.btnApplyToOtherSPC.Text = "Apply to another SPC file...";
-            this.btnApplyToOtherSPC.UseVisualStyleBackColor = true;
-            // 
-            // btnCopyInstrumentTable
-            // 
-            this.btnCopyInstrumentTable.Location = new System.Drawing.Point(190, 136);
-            this.btnCopyInstrumentTable.Name = "btnCopyInstrumentTable";
-            this.btnCopyInstrumentTable.Size = new System.Drawing.Size(164, 31);
-            this.btnCopyInstrumentTable.TabIndex = 3;
-            this.btnCopyInstrumentTable.Text = "Copy to clipboard...";
-            this.btnCopyInstrumentTable.UseVisualStyleBackColor = true;
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(333, 220);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(38, 13);
+            this.label18.TabIndex = 4;
+            this.label18.Text = "Help!?";
+            this.label18.Click += new System.EventHandler(this.ADSRhelp_Click);
             // 
             // Form1
             // 
@@ -1391,6 +1409,7 @@
         private System.Windows.Forms.ListBox lstInstruments;
         private System.Windows.Forms.Button btnCopyInstrumentTable;
         private System.Windows.Forms.Button btnApplyToOtherSPC;
+        private System.Windows.Forms.Label label18;
     }
 }
 
