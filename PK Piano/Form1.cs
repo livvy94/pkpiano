@@ -745,12 +745,12 @@ namespace PK_Piano
                 playbackThing.type = SignalGeneratorType.White;
         }
 
+        //ADSR STUFF
+        //TODO: ORGANIZE THIS MESS
+
         private void lblSPCFilename_Click(object sender, EventArgs e)
         {
-            //TODO: Make it so it's a pipe-separated thing
-            //so that it has the filename right there, but the filepath is still accessible
-            //And also that it looks nice!
-            //Like: foo.spc | C:\Users\Olivia\Dropbox\Programming scratchpad\foo.spc
+            //TODO: show just the filename in the title bar. Like PK Piano - foo.spc
 
             //Clear everything so there isn't any junk data hanging around
             lstInstruments.Items.Clear();
@@ -810,19 +810,40 @@ namespace PK_Piano
 
         private void btnApply_Click(object sender, EventArgs e)
         {
-            Instrument selectedInstrument = (Instrument)lstInstruments.SelectedItem;
-            var result = new Instrument(selectedInstrument.Index, HexBox(txtADSR1), HexBox(txtADSR2), HexBox(txtGAIN), HexBox(txtTuningMult), HexBox(txtTuningSub));
+            SaveToSPC(currentSPCfilepath);
+        }
 
-            //Change the selected item to match the textboxes!
-            ChangeSelectedInstrument(lstInstruments, result);
+        private void btnApplyToOtherSPC_Click(object sender, EventArgs e)
+        {
+            var tempSPCfilepath = SPC_IO.ShowOFD();
+            SaveToSPC(tempSPCfilepath);
+        }
+
+        private void btnCopyInstrumentTable_Click(object sender, EventArgs e)
+        {
+            //TODO: Generate a config.txt-style data table and copy it to the clipboard
+        }
+
+        private void SaveToSPC(string path)
+        {
+            SaveInstrumentChanges();
 
             var NewInstTable = Instrument.MakeHex(loadedInstruments);
-            var itSavedCorrectly = SPC_IO.SaveInstruments(currentSPCfilepath, NewInstTable);
+            var itSavedCorrectly = SPC_IO.SaveInstruments(path, NewInstTable);
 
-            if (itSavedCorrectly)
-                MessageBox.Show($"Saved to {currentSPCfilepath}!");
-            else
+            if (!itSavedCorrectly)
                 MessageBox.Show("Something went wrong while saving to the SPC file!");
+        }
+
+        private void SaveInstrumentChanges()
+        {
+            if (lstInstruments.SelectedIndex == -1)
+                return;
+
+            //Change the selected item to match the textboxes!
+            Instrument selectedInstrument = (Instrument)lstInstruments.SelectedItem;
+            var result = new Instrument(selectedInstrument.Index, HexBox(txtADSR1), HexBox(txtADSR2), HexBox(txtGAIN), HexBox(txtTuningMult), HexBox(txtTuningSub));
+            ChangeSelectedInstrument(lstInstruments, result);
         }
 
         private void ChangeSelectedInstrument(ListBox listbox, Instrument newInstrument)
@@ -850,42 +871,39 @@ namespace PK_Piano
 
         private bool ValidateHexBox(TextBox textbox)
         {
+            if (textbox.Text == string.Empty)
+                return false;
+
             if (!byte.TryParse(textbox.Text, System.Globalization.NumberStyles.HexNumber, null, out _))
             {
                 textbox.Clear();
+                return false;
             }
+
             return true;
         }
 
-        public void ValidateAllTextBoxes()
+        public bool AllTextBoxesAreValid()
         {
-            ValidateHexBox(txtADSR1);
-            ValidateHexBox(txtADSR2);
-            ValidateHexBox(txtGAIN);
-            ValidateHexBox(txtTuningMult);
-            ValidateHexBox(txtTuningSub);
+            var ADSR1isValid = ValidateHexBox(txtADSR1);
+            var ADSR2isValid = ValidateHexBox(txtADSR2);
+            var GAINisValid = ValidateHexBox(txtGAIN);
+            var multIsValid = ValidateHexBox(txtTuningMult);
+            var subIsValid = ValidateHexBox(txtTuningSub);
+
+            return ADSR1isValid && ADSR2isValid && GAINisValid && multIsValid && subIsValid;
         }
 
-        private void txtADSR1_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
-        private void txtADSR2_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
-        private void txtGAIN_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
-        private void txtTuningMult_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
-        private void txtTuningSub_TextChanged(object sender, EventArgs e) => ValidateAllTextBoxes();
+        private void txtADSR1_TextChanged(object sender, EventArgs e) => AllTextBoxesAreValid();
+        private void txtADSR2_TextChanged(object sender, EventArgs e) => AllTextBoxesAreValid();
+        private void txtGAIN_TextChanged(object sender, EventArgs e) => AllTextBoxesAreValid();
+        private void txtTuningMult_TextChanged(object sender, EventArgs e) => AllTextBoxesAreValid();
+        private void txtTuningSub_TextChanged(object sender, EventArgs e) => AllTextBoxesAreValid();
 
         private void ADSRhelp_Click(object sender, EventArgs e)
         {
             Clipboard.SetText("https://vince94.neocities.org/cool/ADSR"); //TODO: who the eff is Vince?
             MessageBox.Show("Go to the URL in your clipboard!");
-        }
-
-        private void btnApplyToOtherSPC_Click(object sender, EventArgs e)
-        {
-            //TODO: Do the stuff from Apply but open an OFD and save in that file instead
-        }
-
-        private void btnCopyInstrumentTable_Click(object sender, EventArgs e)
-        {
-            //TODO: Generate a config.txt-style data table and copy it to the clipboard
         }
     }
 }
