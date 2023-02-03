@@ -811,7 +811,7 @@
             // txtTuningSub
             // 
             this.txtTuningSub.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
-            this.txtTuningSub.Location = new System.Drawing.Point(329, 40);
+            this.txtTuningSub.Location = new System.Drawing.Point(329, 39);
             this.txtTuningSub.MaxLength = 2;
             this.txtTuningSub.Name = "txtTuningSub";
             this.txtTuningSub.Size = new System.Drawing.Size(25, 26);
