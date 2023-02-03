@@ -822,6 +822,13 @@ namespace PK_Piano
         private void btnCopyInstrumentTable_Click(object sender, EventArgs e)
         {
             //TODO: Generate a config.txt-style data table and copy it to the clipboard
+            var result = string.Empty;
+            foreach (var instrument in loadedInstruments)
+            {
+                result += $"  \"{instrument.Index:X2}.brr\"  ${instrument.ADSR1:X2} ${instrument.ADSR2:X2} ${instrument.GAIN:X2}  ${instrument.TuningMultiplier:X2} ${instrument.TuningSub:X2}\r";
+            }
+
+            Clipboard.SetText(result);
         }
 
         private void SaveToSPC(string path)
