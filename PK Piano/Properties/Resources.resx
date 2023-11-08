@@ -118,19 +118,4 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ExtraAudio_Equipped_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExtraAudio Equipped!.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ExtraAudio_LeftRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExtraAudio LeftRight.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ExtraAudio_Text_Blip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExtraAudio Text Blip.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ExtraAudio_The_A_Button" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExtraAudio The A Button.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ExtraAudio_UpDown_Tick" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ExtraAudio UpDown Tick.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
 </root>

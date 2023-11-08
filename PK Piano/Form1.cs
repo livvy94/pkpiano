@@ -16,7 +16,6 @@ namespace PK_Piano
             InitializeComponent();
         }
 
-        bool sfxEnabled = false;
         byte octave = 4; //used in the note buttons' if statements
         byte lastNote;
         string transposeValue = "00"; //this is what will be copied to the clipboard for channel transpose
@@ -67,13 +66,11 @@ namespace PK_Piano
 
         private void CopySingleHex(byte input)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText($"[{input:X2}]");
         }
 
         private void CopyDoubleHex(byte input1, byte input2)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText($"[{input1:X2} {input2:X2}]");
         }
 
@@ -155,7 +152,6 @@ namespace PK_Piano
         {
             multiplier = (int)txtMultiplier.Value;
             FormatNoteLength();
-            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_UpDown_Tick).Play();
         }
 
         private void SetAllEchoValues()
@@ -173,7 +169,6 @@ namespace PK_Piano
             echoChannels = GetNumberFromBooleans(checkBox8.Checked, checkBox7.Checked, checkBox6.Checked, checkBox5.Checked, checkBox4.Checked, checkBox3.Checked, checkBox2.Checked, checkBox1.Checked);
             CreateEchoCodes();
 
-            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_The_A_Button).Play();
         }
 
         private byte GetNumberFromBooleans(bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7, bool b8)
@@ -295,21 +290,18 @@ namespace PK_Piano
         {
             octave = (byte)Math.Max(1, octave - 1);
             OctaveLbl.Text = $"Octave: {octave}";
-            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
 
         private void btnOctaveUp_Click(object sender, EventArgs e)
         {
             octave = (byte)Math.Min(6, octave + 1);
             OctaveLbl.Text = $"Octave: {octave}";
-            if (sfxEnabled) new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
         }
 
         ///////////////////////////
         //Other button click events
         private void btnChannelTranspose_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText($"[EA {transposeValue}]");
         }
 
@@ -317,13 +309,11 @@ namespace PK_Piano
         {
             //Unfortunately, documenting finetune data in the vanilla ROM is quite an undertaking...
             //Just look at other songs for reference :(
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F4 00]");
         }
 
         private void btnCopySlidingPan_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             FormatNoteLength();
             var pan = Math.Abs(PanningBar.Value);
             var output = $"[E2 {noteLength:X2} {pan:X2}]"; //[E2 length panning]
@@ -332,7 +322,6 @@ namespace PK_Piano
 
         private void btnCopySlidingVolume_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             FormatNoteLength();
             var vol = Math.Abs(ChannelVolumeBar.Value);
             var output = $"[EE {noteLength:X2} {vol:X2}]"; //[EE length volume]
@@ -341,7 +330,6 @@ namespace PK_Piano
 
         private void btnCopySlidingEcho_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             FormatNoteLength();
             var vol = Math.Abs(trackBarEchoVol.Value);
             var output = $"[F8 {noteLength:X2} {vol:X2} {vol:X2}]"; //[F8 length vol vol]
@@ -371,14 +359,12 @@ namespace PK_Piano
         private void btnPortamentoUp_Click(object sender, EventArgs e)
         {
             //[F1 start length range]
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F1 00 06 01]");
         }
 
         private void btnPortamentoDown_Click(object sender, EventArgs e)
         {
             //[F2 start length range]
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[F2 00 06 01]");
         }
 
@@ -389,13 +375,11 @@ namespace PK_Piano
 
         private void btnPortamento_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("C8 [F9 00 01 ");
         }
 
         private void btnVibrato_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[E3 0C 1C 32]");
         }
 
@@ -412,7 +396,6 @@ namespace PK_Piano
             var output = $"[E1 {panPosition:X2}]"; //[E1 panning]
             txtPanningDisplay.Text = output;
             Clipboard.SetText(output);
-            if (sfxEnabled) sfxTextBlip.Play();
         }
 
         private void ChannelVolumeBar_Scroll(object sender, EventArgs e)
@@ -421,26 +404,22 @@ namespace PK_Piano
             var output = $"[ED {volume:X2}]"; //[ED volume]
             txtChannelVolumeDisplay.Text = output;
             Clipboard.SetText(output);
-            if (sfxEnabled) PlayTextTypeSound("huge");
         }
 
         private void StaccatoBar_Scroll(object sender, EventArgs e)
         {
             noteStacatto = (byte)StaccatoBar.Value;
             FormatNoteLength();
-            if (sfxEnabled) sfxTextBlip.Play();
         }
 
         private void VolBar_Scroll(object sender, EventArgs e)
         {
             noteVolume = (byte)VolBar.Value;
             FormatNoteLength();
-            if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
         private void btnTremolo_Click(object sender, EventArgs e)
         {
-            if (sfxEnabled) sfxEquipped.Play();
             Clipboard.SetText("[EB 0C 1C 32]"); //TODO: change these defaults to be cooler
         }
 
@@ -461,7 +440,6 @@ namespace PK_Piano
 
             var result = MPTColumn.GetEBMdata(mptColumnText); //convert the OpenMPT note data to N-SPC format
             Clipboard.SetText(result);
-            if (sfxEnabled) sfxEquipped.Play();
         }
 
         private void btnC8eraser_Click(object sender, EventArgs e)
@@ -491,7 +469,6 @@ namespace PK_Piano
             RunTest(optimizedBytes, goodVersion);
 
             Clipboard.SetText(optimizedBytes.ToString());
-            if (sfxEnabled) sfxEquipped.Play();
         }
 
         public static string ProcessBytes(List<byte> bytesInput)
@@ -604,56 +581,28 @@ namespace PK_Piano
             MessageBox.Show(message);
         }
 
-
-        //Text blip stuff
-        //If the sfxEnabled boolean value is set to true, then various parts of the UI will give audio feedback.
-        //I'm getting kind of tired of it, though, so I'm going to make it toggleable in the future.
-        byte numberOfLettersBeforeSound;
-        readonly SoundPlayer sfxTextBlip = new SoundPlayer(Properties.Resources.ExtraAudio_Text_Blip); //adding these so it doesn't make a new instance of SoundPlayer *every* time
-        readonly SoundPlayer sfxEquipped = new SoundPlayer(Properties.Resources.ExtraAudio_Equipped_);
-
-        private void PlayTextTypeSound(string type)
-        {
-            if (!sfxEnabled) return;
-
-            //Text blip logic
-            byte amount = 1;
-            if (type == "huge") amount = 5;
-
-            if (numberOfLettersBeforeSound > amount)
-            {
-                numberOfLettersBeforeSound = 0;
-                sfxTextBlip.Play();
-            }
-            else numberOfLettersBeforeSound++;
-        }
-
         private void trackBarEchoVol_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            if (sfxEnabled) PlayTextTypeSound("huge");
         }
 
         private void trackBarEchoDelay_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
         private void trackBarEchoFeedback_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            if (sfxEnabled) PlayTextTypeSound("huge");
         }
 
         private void trackBarEchoFilter_Scroll(object sender, EventArgs e)
         {
             SetAllEchoValues();
             CreateEchoCodes();
-            if (sfxEnabled) PlayTextTypeSound("tiny");
         }
 
 
@@ -666,16 +615,6 @@ namespace PK_Piano
         private void checkBox6_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
         private void checkBox7_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
         private void checkBox8_CheckedChanged(object sender, EventArgs e) { CalculateEchoChannelCode(); }
-
-        private void chkMiscFeedback_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chkMiscFeedback.Checked)
-            {
-                sfxEnabled = true; //this is one of the global variables defined at the beginning
-                new SoundPlayer(Properties.Resources.ExtraAudio_LeftRight).Play();
-            }
-            else sfxEnabled = false;
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {

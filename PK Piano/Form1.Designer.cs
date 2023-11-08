@@ -100,7 +100,6 @@
             this.tabOther = new System.Windows.Forms.TabPage();
             this.cboWaveform = new System.Windows.Forms.ComboBox();
             this.btnTuning = new System.Windows.Forms.Button();
-            this.chkMiscFeedback = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
             this.LengthDisplay = new System.Windows.Forms.Label();
             this.VolBar = new System.Windows.Forms.TrackBar();
@@ -891,7 +890,6 @@
             // 
             this.tabOther.Controls.Add(this.cboWaveform);
             this.tabOther.Controls.Add(this.btnTuning);
-            this.tabOther.Controls.Add(this.chkMiscFeedback);
             this.tabOther.Location = new System.Drawing.Point(4, 22);
             this.tabOther.Name = "tabOther";
             this.tabOther.Padding = new System.Windows.Forms.Padding(3);
@@ -903,13 +901,8 @@
             // cboWaveform
             // 
             this.cboWaveform.FormattingEnabled = true;
-            this.cboWaveform.Items.AddRange(new object[] {
-            "Sine",
-            "Square",
-            "Sawtooth",
-            "Triangle",
-            "Noise"});
-            this.cboWaveform.Location = new System.Drawing.Point(141, 31);
+            this.cboWaveform.Items.AddRange(new object[] { "Sine", "Square", "Sawtooth", "Triangle", "Noise" });
+            this.cboWaveform.Location = new System.Drawing.Point(141, 8);
             this.cboWaveform.Name = "cboWaveform";
             this.cboWaveform.Size = new System.Drawing.Size(74, 21);
             this.cboWaveform.TabIndex = 57;
@@ -917,24 +910,13 @@
             // 
             // btnTuning
             // 
-            this.btnTuning.Location = new System.Drawing.Point(6, 29);
+            this.btnTuning.Location = new System.Drawing.Point(6, 6);
             this.btnTuning.Name = "btnTuning";
             this.btnTuning.Size = new System.Drawing.Size(129, 23);
             this.btnTuning.TabIndex = 56;
             this.btnTuning.Text = "Play Tuning Waveform";
             this.btnTuning.UseVisualStyleBackColor = true;
             this.btnTuning.Click += new System.EventHandler(this.btnTuning_Click);
-            // 
-            // chkMiscFeedback
-            // 
-            this.chkMiscFeedback.AutoSize = true;
-            this.chkMiscFeedback.Location = new System.Drawing.Point(6, 6);
-            this.chkMiscFeedback.Name = "chkMiscFeedback";
-            this.chkMiscFeedback.Size = new System.Drawing.Size(140, 17);
-            this.chkMiscFeedback.TabIndex = 55;
-            this.chkMiscFeedback.Text = "Enable UI sound effects";
-            this.chkMiscFeedback.UseVisualStyleBackColor = true;
-            this.chkMiscFeedback.CheckedChanged += new System.EventHandler(this.chkMiscFeedback_CheckedChanged);
             // 
             // label23
             // 
@@ -995,19 +977,11 @@
             // 
             this.txtMultiplier.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMultiplier.Location = new System.Drawing.Point(92, 226);
-            this.txtMultiplier.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.txtMultiplier.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             this.txtMultiplier.Name = "txtMultiplier";
             this.txtMultiplier.Size = new System.Drawing.Size(63, 22);
             this.txtMultiplier.TabIndex = 18;
-            this.txtMultiplier.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.txtMultiplier.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label20
             // 
@@ -1031,12 +1005,7 @@
             // 
             this.cboNoteLength.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboNoteLength.FormattingEnabled = true;
-            this.cboNoteLength.Items.AddRange(new object[] {
-            "06",
-            "0C",
-            "18",
-            "30",
-            "60"});
+            this.cboNoteLength.Items.AddRange(new object[] { "06", "0C", "18", "30", "60" });
             this.cboNoteLength.Location = new System.Drawing.Point(92, 198);
             this.cboNoteLength.Name = "cboNoteLength";
             this.cboNoteLength.Size = new System.Drawing.Size(63, 22);
@@ -1301,13 +1270,11 @@
             this.tabADSR.ResumeLayout(false);
             this.tabADSR.PerformLayout();
             this.tabOther.ResumeLayout(false);
-            this.tabOther.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
@@ -1393,7 +1360,6 @@
         private System.Windows.Forms.Button btnTremoloOff;
         private System.Windows.Forms.Button btnTremolo;
         private System.Windows.Forms.TabPage tabOther;
-        private System.Windows.Forms.CheckBox chkMiscFeedback;
         private System.Windows.Forms.Label txtChannelVolumeDisplay;
         private System.Windows.Forms.Label txtPanningDisplay;
         private System.Windows.Forms.ComboBox cboWaveform;
