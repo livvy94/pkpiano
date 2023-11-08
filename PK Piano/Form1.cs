@@ -48,7 +48,7 @@ namespace PK_Piano
 
             //Takes a byte, puts it in the label, and puts it in the clipboard
             FormatNoteLength();
-            var note = "[" + result.ToString("X2") + "]";
+            var note = $"[{result:X2}]";
             DispLabel.Text = note;
             Clipboard.SetText(note);
 
