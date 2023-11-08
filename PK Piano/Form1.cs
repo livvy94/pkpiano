@@ -292,14 +292,12 @@ namespace PK_Piano
         //Other button click events
         private void btnChannelTranspose_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText($"[EA {transposeValue}]");
+            CopyDoubleHex(0xEA, Convert.ToByte(transposeValue));
         }
 
         private void btnFinetune1_Click(object sender, EventArgs e)
         {
-            //Unfortunately, documenting finetune data in the vanilla ROM is quite an undertaking...
-            //Just look at other songs for reference :(
-            Clipboard.SetText("[F4 00]");
+            CopyDoubleHex(0xF4, 0x00);
         }
 
         private void btnCopySlidingPan_Click(object sender, EventArgs e)

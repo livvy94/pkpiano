@@ -5,21 +5,19 @@ namespace PK_Piano
 {
     class MPTColumn
     {
-        public const string VALID = "Valid!"; //TODO: make this validation thing less janky
+        private const string VALID = "Valid!"; //TODO: make this validation thing less janky
 
         public static string GetEBMdata(string input)
         {
             var result = new StringBuilder();
             var rows = input.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-            var rowStatus = validation(rows);
+            var rowStatus = Validation(rows);
             if (rowStatus != VALID) return rowStatus; //display the error message if something's up
 
-            foreach (string row in rows)
+            foreach (var row in rows)
             {
-                if (row.StartsWith("ModPlug Tracker"))
-                    result.Append(""); //skip the header row
-                else
+                if (!row.StartsWith("ModPlug Tracker"))
                     result.Append(EBM_Note_Data.GetEBMNote(row)); //convert all of the notes
             }
 
@@ -28,7 +26,7 @@ namespace PK_Piano
 
         //TODO: Figure out what hex values AddMusicK uses and implement it as "GetAMKdate(string input)"
 
-        public static string validation(string[] input)
+        private static string Validation(string[] input)
         {
             string errorMessage = VALID;
 
