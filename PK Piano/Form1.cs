@@ -89,7 +89,7 @@ namespace PK_Piano
             lastNote = input;
         }
 
-        private string FormatNoteLength()
+        private void FormatNoteLength()
         {
             var multipliedLength = noteLength * multiplier;
             var output = $"[{multipliedLength:X2} {noteStacatto:X}{noteVolume:X}]";
@@ -99,7 +99,6 @@ namespace PK_Piano
 
             LengthDisplay.Text = output;
             Clipboard.SetText(output);
-            return output;
         }
 
         private void btnDividePrompt_Click(object sender, EventArgs e)
