@@ -59,15 +59,12 @@
             return result.ToString("X") + " ";
         }
 
-        public static bool LengthIsInvalid(int length)
-        {
-            return length > 0x7F; //numbers higher than 0x7F count as notes and not note lengths
-        }
+        public static bool LengthIsInvalid(int length) => length > 0x7F;
 
         public static int[] ValidateNoteLength(int length)
         {
-            int multiplier = 1;
-            int[] result = new int[2];
+            var multiplier = 1;
+            var result = new int[2];
             //result[0] is the new length
             //result[1] is the appropriate multiplier
             //...should I make this into a class? Probably.

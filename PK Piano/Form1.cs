@@ -106,28 +106,23 @@ namespace PK_Piano
             var lengthResult = EBM_Note_Data.ValidateNoteLength(noteLength * multiplier);
             if (lengthResult[1] == 1) return; //only proceed if division is necessary
 
-            var message = $"Instead of that huge value, use {getWrittenNumber(lengthResult[1])} "
+            var message = $"Instead of that huge value, use {GetWrittenNumber(lengthResult[1])} "
                         + $"notes with this value instead: [{lengthResult[0]:X2}]";
 
             MessageBox.Show(message, "Divided note length");
         }
 
-        private string getWrittenNumber(int input)
+        private string GetWrittenNumber(int input)
         {
-            string writtenNumber = "ERROR";
-            switch (input) //this will only be used in note length multipliers, so only these three numbers will ever be needed
+            var numberMap = new Dictionary<int, string>
             {
-                case 2:
-                    writtenNumber = "two";
-                    break;
-                case 3:
-                    writtenNumber = "three";
-                    break;
-                case 4:
-                    writtenNumber = "four";
-                    break;
-            }
-            return writtenNumber;
+                { 2, "two" },
+                { 3, "three" },
+                { 4, "four" },
+                { 5, "five" }
+            };
+
+            return numberMap.ContainsKey(input) ? numberMap[input] : "ERROR";
         }
 
         private void cboNoteLength_TextChanged(object sender, EventArgs e)
