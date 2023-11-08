@@ -2,6 +2,7 @@
 using NAudio.Wave.SampleProviders;
 using PK_Piano.SPC_File_Editing;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Media;
 using System.Windows.Forms;
@@ -167,16 +168,11 @@ namespace PK_Piano
 
         private byte GetNumberFromBooleans(bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7, bool b8)
         {
-            byte result = 0; //this converts the bools to a number by adding their respective binary weights
-            if (b1) result += 1;
-            if (b2) result += 2;
-            if (b3) result += 4;
-            if (b4) result += 8;
-            if (b5) result += 16;
-            if (b6) result += 32;
-            if (b7) result += 64;
-            if (b8) result += 128;
-            return result;
+            var boolArray = new[] {b1, b2, b3, b4, b5, b6, b7, b8};
+            var bitArray = new BitArray(boolArray);
+            var bytes = new byte[1];
+            bitArray.CopyTo(bytes, 0);
+            return bytes[0];
         }
 
         private void CreateEchoCodes()
