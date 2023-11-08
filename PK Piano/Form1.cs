@@ -672,16 +672,19 @@ namespace PK_Piano
 
         private void cboWaveform_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboWaveform.SelectedIndex == 0)
-                playbackThing.type = SignalGeneratorType.Sin;
-            else if (cboWaveform.SelectedIndex == 1)
-                playbackThing.type = SignalGeneratorType.Square;
-            else if (cboWaveform.SelectedIndex == 2)
-                playbackThing.type = SignalGeneratorType.SawTooth;
-            else if (cboWaveform.SelectedIndex == 3)
-                playbackThing.type = SignalGeneratorType.Triangle;
-            else
-                playbackThing.type = SignalGeneratorType.White;
+            switch (cboWaveform.SelectedIndex)
+            {
+                case 0:
+                    playbackThing.type = SignalGeneratorType.Sin; break;
+                case 1:
+                    playbackThing.type = SignalGeneratorType.Square; break;
+                case 2:
+                    playbackThing.type = SignalGeneratorType.SawTooth; break;
+                case 3:
+                    playbackThing.type = SignalGeneratorType.Triangle; break;
+                default:
+                    playbackThing.type = SignalGeneratorType.White; break;
+            }
         }
 
         //ADSR STUFF
@@ -723,8 +726,8 @@ namespace PK_Piano
         private void lstInstruments_SelectedIndexChanged(object sender, EventArgs e)
         {
             //if (lstInstruments.Items.Count < 1) return; //will I need this?
-            Instrument CurrentInstrument = (Instrument)lstInstruments.SelectedItem;
-            UpdateADSRTextboxes(CurrentInstrument);
+            var currentInstrument = (Instrument)lstInstruments.SelectedItem;
+            UpdateADSRTextboxes(currentInstrument);
         }
 
         private void UpdateADSRTextboxes(Instrument instrument)
