@@ -25,8 +25,7 @@ namespace PK_Piano.SPC_File_Editing
         {
             //This gets used in the ListBox
             //This formatting is meant to match the formatting in EBMusEd's instrument viewer!
-            string result = $"{Index:X2}: {ADSR1:X2} {ADSR2:X2} {GAIN:X2}  {TuningMultiplier:X2}{TuningSub:X2}";
-            return result;
+            return $"{Index:X2}: {ADSR1:X2} {ADSR2:X2} {GAIN:X2}  {TuningMultiplier:X2}{TuningSub:X2}";
         }
 
         public static byte[] MakeHex(List<Instrument> instruments)
