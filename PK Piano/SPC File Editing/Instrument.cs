@@ -30,16 +30,19 @@ namespace PK_Piano.SPC_File_Editing
 
         public static byte[] MakeHex(List<Instrument> instruments)
         {
-            var result = new List<byte>();
+            var result = new List<byte>(instruments.Count * 6);
 
             foreach (var instrument in instruments)
             {
-                result.Add(instrument.Index);
-                result.Add(instrument.ADSR1);
-                result.Add(instrument.ADSR2);
-                result.Add(instrument.GAIN);
-                result.Add(instrument.TuningMultiplier);
-                result.Add(instrument.TuningSub);
+                result.AddRange(new byte[]
+                {
+                    instrument.Index,
+                    instrument.ADSR1,
+                    instrument.ADSR2,
+                    instrument.GAIN,
+                    instrument.TuningMultiplier,
+                    instrument.TuningSub, 
+                });
             }
 
             return result.ToArray();
