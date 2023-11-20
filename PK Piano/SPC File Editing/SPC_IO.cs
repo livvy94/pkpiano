@@ -61,13 +61,18 @@ namespace PK_Piano.SPC_File_Editing
         {
             //TODO: Make this into a hex search thing so it doesn't have to be hard-coded
             const int ASM_LENGTH = 10;
-            byte[] buffer = new byte[ASM_LENGTH];
+            var buffer = new byte[ASM_LENGTH];
 
-            const int ASM_OFFSET = 0x0A6D; //this is the location of the following compiled SPC700 ASM:
-            //CF DA 14 60 98 XX 14 98 YY 15
-            //where YYXX is the offset we want
+            //Find some compiled ASM which contains the offset of the instrument table.
+            //The ASM we are looking for is [CF DA 14 60 98 XX 14 98 YY 15] - YYXX is the offset we want
+            byte[] searchPattern = { 0xCF, 0xDA, 0x14, 0x60, 0x98 };
 
-            fs.Seek(ASM_OFFSET, SeekOrigin.Begin);
+            //Copy the FileStream into a byte array so we can use it in BinaryCounter's search function
+            var fileBytes = new byte[fs.Length];
+            fs.Read(fileBytes, 0, fileBytes.Length);
+            var asmOffset = FindPatternIndexInEnumerable(fileBytes, searchPattern);
+
+            fs.Seek(asmOffset, SeekOrigin.Begin);
             fs.Read(buffer, 0, ASM_LENGTH);
 
             int firstbyte = buffer[5];
@@ -76,48 +81,28 @@ namespace PK_Piano.SPC_File_Editing
             return result_offset + 0x100; //the header in each SPC file containing ID666 tags etc is 0x100 bytes long
         }
 
-        //hex search stuff attempt:
-        private int FindASMoffset(string filePath)
+        static long FindPatternIndexInEnumerable<T>(IEnumerable<T> searchEnumerable, IEnumerable<T> searchPattern)
         {
-            var sequence = new byte[] { 0xCF, 0xDA, 0x14, 0x60, 0x98 };
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            //A search function by BinaryCounter (https://github.com/binarycounter)
+            for (var i = 0; i <= searchEnumerable.Count() - searchPattern.Count(); i++)
             {
-                byte[] buffer = new byte[sequence.Length];
-                while (fs.Read(buffer, 0, buffer.Length) == buffer.Length)
+                var sub = searchEnumerable.Skip(i).Take(searchPattern.Count());
+                if (Enumerable.SequenceEqual(sub, searchPattern))
                 {
-                    if (buffer.SequenceEqual(sequence))
-                    {
-                        return (int)fs.Position - buffer.Length;
-                    }
+                    return i;
                 }
             }
-            return -1;
-        }
 
-        private int FindASMoffset2(string filePath)
-        {
-            byte[] sequence = new byte[] { 0xC5, 0xDA, 0x14, 0x60, 0x98, 0x14, 0x98, 0x15 };
-            var indexes = Enumerable.Range(0, sequence.Length - sequence.Length)
-                .Where(i => sequence.Skip(i).Take(5).Skip(1).Take(2).Skip(1).Take(1).SequenceEqual(sequence));
-
-            return indexes.First();
+            return -1; //Pattern not found
         }
 
         internal static string ShowOFD()
         {
-            var result = string.Empty;
-            var ofd = new OpenFileDialog
+            using (var ofd = new OpenFileDialog{ Multiselect = false, Filter = "SPC files (*.spc)|*.spc" })
             {
-                Multiselect = false,
-                Filter = "SPC files (*.spc)|*.spc"
-            };
-
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                result = ofd.FileName;
+                //return the result, or null if the user hit Cancel
+                return ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
             }
-
-            return result; //This probably isn't best-practice...
         }
     }
 }
