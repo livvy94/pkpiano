@@ -292,7 +292,7 @@ namespace PK_Piano
         //Other button click events
         private void btnChannelTranspose_Click(object sender, EventArgs e)
         {
-            CopyDoubleHex(0xEA, Convert.ToByte(transposeValue));
+            CopyDoubleHex(0xEA, Convert.ToByte(transposeValue, 16));
         }
 
         private void btnFinetune1_Click(object sender, EventArgs e)
@@ -609,7 +609,7 @@ namespace PK_Piano
             playbackThing.wo = new WaveOutEvent();
             playbackThing.fadeout = true;
 
-            cboWaveform.SelectedIndex = 1;
+            cboWaveform.SelectedIndex = 3;
             txtMultiplier.TextChanged += txtMultiplier_TextChanged; //The default click event for txtMultiplier doesn't do anything, so this is the next best alternative
 
             //Tooltip stuff from http://stackoverflow.com/questions/1339524/c-how-do-i-add-a-tooltip-to-a-control
