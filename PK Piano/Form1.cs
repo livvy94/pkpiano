@@ -4,7 +4,6 @@ using PK_Piano.SPC_File_Editing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Media;
 using System.Windows.Forms;
 
 namespace PK_Piano
@@ -161,7 +160,15 @@ namespace PK_Piano
         {
             SetAllEchoValues(); //I keep getting 00s until I move one of the sliders, which is annoying. Hopefully this should fix it.
 
-            echoChannels = GetNumberFromBooleans(checkBox8.Checked, checkBox7.Checked, checkBox6.Checked, checkBox5.Checked, checkBox4.Checked, checkBox3.Checked, checkBox2.Checked, checkBox1.Checked);
+            echoChannels = GetNumberFromBooleans(
+                checkBox1.Checked,
+                checkBox2.Checked,
+                checkBox3.Checked,
+                checkBox4.Checked,
+                checkBox5.Checked,
+                checkBox6.Checked,
+                checkBox7.Checked,
+                checkBox8.Checked);
             CreateEchoCodes();
 
         }
