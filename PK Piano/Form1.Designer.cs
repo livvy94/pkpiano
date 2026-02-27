@@ -86,7 +86,6 @@
             this.tabADSR = new System.Windows.Forms.TabPage();
             this.label18 = new System.Windows.Forms.Label();
             this.btnCopyInstrumentTable = new System.Windows.Forms.Button();
-            this.btnApplyToOtherSPC = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.txtGAIN = new System.Windows.Forms.TextBox();
             this.txtTuningSub = new System.Windows.Forms.TextBox();
@@ -128,6 +127,16 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
+            this.tabPackProgress = new System.Windows.Forms.TabPage();
+            this.label24 = new System.Windows.Forms.Label();
+            this.btnClearARAM = new System.Windows.Forms.Button();
+            this.rbo00 = new System.Windows.Forms.RadioButton();
+            this.rbo1A = new System.Windows.Forms.RadioButton();
+            this.lblARAM = new System.Windows.Forms.Label();
+            this.lblARAMremaining = new System.Windows.Forms.Label();
+            this.lblLargestDelay = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btnAddBRR = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -142,6 +151,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).BeginInit();
+            this.tabPackProgress.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -149,6 +159,7 @@
             this.tabControl1.Controls.Add(this.tabInitial);
             this.tabControl1.Controls.Add(this.tabChannel);
             this.tabControl1.Controls.Add(this.tabADSR);
+            this.tabControl1.Controls.Add(this.tabPackProgress);
             this.tabControl1.Controls.Add(this.tabOther);
             this.tabControl1.Location = new System.Drawing.Point(292, 12);
             this.tabControl1.Name = "tabControl1";
@@ -737,9 +748,9 @@
             // 
             // tabADSR
             // 
+            this.tabADSR.Controls.Add(this.label22);
             this.tabADSR.Controls.Add(this.label18);
             this.tabADSR.Controls.Add(this.btnCopyInstrumentTable);
-            this.tabADSR.Controls.Add(this.btnApplyToOtherSPC);
             this.tabADSR.Controls.Add(this.btnApply);
             this.tabADSR.Controls.Add(this.txtGAIN);
             this.tabADSR.Controls.Add(this.txtTuningSub);
@@ -769,83 +780,93 @@
             // 
             // btnCopyInstrumentTable
             // 
-            this.btnCopyInstrumentTable.Location = new System.Drawing.Point(190, 136);
+            this.btnCopyInstrumentTable.Location = new System.Drawing.Point(190, 102);
             this.btnCopyInstrumentTable.Name = "btnCopyInstrumentTable";
             this.btnCopyInstrumentTable.Size = new System.Drawing.Size(164, 31);
-            this.btnCopyInstrumentTable.TabIndex = 3;
+            this.btnCopyInstrumentTable.TabIndex = 8;
             this.btnCopyInstrumentTable.Text = "Copy to clipboard...";
             this.btnCopyInstrumentTable.UseVisualStyleBackColor = true;
             this.btnCopyInstrumentTable.Click += new System.EventHandler(this.btnCopyInstrumentTable_Click);
-            // 
-            // btnApplyToOtherSPC
-            // 
-            this.btnApplyToOtherSPC.Location = new System.Drawing.Point(190, 99);
-            this.btnApplyToOtherSPC.Name = "btnApplyToOtherSPC";
-            this.btnApplyToOtherSPC.Size = new System.Drawing.Size(164, 31);
-            this.btnApplyToOtherSPC.TabIndex = 3;
-            this.btnApplyToOtherSPC.Text = "Apply to another SPC file...";
-            this.btnApplyToOtherSPC.UseVisualStyleBackColor = true;
-            this.btnApplyToOtherSPC.Click += new System.EventHandler(this.btnApplyToOtherSPC_Click);
             // 
             // btnApply
             // 
             this.btnApply.Location = new System.Drawing.Point(190, 65);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(164, 31);
-            this.btnApply.TabIndex = 3;
-            this.btnApply.Text = "Apply...";
+            this.btnApply.TabIndex = 6;
+            this.btnApply.Text = "Save";
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
             // txtGAIN
             // 
+            this.txtGAIN.BackColor = System.Drawing.Color.White;
+            this.txtGAIN.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtGAIN.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
             this.txtGAIN.Location = new System.Drawing.Point(252, 39);
             this.txtGAIN.MaxLength = 2;
             this.txtGAIN.Name = "txtGAIN";
-            this.txtGAIN.Size = new System.Drawing.Size(25, 26);
-            this.txtGAIN.TabIndex = 2;
+            this.txtGAIN.Size = new System.Drawing.Size(25, 19);
+            this.txtGAIN.TabIndex = 3;
+            this.txtGAIN.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtGAIN.TextChanged += new System.EventHandler(this.txtGAIN_TextChanged);
+            this.txtGAIN.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtGAIN_KeyDown);
             // 
             // txtTuningSub
             // 
+            this.txtTuningSub.BackColor = System.Drawing.Color.White;
+            this.txtTuningSub.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTuningSub.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
             this.txtTuningSub.Location = new System.Drawing.Point(329, 39);
             this.txtTuningSub.MaxLength = 2;
             this.txtTuningSub.Name = "txtTuningSub";
-            this.txtTuningSub.Size = new System.Drawing.Size(25, 26);
-            this.txtTuningSub.TabIndex = 2;
+            this.txtTuningSub.Size = new System.Drawing.Size(25, 19);
+            this.txtTuningSub.TabIndex = 5;
+            this.txtTuningSub.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtTuningSub.TextChanged += new System.EventHandler(this.txtTuningSub_TextChanged);
+            this.txtTuningSub.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTuningSub_KeyDown);
             // 
             // txtADSR2
             // 
+            this.txtADSR2.BackColor = System.Drawing.Color.White;
+            this.txtADSR2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtADSR2.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
             this.txtADSR2.Location = new System.Drawing.Point(221, 39);
             this.txtADSR2.MaxLength = 2;
             this.txtADSR2.Name = "txtADSR2";
-            this.txtADSR2.Size = new System.Drawing.Size(25, 26);
+            this.txtADSR2.Size = new System.Drawing.Size(25, 19);
             this.txtADSR2.TabIndex = 2;
+            this.txtADSR2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtADSR2.TextChanged += new System.EventHandler(this.txtADSR2_TextChanged);
+            this.txtADSR2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtADSR2_KeyDown);
             // 
             // txtTuningMult
             // 
+            this.txtTuningMult.BackColor = System.Drawing.Color.White;
+            this.txtTuningMult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtTuningMult.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
             this.txtTuningMult.Location = new System.Drawing.Point(298, 39);
             this.txtTuningMult.MaxLength = 2;
             this.txtTuningMult.Name = "txtTuningMult";
-            this.txtTuningMult.Size = new System.Drawing.Size(25, 26);
-            this.txtTuningMult.TabIndex = 2;
+            this.txtTuningMult.Size = new System.Drawing.Size(25, 19);
+            this.txtTuningMult.TabIndex = 4;
+            this.txtTuningMult.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtTuningMult.TextChanged += new System.EventHandler(this.txtTuningMult_TextChanged);
+            this.txtTuningMult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTuningMult_KeyDown);
             // 
             // txtADSR1
             // 
+            this.txtADSR1.BackColor = System.Drawing.Color.White;
+            this.txtADSR1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtADSR1.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Bold);
             this.txtADSR1.Location = new System.Drawing.Point(190, 39);
             this.txtADSR1.MaxLength = 2;
             this.txtADSR1.Name = "txtADSR1";
-            this.txtADSR1.Size = new System.Drawing.Size(25, 26);
-            this.txtADSR1.TabIndex = 2;
+            this.txtADSR1.Size = new System.Drawing.Size(25, 19);
+            this.txtADSR1.TabIndex = 1;
+            this.txtADSR1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtADSR1.TextChanged += new System.EventHandler(this.txtADSR1_TextChanged);
+            this.txtADSR1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtADSR1_KeyDown);
             // 
             // label17
             // 
@@ -901,7 +922,12 @@
             // cboWaveform
             // 
             this.cboWaveform.FormattingEnabled = true;
-            this.cboWaveform.Items.AddRange(new object[] { "Sine", "Square", "Sawtooth", "Triangle", "Noise" });
+            this.cboWaveform.Items.AddRange(new object[] {
+            "Sine",
+            "Square",
+            "Sawtooth",
+            "Triangle",
+            "Noise"});
             this.cboWaveform.Location = new System.Drawing.Point(141, 8);
             this.cboWaveform.Name = "cboWaveform";
             this.cboWaveform.Size = new System.Drawing.Size(74, 21);
@@ -977,11 +1003,19 @@
             // 
             this.txtMultiplier.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMultiplier.Location = new System.Drawing.Point(92, 226);
-            this.txtMultiplier.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            this.txtMultiplier.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.txtMultiplier.Name = "txtMultiplier";
             this.txtMultiplier.Size = new System.Drawing.Size(63, 22);
             this.txtMultiplier.TabIndex = 18;
-            this.txtMultiplier.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            this.txtMultiplier.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // label20
             // 
@@ -1005,7 +1039,12 @@
             // 
             this.cboNoteLength.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboNoteLength.FormattingEnabled = true;
-            this.cboNoteLength.Items.AddRange(new object[] { "06", "0C", "18", "30", "60" });
+            this.cboNoteLength.Items.AddRange(new object[] {
+            "06",
+            "0C",
+            "18",
+            "30",
+            "60"});
             this.cboNoteLength.Location = new System.Drawing.Point(92, 198);
             this.cboNoteLength.Name = "cboNoteLength";
             this.cboNoteLength.Size = new System.Drawing.Size(63, 22);
@@ -1216,6 +1255,111 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
+            // tabPackProgress
+            // 
+            this.tabPackProgress.Controls.Add(this.btnAddBRR);
+            this.tabPackProgress.Controls.Add(this.lblLargestDelay);
+            this.tabPackProgress.Controls.Add(this.lblARAMremaining);
+            this.tabPackProgress.Controls.Add(this.lblARAM);
+            this.tabPackProgress.Controls.Add(this.rbo1A);
+            this.tabPackProgress.Controls.Add(this.rbo00);
+            this.tabPackProgress.Controls.Add(this.btnClearARAM);
+            this.tabPackProgress.Controls.Add(this.label24);
+            this.tabPackProgress.Location = new System.Drawing.Point(4, 22);
+            this.tabPackProgress.Name = "tabPackProgress";
+            this.tabPackProgress.Size = new System.Drawing.Size(374, 239);
+            this.tabPackProgress.TabIndex = 7;
+            this.tabPackProgress.Text = "Free Space";
+            this.tabPackProgress.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(26, 220);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(326, 13);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "Use this tab to add up filesizes and see how much free space is left.";
+            // 
+            // btnClearARAM
+            // 
+            this.btnClearARAM.Location = new System.Drawing.Point(257, 12);
+            this.btnClearARAM.Name = "btnClearARAM";
+            this.btnClearARAM.Size = new System.Drawing.Size(87, 23);
+            this.btnClearARAM.TabIndex = 3;
+            this.btnClearARAM.Text = "Reset";
+            this.btnClearARAM.UseVisualStyleBackColor = true;
+            this.btnClearARAM.Click += new System.EventHandler(this.btnClearARAM_Click);
+            // 
+            // rbo00
+            // 
+            this.rbo00.AutoSize = true;
+            this.rbo00.Location = new System.Drawing.Point(26, 58);
+            this.rbo00.Name = "rbo00";
+            this.rbo00.Size = new System.Drawing.Size(162, 17);
+            this.rbo00.TabIndex = 5;
+            this.rbo00.Text = "Start counting at 00 (0x7000)";
+            this.rbo00.UseVisualStyleBackColor = true;
+            // 
+            // rbo1A
+            // 
+            this.rbo1A.AutoSize = true;
+            this.rbo1A.Checked = true;
+            this.rbo1A.Location = new System.Drawing.Point(26, 76);
+            this.rbo1A.Name = "rbo1A";
+            this.rbo1A.Size = new System.Drawing.Size(164, 17);
+            this.rbo1A.TabIndex = 6;
+            this.rbo1A.TabStop = true;
+            this.rbo1A.Text = "Start counting at 1A (0x95B0)";
+            this.rbo1A.UseVisualStyleBackColor = true;
+            // 
+            // lblARAM
+            // 
+            this.lblARAM.AutoSize = true;
+            this.lblARAM.Font = new System.Drawing.Font("Courier New", 7F);
+            this.lblARAM.Location = new System.Drawing.Point(24, 40);
+            this.lblARAM.Name = "lblARAM";
+            this.lblARAM.Size = new System.Drawing.Size(0, 12);
+            this.lblARAM.TabIndex = 7;
+            // 
+            // lblARAMremaining
+            // 
+            this.lblARAMremaining.AutoSize = true;
+            this.lblARAMremaining.Location = new System.Drawing.Point(23, 96);
+            this.lblARAMremaining.Name = "lblARAMremaining";
+            this.lblARAMremaining.Size = new System.Drawing.Size(84, 13);
+            this.lblARAMremaining.TabIndex = 8;
+            this.lblARAMremaining.Text = "Bytes remaining:";
+            this.lblARAMremaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblLargestDelay
+            // 
+            this.lblLargestDelay.AutoSize = true;
+            this.lblLargestDelay.Location = new System.Drawing.Point(23, 113);
+            this.lblLargestDelay.Name = "lblLargestDelay";
+            this.lblLargestDelay.Size = new System.Drawing.Size(69, 13);
+            this.lblLargestDelay.TabIndex = 9;
+            this.lblLargestDelay.Text = "No warnings.";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(187, 136);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(174, 26);
+            this.label22.TabIndex = 9;
+            this.label22.Text = "This is an ADSR editor for SPC files\r\nexported from EBMusEd.";
+            // 
+            // btnAddBRR
+            // 
+            this.btnAddBRR.Location = new System.Drawing.Point(26, 12);
+            this.btnAddBRR.Name = "btnAddBRR";
+            this.btnAddBRR.Size = new System.Drawing.Size(225, 23);
+            this.btnAddBRR.TabIndex = 10;
+            this.btnAddBRR.Text = "Add a BRR...";
+            this.btnAddBRR.UseVisualStyleBackColor = true;
+            this.btnAddBRR.Click += new System.EventHandler(this.btnAddBRR_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1273,8 +1417,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).EndInit();
+            this.tabPackProgress.ResumeLayout(false);
+            this.tabPackProgress.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         #endregion
@@ -1376,8 +1523,17 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ListBox lstInstruments;
         private System.Windows.Forms.Button btnCopyInstrumentTable;
-        private System.Windows.Forms.Button btnApplyToOtherSPC;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TabPage tabPackProgress;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Button btnClearARAM;
+        private System.Windows.Forms.RadioButton rbo1A;
+        private System.Windows.Forms.RadioButton rbo00;
+        private System.Windows.Forms.Label lblARAMremaining;
+        private System.Windows.Forms.Label lblARAM;
+        private System.Windows.Forms.Label lblLargestDelay;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button btnAddBRR;
     }
 }
 

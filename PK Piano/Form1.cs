@@ -4,6 +4,7 @@ using PK_Piano.SPC_File_Editing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace PK_Piano
@@ -14,6 +15,7 @@ namespace PK_Piano
         {
             echoDelay = 0x00;
             InitializeComponent();
+            UpdateARAM();
         }
 
         byte octave = 4; //used in the note buttons' if statements
@@ -31,6 +33,7 @@ namespace PK_Piano
         byte echoFeedback;
         byte echoFilter;
         readonly ToneGenerator.PlaybackThing playbackThing = new ToneGenerator.PlaybackThing();
+        int ARAM_Count = 0x95B0;
 
         string currentSPCfilepath = string.Empty;
         List<Instrument> loadedInstruments = new List<Instrument>();
@@ -175,7 +178,7 @@ namespace PK_Piano
 
         private byte GetNumberFromBooleans(bool b1, bool b2, bool b3, bool b4, bool b5, bool b6, bool b7, bool b8)
         {
-            var boolArray = new[] {b1, b2, b3, b4, b5, b6, b7, b8};
+            var boolArray = new[] { b1, b2, b3, b4, b5, b6, b7, b8 };
             var bitArray = new BitArray(boolArray);
             var bytes = new byte[1];
             bitArray.CopyTo(bytes, 0);
@@ -651,6 +654,8 @@ namespace PK_Piano
             toolTip1.SetToolTip(btnTempo, "[E7 tempo]");
             toolTip1.SetToolTip(btnGlobalVolume, "[E5 volume]");
 
+            toolTip1.SetToolTip(btnAddBRR, "Get a BRR file's size and add it to the count.");
+
             //toolTip1.SetToolTip(ANYTHING, "");
             //toolTip1.SetToolTip(ANYTHING, "");
             //toolTip1.SetToolTip(ANYTHING, "");
@@ -750,12 +755,6 @@ namespace PK_Piano
             SaveToSPC(currentSPCfilepath);
         }
 
-        private void btnApplyToOtherSPC_Click(object sender, EventArgs e)
-        {
-            var tempSPCfilepath = SPC_IO.ShowOFD();
-            SaveToSPC(tempSPCfilepath);
-        }
-
         private void btnCopyInstrumentTable_Click(object sender, EventArgs e)
         {
             //TODO: Generate a config.txt-style data table and copy it to the clipboard
@@ -846,8 +845,134 @@ namespace PK_Piano
 
         private void ADSRhelp_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("https://vince94.neocities.org/cool/ADSR"); //TODO: who the eff is Vince?
+            Clipboard.SetText("https://livvy94.neocities.org/cool/ADSR");
             MessageBox.Show("Go to the URL in your clipboard!");
+        }
+
+        private void UpdateARAM()
+        {
+            lblARAM.Text = GenerateProgressBar(ARAM_Count);
+            lblARAMremaining.Text = "Bytes remaining: 0x" + (0xFFFF - ARAM_Count).ToString("X4");
+
+            lblLargestDelay.Text = "Current size: " + ARAM_Count.ToString("X4");
+
+            if (ARAM_Count > 0xE700)
+                lblLargestDelay.Text = "Over the safe limit! (03)";
+            else if (ARAM_Count > 0xEF00)
+                lblLargestDelay.Text = "Over the safe limit! (02)";
+            else if (ARAM_Count > 0xF700)
+                lblLargestDelay.Text = "WAY over the safe limit! (01)";
+        }
+
+        private string GenerateProgressBar(int value, int maxValue = 0xFFFF, int length = 53)
+        {
+            //0x7000 - BRR Start
+            //0x95B0 - BRR Start (1A)
+            //0xFFFF - Max possible ARAM offset
+
+            // Calculate percentage
+            double percent = (double)value / maxValue;
+
+            // Determine filled characters
+            int filled = (int)Math.Round(percent * length);
+
+            return new string('▓', filled) + new string('░', length - filled);
+        }
+
+        private void btnClearARAM_Click(object sender, EventArgs e)
+        {
+            if (rbo1A.Checked)
+                ARAM_Count = 0x95B0;
+            else
+                ARAM_Count = 0x7000;
+
+            UpdateARAM();
+        }
+
+        private void txtADSR1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                e.SuppressKeyPress = true;
+                ParseADSR();
+            }
+        }
+
+        private void txtADSR2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                e.SuppressKeyPress = true;
+                ParseADSR();
+            }
+        }
+
+        private void txtGAIN_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                e.SuppressKeyPress = true;
+                ParseADSR();
+            }
+        }
+
+        private void txtTuningMult_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                e.SuppressKeyPress = true;
+                ParseADSR();
+            }
+        }
+
+        private void txtTuningSub_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                e.SuppressKeyPress = true;
+                ParseADSR();
+            }
+        }
+
+        private void ParseADSR()
+        {
+            //Possible clipboard contents:
+            //$8F $E6 $00
+            //$00 $00 $00 $04 $00
+            var clip = Clipboard.GetText();
+            if (clip.Length == 11 || clip.Length == 19)
+                clip = clip.Replace(" ", "").Replace("$", ""); //sanitize
+
+            if (clip.Length == 6)
+            {
+                txtADSR1.Text = clip.Substring(0, 2);
+                txtADSR2.Text = clip.Substring(2, 2);
+                txtGAIN.Text = clip.Substring(4, 2);
+            }
+            else if (clip.Length == 10)
+            {
+                txtADSR1.Text = clip.Substring(0, 2);
+                txtADSR2.Text = clip.Substring(2, 2);
+                txtGAIN.Text = clip.Substring(4, 2);
+                txtTuningMult.Text = clip.Substring(6, 2);
+                txtTuningSub.Text = clip.Substring(8, 2);
+            }
+        }
+
+        private void btnAddBRR_Click(object sender, EventArgs e)
+        {
+            string configtxt;
+            using (var ofd = new OpenFileDialog { Multiselect = false, Filter = "BRR samples (*.brr)|*.brr" })
+            {
+                configtxt = ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : null;
+            }
+
+            if (configtxt == null) return;
+
+            var info = new FileInfo(configtxt);
+            int sizeInBytes = (int)info.Length - 2; //file size minus the loop header
+            ARAM_Count += sizeInBytes;
+            UpdateARAM();
         }
     }
 }
