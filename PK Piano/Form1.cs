@@ -448,25 +448,16 @@ namespace PK_Piano
             if (clipboardContents.Contains("Not enough rows to process")) return;
             clipboardContents = clipboardContents.Replace("[", "").Replace("]", ""); //get rid of brackets
 
-            List<byte> input;
-
-            //Get the note sequence from the clipboard
-            //try
-            //{
-            //    input = SongPiece.StringToBytes(clipboardContents);
-            //}
-            //catch(Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    return;
-            //}
-
-            input = SongPiece.StringToBytes("0C A7 C8 C8"); //DIY Unit Test
-            List<byte> goodVersion = SongPiece.StringToBytes("24 A7");
-            List<byte> optimizedBytes = SongPiece.StringToBytes(ProcessBytes(input));
-            RunTest(optimizedBytes, goodVersion);
-
-            Clipboard.SetText(optimizedBytes.ToString());
+            try
+            {
+                string result = C8Eraser.Optimize(Clipboard.GetText());
+                if (!string.IsNullOrWhiteSpace(result))
+                    Clipboard.SetText(result);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ex.Message, "C8 Eraser", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         public static string ProcessBytes(List<byte> bytesInput)

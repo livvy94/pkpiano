@@ -267,6 +267,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="C8eraser.cs" />
     <Compile Include="EBM Note Data.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -347,7 +348,7 @@
     </PublishFile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources" />
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
