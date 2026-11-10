@@ -84,6 +84,7 @@
             this.btnPortamento = new System.Windows.Forms.Button();
             this.btnPortamentoOff = new System.Windows.Forms.Button();
             this.tabADSR = new System.Windows.Forms.TabPage();
+            this.label22 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.btnCopyInstrumentTable = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
@@ -96,6 +97,15 @@
             this.lblSPCFilename = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.lstInstruments = new System.Windows.Forms.ListBox();
+            this.tabPackProgress = new System.Windows.Forms.TabPage();
+            this.btnAddBRR = new System.Windows.Forms.Button();
+            this.lblLargestDelay = new System.Windows.Forms.Label();
+            this.lblARAMremaining = new System.Windows.Forms.Label();
+            this.lblARAM = new System.Windows.Forms.Label();
+            this.rbo1A = new System.Windows.Forms.RadioButton();
+            this.rbo00 = new System.Windows.Forms.RadioButton();
+            this.btnClearARAM = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
             this.tabOther = new System.Windows.Forms.TabPage();
             this.cboWaveform = new System.Windows.Forms.ComboBox();
             this.btnTuning = new System.Windows.Forms.Button();
@@ -127,16 +137,7 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
-            this.tabPackProgress = new System.Windows.Forms.TabPage();
-            this.label24 = new System.Windows.Forms.Label();
-            this.btnClearARAM = new System.Windows.Forms.Button();
-            this.rbo00 = new System.Windows.Forms.RadioButton();
-            this.rbo1A = new System.Windows.Forms.RadioButton();
-            this.lblARAM = new System.Windows.Forms.Label();
-            this.lblARAMremaining = new System.Windows.Forms.Label();
-            this.lblLargestDelay = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.btnAddBRR = new System.Windows.Forms.Button();
+            this.lblDelayWarning = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -147,11 +148,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.ChannelVolumeBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).BeginInit();
             this.tabADSR.SuspendLayout();
+            this.tabPackProgress.SuspendLayout();
             this.tabOther.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).BeginInit();
-            this.tabPackProgress.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -169,6 +170,7 @@
             // 
             // tabInitial
             // 
+            this.tabInitial.Controls.Add(this.lblDelayWarning);
             this.tabInitial.Controls.Add(this.btnEchoOff);
             this.tabInitial.Controls.Add(this.btnSetFirstDrum);
             this.tabInitial.Controls.Add(this.label15);
@@ -768,6 +770,15 @@
             this.tabADSR.Text = "ADSR";
             this.tabADSR.UseVisualStyleBackColor = true;
             // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(187, 136);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(174, 26);
+            this.label22.TabIndex = 9;
+            this.label22.Text = "This is an ADSR editor for SPC files\r\nexported from EBMusEd.";
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -907,6 +918,102 @@
             this.lstInstruments.TabIndex = 0;
             this.lstInstruments.SelectedIndexChanged += new System.EventHandler(this.lstInstruments_SelectedIndexChanged);
             // 
+            // tabPackProgress
+            // 
+            this.tabPackProgress.Controls.Add(this.btnAddBRR);
+            this.tabPackProgress.Controls.Add(this.lblLargestDelay);
+            this.tabPackProgress.Controls.Add(this.lblARAMremaining);
+            this.tabPackProgress.Controls.Add(this.lblARAM);
+            this.tabPackProgress.Controls.Add(this.rbo1A);
+            this.tabPackProgress.Controls.Add(this.rbo00);
+            this.tabPackProgress.Controls.Add(this.btnClearARAM);
+            this.tabPackProgress.Controls.Add(this.label24);
+            this.tabPackProgress.Location = new System.Drawing.Point(4, 22);
+            this.tabPackProgress.Name = "tabPackProgress";
+            this.tabPackProgress.Size = new System.Drawing.Size(374, 239);
+            this.tabPackProgress.TabIndex = 7;
+            this.tabPackProgress.Text = "Free Space";
+            this.tabPackProgress.UseVisualStyleBackColor = true;
+            // 
+            // btnAddBRR
+            // 
+            this.btnAddBRR.Location = new System.Drawing.Point(26, 12);
+            this.btnAddBRR.Name = "btnAddBRR";
+            this.btnAddBRR.Size = new System.Drawing.Size(225, 23);
+            this.btnAddBRR.TabIndex = 10;
+            this.btnAddBRR.Text = "Add a BRR...";
+            this.btnAddBRR.UseVisualStyleBackColor = true;
+            this.btnAddBRR.Click += new System.EventHandler(this.btnAddBRR_Click);
+            // 
+            // lblLargestDelay
+            // 
+            this.lblLargestDelay.AutoSize = true;
+            this.lblLargestDelay.Location = new System.Drawing.Point(23, 113);
+            this.lblLargestDelay.Name = "lblLargestDelay";
+            this.lblLargestDelay.Size = new System.Drawing.Size(69, 13);
+            this.lblLargestDelay.TabIndex = 9;
+            this.lblLargestDelay.Text = "No warnings.";
+            // 
+            // lblARAMremaining
+            // 
+            this.lblARAMremaining.AutoSize = true;
+            this.lblARAMremaining.Location = new System.Drawing.Point(23, 96);
+            this.lblARAMremaining.Name = "lblARAMremaining";
+            this.lblARAMremaining.Size = new System.Drawing.Size(84, 13);
+            this.lblARAMremaining.TabIndex = 8;
+            this.lblARAMremaining.Text = "Bytes remaining:";
+            this.lblARAMremaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // lblARAM
+            // 
+            this.lblARAM.AutoSize = true;
+            this.lblARAM.Font = new System.Drawing.Font("Courier New", 7F);
+            this.lblARAM.Location = new System.Drawing.Point(24, 40);
+            this.lblARAM.Name = "lblARAM";
+            this.lblARAM.Size = new System.Drawing.Size(0, 12);
+            this.lblARAM.TabIndex = 7;
+            // 
+            // rbo1A
+            // 
+            this.rbo1A.AutoSize = true;
+            this.rbo1A.Checked = true;
+            this.rbo1A.Location = new System.Drawing.Point(26, 76);
+            this.rbo1A.Name = "rbo1A";
+            this.rbo1A.Size = new System.Drawing.Size(164, 17);
+            this.rbo1A.TabIndex = 6;
+            this.rbo1A.TabStop = true;
+            this.rbo1A.Text = "Start counting at 1A (0x95B0)";
+            this.rbo1A.UseVisualStyleBackColor = true;
+            // 
+            // rbo00
+            // 
+            this.rbo00.AutoSize = true;
+            this.rbo00.Location = new System.Drawing.Point(26, 58);
+            this.rbo00.Name = "rbo00";
+            this.rbo00.Size = new System.Drawing.Size(162, 17);
+            this.rbo00.TabIndex = 5;
+            this.rbo00.Text = "Start counting at 00 (0x7000)";
+            this.rbo00.UseVisualStyleBackColor = true;
+            // 
+            // btnClearARAM
+            // 
+            this.btnClearARAM.Location = new System.Drawing.Point(257, 12);
+            this.btnClearARAM.Name = "btnClearARAM";
+            this.btnClearARAM.Size = new System.Drawing.Size(87, 23);
+            this.btnClearARAM.TabIndex = 3;
+            this.btnClearARAM.Text = "Reset";
+            this.btnClearARAM.UseVisualStyleBackColor = true;
+            this.btnClearARAM.Click += new System.EventHandler(this.btnClearARAM_Click);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(26, 220);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(326, 13);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "Use this tab to add up filesizes and see how much free space is left.";
+            // 
             // tabOther
             // 
             this.tabOther.Controls.Add(this.cboWaveform);
@@ -995,9 +1102,9 @@
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(165, 166);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(111, 13);
+            this.label21.Size = new System.Drawing.Size(126, 13);
             this.label21.TabIndex = 5;
-            this.label21.Text = "Staccato and volume:";
+            this.label21.Text = "Note Style (staccato, vol)";
             // 
             // txtMultiplier
             // 
@@ -1255,110 +1362,16 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
-            // tabPackProgress
+            // lblDelayWarning
             // 
-            this.tabPackProgress.Controls.Add(this.btnAddBRR);
-            this.tabPackProgress.Controls.Add(this.lblLargestDelay);
-            this.tabPackProgress.Controls.Add(this.lblARAMremaining);
-            this.tabPackProgress.Controls.Add(this.lblARAM);
-            this.tabPackProgress.Controls.Add(this.rbo1A);
-            this.tabPackProgress.Controls.Add(this.rbo00);
-            this.tabPackProgress.Controls.Add(this.btnClearARAM);
-            this.tabPackProgress.Controls.Add(this.label24);
-            this.tabPackProgress.Location = new System.Drawing.Point(4, 22);
-            this.tabPackProgress.Name = "tabPackProgress";
-            this.tabPackProgress.Size = new System.Drawing.Size(374, 239);
-            this.tabPackProgress.TabIndex = 7;
-            this.tabPackProgress.Text = "Free Space";
-            this.tabPackProgress.UseVisualStyleBackColor = true;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(26, 220);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(326, 13);
-            this.label24.TabIndex = 2;
-            this.label24.Text = "Use this tab to add up filesizes and see how much free space is left.";
-            // 
-            // btnClearARAM
-            // 
-            this.btnClearARAM.Location = new System.Drawing.Point(257, 12);
-            this.btnClearARAM.Name = "btnClearARAM";
-            this.btnClearARAM.Size = new System.Drawing.Size(87, 23);
-            this.btnClearARAM.TabIndex = 3;
-            this.btnClearARAM.Text = "Reset";
-            this.btnClearARAM.UseVisualStyleBackColor = true;
-            this.btnClearARAM.Click += new System.EventHandler(this.btnClearARAM_Click);
-            // 
-            // rbo00
-            // 
-            this.rbo00.AutoSize = true;
-            this.rbo00.Location = new System.Drawing.Point(26, 58);
-            this.rbo00.Name = "rbo00";
-            this.rbo00.Size = new System.Drawing.Size(162, 17);
-            this.rbo00.TabIndex = 5;
-            this.rbo00.Text = "Start counting at 00 (0x7000)";
-            this.rbo00.UseVisualStyleBackColor = true;
-            // 
-            // rbo1A
-            // 
-            this.rbo1A.AutoSize = true;
-            this.rbo1A.Checked = true;
-            this.rbo1A.Location = new System.Drawing.Point(26, 76);
-            this.rbo1A.Name = "rbo1A";
-            this.rbo1A.Size = new System.Drawing.Size(164, 17);
-            this.rbo1A.TabIndex = 6;
-            this.rbo1A.TabStop = true;
-            this.rbo1A.Text = "Start counting at 1A (0x95B0)";
-            this.rbo1A.UseVisualStyleBackColor = true;
-            // 
-            // lblARAM
-            // 
-            this.lblARAM.AutoSize = true;
-            this.lblARAM.Font = new System.Drawing.Font("Courier New", 7F);
-            this.lblARAM.Location = new System.Drawing.Point(24, 40);
-            this.lblARAM.Name = "lblARAM";
-            this.lblARAM.Size = new System.Drawing.Size(0, 12);
-            this.lblARAM.TabIndex = 7;
-            // 
-            // lblARAMremaining
-            // 
-            this.lblARAMremaining.AutoSize = true;
-            this.lblARAMremaining.Location = new System.Drawing.Point(23, 96);
-            this.lblARAMremaining.Name = "lblARAMremaining";
-            this.lblARAMremaining.Size = new System.Drawing.Size(84, 13);
-            this.lblARAMremaining.TabIndex = 8;
-            this.lblARAMremaining.Text = "Bytes remaining:";
-            this.lblARAMremaining.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // lblLargestDelay
-            // 
-            this.lblLargestDelay.AutoSize = true;
-            this.lblLargestDelay.Location = new System.Drawing.Point(23, 113);
-            this.lblLargestDelay.Name = "lblLargestDelay";
-            this.lblLargestDelay.Size = new System.Drawing.Size(69, 13);
-            this.lblLargestDelay.TabIndex = 9;
-            this.lblLargestDelay.Text = "No warnings.";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(187, 136);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(174, 26);
-            this.label22.TabIndex = 9;
-            this.label22.Text = "This is an ADSR editor for SPC files\r\nexported from EBMusEd.";
-            // 
-            // btnAddBRR
-            // 
-            this.btnAddBRR.Location = new System.Drawing.Point(26, 12);
-            this.btnAddBRR.Name = "btnAddBRR";
-            this.btnAddBRR.Size = new System.Drawing.Size(225, 23);
-            this.btnAddBRR.TabIndex = 10;
-            this.btnAddBRR.Text = "Add a BRR...";
-            this.btnAddBRR.UseVisualStyleBackColor = true;
-            this.btnAddBRR.Click += new System.EventHandler(this.btnAddBRR_Click);
+            this.lblDelayWarning.AutoSize = true;
+            this.lblDelayWarning.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDelayWarning.Location = new System.Drawing.Point(247, 62);
+            this.lblDelayWarning.Name = "lblDelayWarning";
+            this.lblDelayWarning.Size = new System.Drawing.Size(119, 22);
+            this.lblDelayWarning.TabIndex = 40;
+            this.lblDelayWarning.Text = "In EB, delay values higher\r\nthan 03 may cause glitches!";
+            this.lblDelayWarning.Visible = false;
             // 
             // Form1
             // 
@@ -1413,12 +1426,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.PanningBar)).EndInit();
             this.tabADSR.ResumeLayout(false);
             this.tabADSR.PerformLayout();
+            this.tabPackProgress.ResumeLayout(false);
+            this.tabPackProgress.PerformLayout();
             this.tabOther.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.VolBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StaccatoBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMultiplier)).EndInit();
-            this.tabPackProgress.ResumeLayout(false);
-            this.tabPackProgress.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1534,6 +1547,7 @@
         private System.Windows.Forms.Label lblLargestDelay;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button btnAddBRR;
+        private System.Windows.Forms.Label lblDelayWarning;
     }
 }
 

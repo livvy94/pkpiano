@@ -580,6 +580,8 @@ namespace PK_Piano
         {
             SetAllEchoValues();
             CreateEchoCodes();
+
+            lblDelayWarning.Visible = (trackBarEchoDelay.Value > 3);
         }
 
         private void trackBarEchoFeedback_Scroll(object sender, EventArgs e)
