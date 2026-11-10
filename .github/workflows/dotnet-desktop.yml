@@ -3,6 +3,7 @@ name: Build Windows EXE
 on:
   push:
     branches: ["master"]
+    tags: ["v*"]
   pull_request:
     branches: ["master"]
   workflow_dispatch:
@@ -10,31 +11,48 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
 
     steps:
-      # Get source code
       - name: Checkout
         uses: actions/checkout@v5
 
-      # Install MSBuild
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      # Install NuGet
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v2
 
-      # Restore NuGet packages
       - name: Restore
         run: nuget restore "PK Piano.sln"
 
-      # Compile the application
       - name: Build
         run: msbuild "PK Piano/PK Piano.csproj" /p:Configuration=Release /p:Platform="AnyCPU" /m
 
-      # Upload executable and required DLLs
+      - name: Package
+        run: |
+          robocopy "PK Piano\bin\Release" "dist\PK Piano" /E /XF *.pdb *.xml
+          if ($LASTEXITCODE -ge 8) { exit $LASTEXITCODE }
+          exit 0
+
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
-          name: PK-Piano-Windows
-          path: PK Piano/bin/Release/
+          name: PK-Piano
+          path: dist/PK Piano/
+
+      # Make a release!
+      # To make this work, do something like this:
+      # git tag v3.0.0
+      # git push origin v3.0.0
+
+      - name: Zip for release
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: Compress-Archive -Path "dist\PK Piano" -DestinationPath "PK-Piano-${{ github.ref_name }}.zip"
+
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" "PK-Piano-${{ github.ref_name }}.zip" --title "PK Piano ${{ github.ref_name }}" --generate-notes
