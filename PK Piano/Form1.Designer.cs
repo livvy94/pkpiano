@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabInitial = new System.Windows.Forms.TabPage();
+            this.lblDelayWarning = new System.Windows.Forms.Label();
             this.btnEchoOff = new System.Windows.Forms.Button();
             this.btnSetFirstDrum = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
@@ -137,7 +138,6 @@
             this.btnOctaveUp = new System.Windows.Forms.Button();
             this.DispLabel = new System.Windows.Forms.Label();
             this.btnDividePrompt = new System.Windows.Forms.Button();
-            this.lblDelayWarning = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabInitial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarEchoFilter)).BeginInit();
@@ -209,6 +209,17 @@
             this.tabInitial.TabIndex = 4;
             this.tabInitial.Text = "Initial Setup";
             this.tabInitial.UseVisualStyleBackColor = true;
+            // 
+            // lblDelayWarning
+            // 
+            this.lblDelayWarning.AutoSize = true;
+            this.lblDelayWarning.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDelayWarning.Location = new System.Drawing.Point(247, 62);
+            this.lblDelayWarning.Name = "lblDelayWarning";
+            this.lblDelayWarning.Size = new System.Drawing.Size(119, 22);
+            this.lblDelayWarning.TabIndex = 40;
+            this.lblDelayWarning.Text = "In EB, delay values higher\r\nthan 03 may cause glitches!";
+            this.lblDelayWarning.Visible = false;
             // 
             // btnEchoOff
             // 
@@ -1362,17 +1373,6 @@
             this.btnDividePrompt.Visible = false;
             this.btnDividePrompt.Click += new System.EventHandler(this.btnDividePrompt_Click);
             // 
-            // lblDelayWarning
-            // 
-            this.lblDelayWarning.AutoSize = true;
-            this.lblDelayWarning.Font = new System.Drawing.Font("Tahoma", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDelayWarning.Location = new System.Drawing.Point(247, 62);
-            this.lblDelayWarning.Name = "lblDelayWarning";
-            this.lblDelayWarning.Size = new System.Drawing.Size(119, 22);
-            this.lblDelayWarning.TabIndex = 40;
-            this.lblDelayWarning.Text = "In EB, delay values higher\r\nthan 03 may cause glitches!";
-            this.lblDelayWarning.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1413,6 +1413,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PK Piano";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.AllowDrop = true;
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.tabControl1.ResumeLayout(false);
             this.tabInitial.ResumeLayout(false);
             this.tabInitial.PerformLayout();

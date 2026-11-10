@@ -687,19 +687,23 @@ namespace PK_Piano
         {
             //TODO: show just the filename in the title bar. Like PK Piano - foo.spc
 
-            //Clear everything so there isn't any junk data hanging around
-            lstInstruments.Items.Clear();
-            loadedInstruments.Clear();
-            currentSPCfilepath = string.Empty;
-            lblSPCFilename.Text = "Click here to load an SPC file...";
-            UpdateADSRTextboxes(null);
-
+            resetADSR_UI();
             currentSPCfilepath = SPC_IO.ShowOFD();
             if (NoFileLoaded()) return; //bad result from the ofd
 
             loadedInstruments = SPC_IO.LoadInstruments(currentSPCfilepath);
 
             UpdateInstruments();
+        }
+
+        private void resetADSR_UI()
+        {
+            //Clear everything so there isn't any junk data hanging around
+            lstInstruments.Items.Clear();
+            loadedInstruments.Clear();
+            currentSPCfilepath = string.Empty;
+            lblSPCFilename.Text = "Click here to load an SPC file...";
+            UpdateADSRTextboxes(null);
         }
 
         private void UpdateInstruments()
@@ -963,9 +967,51 @@ namespace PK_Piano
             if (configtxt == null) return;
 
             var info = new FileInfo(configtxt);
+            addBRR(info); //ta-da!
+        }
+
+        private void addBRR(FileInfo info) //breaking this out to be reusable in drag n drop operations
+        {
             int sizeInBytes = (int)info.Length - 2; //file size minus the loop header
             ARAM_Count += sizeInBytes;
             UpdateARAM();
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e) //drag n drop boilerplate stuff
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files != null && files.Length > 0)
+            {
+                //Okay, we've got a file.
+                var file = new FileInfo(files[0]);
+
+                //TODO: Make it work with multiple files. This doesn't seem worth doing now, though, because:
+                //  -Edge case where the user drops one or many SPCs and one or many BRRs at once
+                //  -Multiple SPCs can't work. It can only display ADSR information for one file at a time
+                //  -I can just drag and drop each BRR individually, it's not that inconvenient lol
+
+                if (file.Extension == ".spc")
+                {
+                    resetADSR_UI();
+                    tabControl1.SelectTab(2); //focus on the ADSR tab
+                    currentSPCfilepath = file.FullName;
+                    loadedInstruments = SPC_IO.LoadInstruments(currentSPCfilepath);
+                    UpdateInstruments();
+                }
+                else if (file.Extension == ".brr")
+                {
+                    tabControl1.SelectTab(3); //focus on the Free Space tab
+                    addBRR(file);
+                }
+            }
         }
     }
 }
