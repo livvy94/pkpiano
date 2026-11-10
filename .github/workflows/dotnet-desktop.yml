@@ -12,34 +12,29 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Download source code
+      # Get source code
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      # Install .NET 8
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
+      # Install MSBuild
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
 
-      # Restore dependencies
+      # Install NuGet
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      # Restore NuGet packages
       - name: Restore
-        run: dotnet restore "PK Piano.csproj"
+        run: nuget restore "PK Piano.sln"
 
-      # Compile and publish standalone EXE
-      - name: Publish Windows EXE
-        run: >
-          dotnet publish "PK Piano.csproj"
-          --configuration Release
-          --runtime win-x64
-          --self-contained true
-          -p:PublishSingleFile=true
-          -p:IncludeNativeLibrariesForSelfExtract=true
-          --output ./publish
+      # Compile the application
+      - name: Build
+        run: msbuild "PK Piano/PK Piano.csproj" /p:Configuration=Release /p:Platform="AnyCPU" /m
 
-      # Upload the finished EXE
+      # Upload executable and required DLLs
       - name: Upload EXE
         uses: actions/upload-artifact@v4
         with:
-          name: Windows-EXE
-          path: ./publish/
+          name: PK-Piano-Windows
+          path: PK Piano/bin/Release/
