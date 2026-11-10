@@ -13,17 +13,17 @@ This tool aims to make using it a bit easier by copying all kinds of codes to yo
 ## Features
 
   - Auditory response - you can hear each note as the control code is copied to the clipboard
-  - Easily calculate note lengths - no more using a hex calculator
-  - Visual controls for Channel Volume, Panning, and the SNES's distinctive Echo Buffer
-  - Convert note data from OpenMPT
+  - Easily calculate note lengths
+  - Visual controls for Channel Volume, Panning, and the SNES's Echo Buffer
+  - Convert note data from OpenMPT (one channel at a time)
   - Generate a sine wave for comparison [while tuning BRR samples](https://www.smwcentral.net/?p=section&s=brrsamples)
 
 ## How to use
 
   - Press one of the buttons
-  - CTRL+V to paste the hex into EBMusEd
+  - Ctrl+V to paste the hex into EBMusEd
   - Hover the mouse over buttons to view command syntax
-  - Experiment
+  - Experiment & have fun making music!
 
 ### Installation
 
